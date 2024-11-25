@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="來源檔案">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="標頭檔">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="資源檔">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="標頭檔\Debug">
+      <UniqueIdentifier>{aa66923a-7c51-465b-8233-5052f0136162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Engine">
+      <UniqueIdentifier>{81790079-920a-48a6-8e41-c0e2305fdb8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Utils">
+      <UniqueIdentifier>{62ec6ea0-ddac-4c73-82a0-414d8b40b267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Render">
+      <UniqueIdentifier>{fa891c9e-1dbc-4a82-ae38-4aa85787347e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Physics">
+      <UniqueIdentifier>{352fa1e6-1337-42a9-a12c-f59362d1f9f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Debug">
+      <UniqueIdentifier>{1f89bbc3-d7d0-489e-8a6a-fcc2a27cb4df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Engine">
+      <UniqueIdentifier>{9c6a0f23-bb6a-44ca-8851-30bb598a93f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Physics">
+      <UniqueIdentifier>{5d626a54-85af-4859-8217-3c9da2a0a32e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Render">
+      <UniqueIdentifier>{73a24cd3-c0ce-4f80-8c5c-86afb72df3d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Utils">
+      <UniqueIdentifier>{d4677fb4-9385-41b7-aa2d-4d96fc21cf75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Container">
+      <UniqueIdentifier>{468b8955-2e5c-4d6c-b7b8-e747b865ce32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Math">
+      <UniqueIdentifier>{38dc5f09-4a55-495a-b22e-9f1a0b4ea1c0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="include\Container\FreeList.inl">
+      <Filter>標頭檔\Container</Filter>
+    </None>
+    <None Include="include\Engine\State.inl">
+      <Filter>標頭檔\Engine</Filter>
+    </None>
+    <None Include="include\Utils\PoolAllocator.inl">
+      <Filter>標頭檔\Utils</Filter>
+    </None>
+    <None Include="include\Math\Vector1.inl">
+      <Filter>標頭檔\Math</Filter>
+    </None>
+    <None Include="include\Math\Vector2.inl">
+      <Filter>標頭檔\Math</Filter>
+    </None>
+    <None Include="include\Math\Vector3.inl">
+      <Filter>標頭檔\Math</Filter>
+    </None>
+    <None Include="include\Math\Vector4.inl">
+      <Filter>標頭檔\Math</Filter>
+    </None>
+    <None Include="include\Math\Matrix.inl">
+      <Filter>標頭檔\Math</Filter>
+    </None>
+    <None Include="include\Physics\RigidBody.inl">
+      <Filter>標頭檔\Physics</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Utils\Clock.cpp">
+      <Filter>來源檔案\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\PoolAllocator.cpp">
+      <Filter>來源檔案\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\ThreadPool.cpp">
+      <Filter>來源檔案\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\RenderWindow.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Shape.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Texture.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\ViewPort.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Engine.cpp">
+      <Filter>來源檔案\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\State.cpp">
+      <Filter>來源檔案\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Debug\Log.cpp">
+      <Filter>來源檔案\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\AABB.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\BoundingVolumeHierarchy.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Collider.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsWorld.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\RectCollider.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\RigidBody.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\SphereCollider.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Transform.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Container\FreeList.hpp">
+      <Filter>標頭檔\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Debug\Log.hpp">
+      <Filter>標頭檔\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Debug\Time.hpp">
+      <Filter>標頭檔\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Engine.hpp">
+      <Filter>標頭檔\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\State.hpp">
+      <Filter>標頭檔\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Drawable.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\RenderWindow.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Shape.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Texture.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\ViewPort.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils\Clock.hpp">
+      <Filter>標頭檔\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils\MathFunctions.hpp">
+      <Filter>標頭檔\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils\PoolAllocator.hpp">
+      <Filter>標頭檔\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils\Random.hpp">
+      <Filter>標頭檔\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils\ThreadPool.hpp">
+      <Filter>標頭檔\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Functions.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Vector.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Vector1.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Vector2.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Vector3.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Vector4.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\vec_config.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Matrix.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math\Constants.hpp">
+      <Filter>標頭檔\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\AABB.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\BoundingVolumeHierarchy.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\Collider.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\Manifold.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\PhysicsWorld.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\RectCollider.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\RigidBody.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\SphereCollider.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\Transform.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
