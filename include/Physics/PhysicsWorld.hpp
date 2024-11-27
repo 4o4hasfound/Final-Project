@@ -85,7 +85,7 @@ private:
 
 	std::vector<std::thread> m_threads;
 	std::mutex m_lock;
-	BVH m_tree;
+	BVH m_treeTiles;
 };
 
 #include "Physics/PhysicsWorld.inl"

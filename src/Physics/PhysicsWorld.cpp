@@ -25,7 +25,7 @@ void PhysicsWorld::update(float dt) {
 			body->update(dt, timeStep == step-1);
 		}
 
-		m_tree.update(); 
+		m_treeTiles.update(); 
 		std::vector<Manifold> result;
 		getContactManifoldsThreaded(result);
 
@@ -43,7 +43,7 @@ void PhysicsWorld::update(float dt) {
 
 bool PhysicsWorld::hasCollide(RigidBody* body) const {
 	std::vector<RigidBody*> potentialCollideBodies;
-	m_tree.query(body->getTransformedAABB(), potentialCollideBodies);
+	m_treeTiles.query(body->getTransformedAABB(), potentialCollideBodies);
 	std::vector<Manifold> result;
 	for (RigidBody* collideBody : potentialCollideBodies) {
 		if (collideBody == body) {
@@ -55,7 +55,7 @@ bool PhysicsWorld::hasCollide(RigidBody* body) const {
 }
 
 void PhysicsWorld::DebugDraw() const {
-	m_tree.render();
+	m_treeTiles.render();
 }
 
 void PhysicsWorld::removeBody(int id) {
@@ -234,7 +234,7 @@ void PhysicsWorld::getContactManifolds(std::vector<Manifold>& manifolds) {
 		if (body->type == RigidBody::Static) {
 			continue;
 		}
-		m_tree.query(body->getTransformedAABB(), potentialCollideBodies);
+		m_treeTiles.query(body->getTransformedAABB(), potentialCollideBodies);
 		for (RigidBody* collideBody : potentialCollideBodies) {
 			if (collideBody == body) {
 				continue;
@@ -281,7 +281,7 @@ void PhysicsWorld::getContactManifoldsWorkgroup(FreeList<RigidBody*>::iterator s
 			continue;
 		}
 		std::vector<RigidBody*> potentialCollideBodies;
-		m_tree.query(body->getTransformedAABB(), potentialCollideBodies);
+		m_treeTiles.query(body->getTransformedAABB(), potentialCollideBodies);
 		for (RigidBody* collideBody : potentialCollideBodies) {
 			if (collideBody == body) {
 				continue;

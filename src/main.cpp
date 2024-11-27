@@ -8,6 +8,8 @@
 #include "Physics/BoundingVolumeHierarchy.hpp"
 #include "Math/Vector.hpp"
 
+#include "Game/Map/GrassMap.hpp"
+
 #include "Utils/Clock.hpp"
 #include "Utils/Noise.hpp"
 
@@ -61,6 +63,7 @@ int main() {
 
 	bool drag = false;
 	vec2 delta;
+	GrassMap map(window.size());
 	Clock t;
 	while (window.running()) {
 		window.clear();
@@ -70,96 +73,21 @@ int main() {
 
 		float dt = t.reset();
 		if (Keyboard::get(Keyboard::KEY_W).pressed) {
-			window.viewport.position.y -= dt * 250;
+			window.viewport.position.y -= dt * 300;
 		}
 		if (Keyboard::get(Keyboard::KEY_S).pressed) {
-			window.viewport.position.y += dt * 250;
+			window.viewport.position.y += dt * 300;
 		}
 		if (Keyboard::get(Keyboard::KEY_A).pressed) {
-			window.viewport.position.x -= dt * 250;
+			window.viewport.position.x -= dt * 300;
 		}
 		if (Keyboard::get(Keyboard::KEY_D).pressed) {
-			window.viewport.position.x += dt * 250;
+			window.viewport.position.x += dt * 300;
 		}
-		std::unordered_set<ivec2, pair_hash> s;
-		float tileSize = 100;
-		for (int i = -1; i <= window.size().y / tileSize + 2; ++i) {
-			for (int j = -1; j <= window.size().x / tileSize + 2; ++j) {
-				Rectangle rect({ tileSize + 1, tileSize + 1 });
-				rect.position = (vec2(j, i) * tileSize + window.viewport.position) / tileSize;
-				rect.position = vec2(
-					std::round(std::floor(rect.position.x) * tileSize),
-					std::round(std::floor(rect.position.y) * tileSize)
-				);
-				Noise::octaves = 11;
-				Noise::persistence = 0.55;
-				Noise::lacunarity = 2;
-				float value = (Noise::get(rect.position) + 1) * 0.5;
-				Noise::octaves = 4;
-				const float valueU1 = Noise::getUniform(rect.position);
-				rect.rotation = static_cast<int>((valueU1 - 0.000001) * 4) * 0.5 * PI;
-				if (value < 0.65) {
-					window.draw(rect, &grass);
-				}
-				else {
-					s.insert(ivec2(rect.position / tileSize));
-					window.draw(rect, &water);
-				}
-			}
-		}
-		int flowerTileSize = tileSize * 0.5;
-		for (int i = -1 / flowerTileSize; i <= window.size().y / flowerTileSize + 5; ++i) {
-			for (int j = -1 / flowerTileSize; j <= window.size().x / flowerTileSize + 5; ++j) {
-				Rectangle rect({ 100, 100 });
-				rect.position = (vec2(j, i) * flowerTileSize + window.viewport.position) / flowerTileSize;
-				rect.position = vec2(
-					std::round(std::floor(rect.position.x) * flowerTileSize),
-					std::round(std::floor(rect.position.y) * flowerTileSize)
-				);
-				if (s.count(ivec2(rect.position / tileSize))) {
-					continue;
-				}
-				Noise::octaves = 11;
-				Noise::persistence = 0.55;
-				Noise::lacunarity = 2.1;
-				const float value = (Noise::get(rect.position) + 1) * 0.5;
-				const float value1 = (Noise::get(rect.position*2) + 1) * 0.5;
-				Noise::octaves = 2;
-				const float valueU2 = Noise::getUniform(rect.position);
-				rect.rotation = 0;
-				rect.position += (valueU2 - 0.5) * flowerTileSize;
-				if (value < 0.25) {
-					auto& flower = flowers[static_cast<int>((valueU2 - 0.000001) * 5)];
-					window.draw(rect, &flower[static_cast<int>((valueU2 - 0.000001) * 3)]);
-				}
-			}
-		}
-		flowerTileSize = tileSize;
-		for (int i = -1; i <= window.size().y / flowerTileSize + 2; ++i) {
-			for (int j = -1; j <= window.size().x / flowerTileSize + 2; ++j) {
-				Rectangle rect({ 200, 200 });
-				rect.position = (vec2(j, i) * flowerTileSize + window.viewport.position) / flowerTileSize;
-				rect.position = vec2(
-					std::round(std::floor(rect.position.x) * flowerTileSize),
-					std::round(std::floor(rect.position.y) * flowerTileSize)
-				);
-				if (s.count(ivec2(rect.position / tileSize))) {
-					continue;
-				}
-				Noise::octaves = 11;
-				Noise::persistence = 0.55;
-				Noise::lacunarity = 2;
-				const float value = (Noise::get(rect.position) + 1) * 0.5;
-				Noise::octaves = 2;
-				const float valueU1 = Noise::getUniform(rect.position);
-				rect.rotation = 0;
-				rect.position += (valueU1 - 0.5) * flowerTileSize;
-				if (value < 0.5 && value > 0.49) {
-					window.draw(rect, &tree);
-				}
-			}
-		}
-		//Logger::Log<Debug>(t.duration());
+
+		map.update(window.viewport);
+		map.draw(window);
+
 		window.flipDisplay();
 	}
 

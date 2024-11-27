@@ -7,7 +7,7 @@ BodyT* PhysicsWorld::createBody(RigidBody::BodyType type, const RigidBodySetting
 	//RigidBody* ptr = new RigidBody(type, id, this);;
 	//m_bodies[id] = ptr;
 
-	m_tree.insert(m_bodies[id]);
+	m_treeTiles.insert(m_bodies[id]);
 
 	return m_bodies[id];
 }

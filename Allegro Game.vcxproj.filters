@@ -55,6 +55,18 @@
     <Filter Include="標頭檔\Skill">
       <UniqueIdentifier>{fd7ecf80-4644-4aa3-992a-f351081ec45c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="標頭檔\Game">
+      <UniqueIdentifier>{3e3cb65a-1621-4f57-b7fe-c61c082313eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Game">
+      <UniqueIdentifier>{ace3bb0f-e18e-45a9-ae1d-a34817de4964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\Map">
+      <UniqueIdentifier>{6818a61a-7ae6-4293-a600-46d739e107b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Game\Map">
+      <UniqueIdentifier>{5873ed72-d81b-4462-a4ed-440e68ecf1a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -154,7 +166,13 @@
       <Filter>來源檔案\Engine</Filter>
     </ClCompile>
     <ClCompile Include="include\Utils\Noise.cpp">
-      <Filter>來源檔案</Filter>
+      <Filter>來源檔案\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Map\Map.cpp">
+      <Filter>來源檔案\Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Map\GrassMap.cpp">
+      <Filter>來源檔案\Game\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="include\Utils\Noise.hpp">
       <Filter>標頭檔\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Map\GrassMap.hpp">
+      <Filter>標頭檔\Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Map\Map.hpp">
+      <Filter>標頭檔\Game\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
