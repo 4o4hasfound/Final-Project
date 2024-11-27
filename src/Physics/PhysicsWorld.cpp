@@ -9,21 +9,8 @@ PhysicsWorld::~PhysicsWorld()
 
 }
 
-RigidBody* PhysicsWorld::createBody(RigidBody::BodyType type, const RigidBodySetting& setting) {
-	int id = m_bodies.emplace(nullptr);
-	m_bodies[id] = (RigidBody*)m_allocator.allocate();
-	new(m_bodies[id]) RigidBody(type, id, this);
-	
-	//RigidBody* ptr = new RigidBody(type, id, this);;
-	//m_bodies[id] = ptr;
-	
-	m_tree.insert(m_bodies[id]);
-
-	return m_bodies[id];
-}
-
 void PhysicsWorld::update(float dt) {
-	const int step = 12;
+	const int step = 1;
 	dt /= step;
 	for (int timeStep = 0; timeStep < step; ++timeStep) {
 		contactPoints.clear();
@@ -259,7 +246,7 @@ void PhysicsWorld::getContactManifolds(std::vector<Manifold>& manifolds) {
 }
 
 void PhysicsWorld::getContactManifoldsThreaded(std::vector<Manifold>& manifolds) {
-	const int numThreads = ThreadPool::ThreadCount();
+	const int numThreads = ThreadPool::threadCount();
 	const int minWorkingItem = 5;
 
 	if (m_bodies.size() < numThreads * minWorkingItem) {
@@ -274,7 +261,7 @@ void PhysicsWorld::getContactManifoldsThreaded(std::vector<Manifold>& manifolds)
 		const int end = (i != numThreads - 1) ? (i + 1) * workgroupSize : m_bodies.size();
 		auto endItr = itr + (end - start);
 
-		ThreadPool::EnqueueJob(std::bind(
+		ThreadPool::enqueueJob(std::bind(
 			&PhysicsWorld::getContactManifoldsWorkgroup,
 			this,
 			itr,
@@ -283,7 +270,7 @@ void PhysicsWorld::getContactManifoldsThreaded(std::vector<Manifold>& manifolds)
 		));
 		itr = endItr;
 	}
-	ThreadPool::WaitUntilComplete();
+	ThreadPool::waitUntilComplete();
 }
 
 void PhysicsWorld::getContactManifoldsWorkgroup(FreeList<RigidBody*>::iterator start, FreeList<RigidBody*>::iterator end, std::vector<Manifold>& manifolds) {
@@ -323,14 +310,14 @@ void PhysicsWorld::resolveManifolds(std::vector<Manifold>& manifolds) {
 }
 
 void PhysicsWorld::resolveManifoldsThreaded(std::vector<Manifold>& manifolds) {
-	const int numThreads = ThreadPool::ThreadCount();
+	const int numThreads = ThreadPool::threadCount();
 
 	int workgroupSize = manifolds.size() / numThreads;
 	std::unordered_map<std::pair<RigidBody*, RigidBody*>, bool, pair_hash> resolved;
 
 	for (int i = 0; i < numThreads; ++i) {
 		const int end = (i != numThreads - 1) ? (i + 1) * workgroupSize : manifolds.size();
-		ThreadPool::EnqueueJob(std::bind(
+		ThreadPool::enqueueJob(std::bind(
 			&PhysicsWorld::resolveManifoldsWorkgroup,
 			this,
 			i * workgroupSize,
@@ -339,7 +326,7 @@ void PhysicsWorld::resolveManifoldsThreaded(std::vector<Manifold>& manifolds) {
 			std::ref(resolved)
 		));
 	}
-	ThreadPool::WaitUntilComplete();
+	ThreadPool::waitUntilComplete();
 }
 
 void PhysicsWorld::resolveManifoldsWorkgroup(int start, int end, std::vector<Manifold>& manifolds, std::unordered_map<std::pair<RigidBody*, RigidBody*>, bool, pair_hash>& resolved) {

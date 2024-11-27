@@ -10,12 +10,16 @@
 
 #include "Utils/ThreadPool.hpp"
 
+#include "Engine/Keyboard.hpp"
+#include "Engine/Mouse.hpp"
+
 #include "Debug/Log.hpp"
 
 class Engine {
 public:
-	static void Init();
-	//static void Run();
+	static void init();
+	static void terminate();
+	static void update();
 private:
 	Engine() = delete;
 	

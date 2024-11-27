@@ -5,9 +5,10 @@ class RenderWindow;
 
 class Drawable {
 	friend class RenderWindow;
-
-protected:
-	virtual void draw(Texture* texture = nullptr) = 0;
 public:
-	bool enableAbsolutePosition = false;
+	virtual void draw(Texture* texture = nullptr) = 0;
+protected:
+	virtual void draw(const RenderWindow* window, Texture* texture = nullptr) = 0;
+public:
+	bool absolutePosition = false;
 };

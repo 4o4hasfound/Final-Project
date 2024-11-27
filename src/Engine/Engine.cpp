@@ -1,13 +1,15 @@
 #include "Engine/Engine.hpp"
 bool Engine::initialized = 0;
 
-void Engine::Init() {
+void Engine::init() {
 	if (initialized) {
 		return;
 	}
 	initialized = 1;
 
 	al_init();
+	al_install_mouse();
+	al_install_keyboard();
 
 	if (!al_init_acodec_addon()) {
 		Logger::Log<Error>("Failed to initialize allegro acodec addon");
@@ -29,5 +31,16 @@ void Engine::Init() {
 		Logger::Log<Error>("Failed to initialize allegro video addon");
 	}
 
-	ThreadPool::Launch(24);
+	Mouse::initialize();
+	Keyboard::initialize();
+	ThreadPool::launch(24);
+}
+
+void Engine::terminate() {
+	ThreadPool::terminate();
+}
+
+void Engine::update() {
+	Mouse::update();
+	Keyboard::update();
 }

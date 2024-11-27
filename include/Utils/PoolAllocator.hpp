@@ -13,7 +13,8 @@
 
 class PoolAllocator;
 
-class PoolAllocator{
+class PoolAllocator
+{
 
 public:
     struct Bucket
@@ -36,7 +37,8 @@ private:
 };
 
 template <class T>
-class SimpleAllocator{
+class SimpleAllocator
+{
 
 public:
     using value_type = T;

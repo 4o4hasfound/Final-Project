@@ -21,8 +21,10 @@ public:
 
 	vec2 size() const;
 	bool intersect(const AABB& other) const;
+	bool intersect(const vec2& point) const;
 	bool contain(const AABB& other) const;
 	float area() const;
+	vec2 center() const;
 
 	void enlarge(const vec2& newSize);
 

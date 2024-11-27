@@ -20,7 +20,14 @@ public:
 	void clear(const vec3& color);
 	void clear(float r = 0.0f, float g = 0.0f, float b = 0.0f);
 
+	void draw(Drawable& target, Texture* texture = nullptr) const;
+
+	const vec2& size() const;
+
+	std::vector<ALLEGRO_EVENT> pollEvents();
+
 	ALLEGRO_DISPLAY* getDisplay() const;
+	vec2 getMouse() const;
 
 	void flipDisplay() const;
 
@@ -29,6 +36,9 @@ public:
 	ViewPort viewport;
 private:
 	ALLEGRO_DISPLAY* m_display;
+	ALLEGRO_EVENT_QUEUE* m_eventQueue;
 	vec2 m_size;
 	bool m_running = true;
+
+	void setupWindow();
 };

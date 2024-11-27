@@ -30,7 +30,8 @@ public:
 	PhysicsWorld();
 	~PhysicsWorld();
 
-	RigidBody* createBody(RigidBody::BodyType type, const RigidBodySetting& setting = RigidBodySetting{});
+	template<typename BodyT = RigidBody, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	BodyT* createBody(RigidBody::BodyType type, const RigidBodySetting& setting = RigidBodySetting{});
 
 	void removeBody(int id);
 	void removeBody(RigidBody* body);
@@ -86,3 +87,5 @@ private:
 	std::mutex m_lock;
 	BVH m_tree;
 };
+
+#include "Physics/PhysicsWorld.inl"

@@ -30,6 +30,13 @@ bool AABB::intersect(const AABB& other) const {
 		&& other.upperBound.y > lowerBound.y;
 }
 
+bool AABB::intersect(const vec2& point) const {
+	return point.x <= upperBound.x 
+		&& point.x >= lowerBound.x 
+		&& point.y <= upperBound.y
+		&& point.y >= lowerBound.y;
+}
+
 bool AABB::contain(const AABB& other) const {
 	return upperBound.x >= other.upperBound.x
 		&& lowerBound.x <= other.lowerBound.x
@@ -40,6 +47,10 @@ bool AABB::contain(const AABB& other) const {
 float AABB::area() const {
 	const vec2 d = upperBound - lowerBound;
 	return d.x * d.y;
+}
+
+vec2 AABB::center() const {
+	return lowerBound + (upperBound - lowerBound) * 0.5f;
 }
 
 void AABB::enlarge(const vec2& newSize) {

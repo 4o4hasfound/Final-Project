@@ -9,7 +9,7 @@ std::atomic<int> ThreadPool::pendingJobCount = 0;
 std::mutex ThreadPool::main_thread;
 std::condition_variable ThreadPool::finishAllJob;
 
-void ThreadPool::Launch(int numThreads) {
+void ThreadPool::launch(int numThreads) {
 	if (threads.size() >= numThreads) {
 		return;
 	}
@@ -17,11 +17,11 @@ void ThreadPool::Launch(int numThreads) {
 	pendingJobCount = 0;
 
 	for (int i = threads.size(); i < numThreads; ++i) {
-		threads.emplace_back(std::thread(&ThreadPool::ThreadLoop));
+		threads.emplace_back(std::thread(&ThreadPool::threadLoop));
 	}
 }
 
-void ThreadPool::EnqueueJob(const std::function<void()>& job) {
+void ThreadPool::enqueueJob(const std::function<void()>& job) {
 	{
 		std::unique_lock<std::mutex> unique_lock(lock);
 		jobs.push(job);
@@ -30,7 +30,7 @@ void ThreadPool::EnqueueJob(const std::function<void()>& job) {
 	cv.notify_one();
 }
 
-void ThreadPool::WaitUntilComplete() {
+void ThreadPool::waitUntilComplete() {
 	if (pendingJobCount <= 0) {
 		return;
 	}
@@ -38,7 +38,7 @@ void ThreadPool::WaitUntilComplete() {
 	finishAllJob.wait(unique_lock, [] {return pendingJobCount <= 0; });
 }
 
-bool ThreadPool::Busy() {
+bool ThreadPool::busy() {
 	bool isBusy;
 	{
 		std::unique_lock<std::mutex> unique_lock(lock);
@@ -47,7 +47,7 @@ bool ThreadPool::Busy() {
 	return isBusy;
 }
 
-void ThreadPool::Terminate() {
+void ThreadPool::terminate() {
 	{
 		std::unique_lock<std::mutex> unique_lock(lock);
 		run = false;
@@ -59,11 +59,11 @@ void ThreadPool::Terminate() {
 	threads.clear();
 }
 
-int ThreadPool::ThreadCount() {
+int ThreadPool::threadCount() {
 	return threads.size();
 }
 
-void ThreadPool::ThreadLoop() {
+void ThreadPool::threadLoop() {
 	while (1) {
 		std::function<void()> job;
 		{

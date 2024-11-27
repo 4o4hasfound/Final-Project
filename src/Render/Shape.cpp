@@ -210,7 +210,7 @@ void Rectangle::draw(Texture* texture) {
 	al_identity_transform(&trans);
 	al_translate_transform(&trans, -position.x - size.x * 0.5, -position.y - size.y * 0.5);
 	if (rotation) {
-		al_rotate_transform(&trans, radians(rotation));
+		al_rotate_transform(&trans, -rotation);
 	}
 	al_translate_transform(&trans, position.x, position.y);
 	al_use_transform(&trans);
@@ -242,12 +242,93 @@ void Rectangle::draw(Texture* texture) {
 	al_use_transform(&trans);
 }
 
+void Rectangle::draw(const RenderWindow* window, Texture* texture) {
+	ALLEGRO_TRANSFORM trans;
+	al_identity_transform(&trans);
+	al_translate_transform(&trans, std::round(-position.x - size.x * 0.5), std::round(-position.y - size.y * 0.5));
+	if (rotation) {
+		al_rotate_transform(&trans, -rotation);
+	}
+	al_translate_transform(&trans, position.x, position.y);
+	if (window && !absolutePosition) {
+		al_translate_transform(
+			&trans, 
+			std::round(-window->viewport.position.x),
+			std::round(-window->viewport.position.y)
+		);
+	}
+	al_use_transform(&trans);
+	if (!texture) {
+		if (!outlineThickness) {
+			al_draw_filled_rectangle(
+				std::round(position.x),
+				std::round(position.y),
+				std::round(position.x + size.x),
+				std::round(position.y + size.y),
+				al_map_rgba(color.r, color.g, color.b, color.a)
+			);
+		}
+		else {
+			al_draw_rectangle(
+				std::round(position.x),
+				std::round(position.y),
+				std::round(position.x + size.x),
+				std::round(position.y + size.y),
+				al_map_rgba(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a),
+				std::round(outlineThickness)
+			);
+		}
+	}
+	else {
+		al_draw_scaled_bitmap(
+			texture->getBitmap(), 
+			0, 0,
+			texture->getSize().x, texture->getSize().y,
+			std::round(position.x), std::roundf(position.y),
+			size.x, size.y,
+			0
+		);
+	}
+	al_identity_transform(&trans);
+	al_use_transform(&trans);
+}
+
 Circle::Circle(float _radius)
 	: radius(_radius) {
 
 }
 
 void Circle::draw(Texture* texture) {
+	if (!outlineThickness) {
+		al_draw_filled_circle(
+			position.x,
+			position.y,
+			radius,
+			al_map_rgba(color.r, color.g, color.b, color.a)
+		);
+	}
+	else {
+		al_draw_circle(
+			position.x,
+			position.y,
+			radius,
+			al_map_rgba(outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a),
+			outlineThickness
+		);
+	}
+}
+
+void Circle::draw(const RenderWindow* window, Texture* texture) {
+	ALLEGRO_TRANSFORM trans;
+	al_identity_transform(&trans);
+
+	if (window && !absolutePosition) {
+		al_translate_transform(
+			&trans,
+			-window->viewport.position.x,
+			-window->viewport.position.y
+		);
+	}
 	if (!outlineThickness) {
 		al_draw_filled_circle(
 			position.x,

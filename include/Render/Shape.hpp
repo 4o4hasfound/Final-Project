@@ -23,6 +23,8 @@ public:
 
 	float outlineThickness = 0.0f;
 	vec4 outlineColor = vec4(0, 0, 0, 255);
+protected:
+	virtual void draw(const RenderWindow* window, Texture* texture = nullptr) override;
 };
 
 class Circle : public Drawable {
@@ -37,4 +39,6 @@ public:
 
 	float outlineThickness = 0.0f;
 	vec4 outlineColor = vec4(0, 0, 0, 255);
+protected:
+	virtual void draw(const RenderWindow* window, Texture* texture = nullptr) override;
 };

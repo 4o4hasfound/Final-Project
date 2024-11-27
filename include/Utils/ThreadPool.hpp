@@ -11,19 +11,19 @@
 
 class ThreadPool {
 public:
-	static void Launch(int numThreads = std::thread::hardware_concurrency());
-	static void EnqueueJob(const std::function<void()>& job);
-	static void WaitUntilComplete();
-	static bool Busy();
-	static void Terminate();
+	static void launch(int numThreads = std::thread::hardware_concurrency());
+	static void enqueueJob(const std::function<void()>& job);
+	static void waitUntilComplete();
+	static bool busy();
+	static void terminate();
 
-	static int ThreadCount();
+	static int threadCount();
 
 	static std::atomic<int> pendingJobCount;
 private:
 	ThreadPool() = delete;
 
-	static void ThreadLoop();
+	static void threadLoop();
 
 	static bool run;
 	static std::vector<std::thread> threads;

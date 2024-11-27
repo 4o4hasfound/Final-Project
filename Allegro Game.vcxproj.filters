@@ -49,6 +49,12 @@
     <Filter Include="標頭檔\Math">
       <UniqueIdentifier>{38dc5f09-4a55-495a-b22e-9f1a0b4ea1c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="標頭檔\Weapon">
+      <UniqueIdentifier>{87b47d76-51da-4c81-8450-e9ba029b5800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Skill">
+      <UniqueIdentifier>{fd7ecf80-4644-4aa3-992a-f351081ec45c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -77,6 +83,9 @@
       <Filter>標頭檔\Math</Filter>
     </None>
     <None Include="include\Physics\RigidBody.inl">
+      <Filter>標頭檔\Physics</Filter>
+    </None>
+    <None Include="include\Physics\PhysicsWorld.inl">
       <Filter>標頭檔\Physics</Filter>
     </None>
   </ItemGroup>
@@ -137,6 +146,15 @@
     </ClCompile>
     <ClCompile Include="src\Physics\Transform.cpp">
       <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Keyboard.cpp">
+      <Filter>來源檔案\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Mouse.cpp">
+      <Filter>來源檔案\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Utils\Noise.cpp">
+      <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +256,21 @@
     </ClInclude>
     <ClInclude Include="include\Physics\Transform.hpp">
       <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Weapon\Weapon.hpp">
+      <Filter>標頭檔\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Skill\Skill.hpp">
+      <Filter>標頭檔\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Keyboard.hpp">
+      <Filter>標頭檔\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Mouse.hpp">
+      <Filter>標頭檔\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils\Noise.hpp">
+      <Filter>標頭檔\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

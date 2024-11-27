@@ -174,6 +174,7 @@ RenderWindow::RenderWindow(int width, int height, const std::string& windowName)
 		return;
 	}
 	al_set_window_title(m_display, windowName.c_str());
+	setupWindow();
 }
 
 RenderWindow::RenderWindow(const vec2& size, const std::string& windowName)
@@ -184,6 +185,7 @@ RenderWindow::RenderWindow(const vec2& size, const std::string& windowName)
 		return;
 	}
 	al_set_window_title(m_display, windowName.c_str());
+	setupWindow();
 }
 
 RenderWindow::RenderWindow(const std::string& windowName) {
@@ -201,6 +203,7 @@ RenderWindow::RenderWindow(const std::string& windowName) {
 		return;
 	}
 	al_set_window_title(m_display, windowName.c_str());
+	setupWindow();
 }
 
 RenderWindow::~RenderWindow() {
@@ -217,10 +220,69 @@ void RenderWindow::clear(float r, float g, float b) {
 	al_clear_to_color(al_map_rgb(r, g, b));
 }
 
+void RenderWindow::draw(Drawable& target, Texture* texture) const {
+	target.draw(this, texture);
+}
+
+const vec2& RenderWindow::size() const {
+	return m_size;
+}
+
+std::vector<ALLEGRO_EVENT> RenderWindow::pollEvents() {
+	std::vector<ALLEGRO_EVENT> events;
+	ALLEGRO_EVENT event;
+	ALLEGRO_TIMEOUT timeout;
+
+	al_init_timeout(&timeout, 0.005);
+
+	bool get_event;
+	while ((get_event = al_wait_for_event_until(m_eventQueue, &event, &timeout))) {
+		switch (event.type) {
+			case ALLEGRO_EVENT_DISPLAY_CLOSE:
+				m_running = false;
+				break;
+			default:
+				events.push_back(event);
+		}
+	}
+	return events;
+}
+
 ALLEGRO_DISPLAY* RenderWindow::getDisplay() const {
 	return m_display;
 }
 
+vec2 RenderWindow::getMouse() const {
+	ALLEGRO_MOUSE_STATE state;
+	al_get_mouse_state(&state);
+
+	return vec2(state.x, state.y);
+}
+
 void RenderWindow::flipDisplay() const {
 	al_flip_display();
+}
+
+bool RenderWindow::running() const {
+	return m_running;
+}
+
+void RenderWindow::setupWindow() {
+	m_eventQueue = al_create_event_queue();
+	al_register_event_source(
+		m_eventQueue, 
+		al_get_display_event_source(m_display)
+	);
+
+	al_register_event_source(
+		m_eventQueue,
+		al_get_keyboard_event_source()
+	);
+
+	al_register_event_source(
+		m_eventQueue,
+		al_get_mouse_event_source()
+	);
+	viewport.size = m_size;
+	viewport.position = vec2(0, 0);
 }
