@@ -233,7 +233,7 @@ std::vector<ALLEGRO_EVENT> RenderWindow::pollEvents() {
 	ALLEGRO_EVENT event;
 	ALLEGRO_TIMEOUT timeout;
 
-	al_init_timeout(&timeout, 0.005);
+	al_init_timeout(&timeout, 0.001);
 
 	bool get_event;
 	while ((get_event = al_wait_for_event_until(m_eventQueue, &event, &timeout))) {

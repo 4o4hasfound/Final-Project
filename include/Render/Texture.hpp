@@ -12,8 +12,13 @@ class Texture {
 public:
 	Texture();
 	Texture(const vec2& size);
+	Texture(ALLEGRO_BITMAP* data);
 	Texture(const std::string& filename);
 	~Texture();
+
+	Texture(const Texture& texture);
+	Texture(Texture&& texture);
+	void operator=(const Texture& texture);
 
 	const vec2& getSize() const;
 	ALLEGRO_BITMAP* getBitmap() const;

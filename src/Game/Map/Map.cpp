@@ -7,6 +7,10 @@ void Map::Tiles::setGridSize(const vec2& _size) {
 	}
 }
 
+bool Map::Tiles::exist(int x, int y) {
+	return y >= 0 && x >= 0 && y < grid.size() && x < grid[0].size() && grid[y][x].exist;
+}
+
 bool Map::Tiles::intersect(const vec2& point) {
 	ivec2 index = ivec2((point - position) / size);
 	if (index.y < 0 || index.x < 0 || index.y >= grid.size() || index.x >= grid[0].size()) {
@@ -42,7 +46,7 @@ bool Map::Tiles::intersect(const vec2& point, const vec2& _size) {
 				continue;
 			}
 
-			if (grid[i][j].exist && grid[i][j].texture) {
+			if (grid[i][j].exist) {
 				return true;
 			}
 		}

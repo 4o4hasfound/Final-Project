@@ -53,6 +53,11 @@ public:
     static float getUniform(float x, float y);
     static float getUniform(const vec2& v);
 
+    static int getRange(float x, int start, int end);
+    static int getRange(const vec1& v, int start, int end);
+    static int getRange(float x, float y, int start, int end);
+    static int getRange(const vec2& v, int start, int end);
+
     static int octaves;
     static float persistence;
     static float lacunarity;

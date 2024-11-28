@@ -165,14 +165,20 @@
     <ClCompile Include="src\Engine\Mouse.cpp">
       <Filter>來源檔案\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="include\Utils\Noise.cpp">
-      <Filter>來源檔案\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\Map\Map.cpp">
       <Filter>來源檔案\Game\Map</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Map\GrassMap.cpp">
       <Filter>來源檔案\Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\Noise.cpp">
+      <Filter>來源檔案\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Animation.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="include\Render\Tileset.cpp">
+      <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +301,12 @@
     </ClInclude>
     <ClInclude Include="include\Game\Map\Map.hpp">
       <Filter>標頭檔\Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Animation.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Tileset.hpp">
+      <Filter>標頭檔\Render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

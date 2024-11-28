@@ -168,7 +168,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Utils\Noise.cpp" />
+    <ClCompile Include="include\Render\Tileset.cpp" />
     <ClCompile Include="src\Debug\Log.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Engine\Keyboard.cpp" />
@@ -185,11 +185,13 @@
     <ClCompile Include="src\Physics\RigidBody.cpp" />
     <ClCompile Include="src\Physics\SphereCollider.cpp" />
     <ClCompile Include="src\Physics\Transform.cpp" />
+    <ClCompile Include="src\Render\Animation.cpp" />
     <ClCompile Include="src\Render\RenderWindow.cpp" />
     <ClCompile Include="src\Render\Shape.cpp" />
     <ClCompile Include="src\Render\Texture.cpp" />
     <ClCompile Include="src\Render\ViewPort.cpp" />
     <ClCompile Include="src\Utils\Clock.cpp" />
+    <ClCompile Include="src\Utils\Noise.cpp" />
     <ClCompile Include="src\Utils\PoolAllocator.cpp" />
     <ClCompile Include="src\Utils\ThreadPool.cpp" />
   </ItemGroup>
@@ -221,10 +223,12 @@
     <ClInclude Include="include\Physics\RigidBody.hpp" />
     <ClInclude Include="include\Physics\SphereCollider.hpp" />
     <ClInclude Include="include\Physics\Transform.hpp" />
+    <ClInclude Include="include\Render\Animation.hpp" />
     <ClInclude Include="include\Render\Drawable.hpp" />
     <ClInclude Include="include\Render\RenderWindow.hpp" />
     <ClInclude Include="include\Render\Shape.hpp" />
     <ClInclude Include="include\Render\Texture.hpp" />
+    <ClInclude Include="include\Render\Tileset.hpp" />
     <ClInclude Include="include\Render\ViewPort.hpp" />
     <ClInclude Include="include\Skill\Skill.hpp" />
     <ClInclude Include="include\Utils\Clock.hpp" />

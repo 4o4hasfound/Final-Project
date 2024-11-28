@@ -38,6 +38,8 @@ protected:
 
 		void setGridSize(const vec2& _size);
 
+		bool exist(int x, int y);
+
 		bool intersect(const vec2& point);
 		bool intersect(const AABB& aabb);
 		bool intersect(const vec2& point, const vec2& size);

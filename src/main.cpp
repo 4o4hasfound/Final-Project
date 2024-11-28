@@ -1,5 +1,6 @@
 #include "Render/RenderWindow.hpp"
 #include "Render/Shape.hpp"
+#include "Render/Animation.hpp"
 #include "Engine/Engine.hpp"
 #include "Engine/Keyboard.hpp"
 #include "Engine/Mouse.hpp"
@@ -25,8 +26,6 @@ struct pair_hash {
 int main() {
 	Engine::init();
 	RenderWindow window(1920, 1080, "Game");
-
-	al_set_new_display_flags(ALLEGRO_RESIZABLE); // No AA
 
 	Texture grass("assets/grass.png");
 	Texture water("assets/water.png");
@@ -66,6 +65,7 @@ int main() {
 	GrassMap map(window.size());
 	Clock t;
 	while (window.running()) {
+		window.pollEvents();
 		window.clear();
 
 		Keyboard::update();
