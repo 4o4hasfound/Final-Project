@@ -25,7 +25,7 @@ void BVH::update() {
 			continue;
 		}
 		
-		if (node.aabb.contain(m_bodies[node.object]->getTransformedAABB())) {
+		if (node.aabb.contain(m_bodies[node.object]->getAABB())) {
 			continue;
 		}
 
@@ -37,7 +37,7 @@ void BVH::update() {
 
 float BVH::computeInheritCost(int object, int node) const {
 	float cost = 0.0f;
-	AABB aabb = m_bodies[object]->getTransformedAABB();
+	AABB aabb = m_bodies[object]->getAABB();
 	enlargeAABB(aabb);
 	while (node != -1 && m_nodes[node].parent != -1) {
 		cost +=
@@ -49,7 +49,7 @@ float BVH::computeInheritCost(int object, int node) const {
 }
 
 int BVH::pickSibling(int object) const {
-	AABB aabb = m_bodies[object]->getTransformedAABB();
+	AABB aabb = m_bodies[object]->getAABB();
 	enlargeAABB(aabb);
 	int node = m_root;
 
@@ -82,7 +82,7 @@ int BVH::pickSibling(int object) const {
 
 void BVH::insertLeaf(int object) {
 	// Create a new node
-	AABB aabb = m_bodies[object]->getTransformedAABB();
+	AABB aabb = m_bodies[object]->getAABB();
 	enlargeAABB(aabb);
 	int node = m_nodes.emplace(object, aabb);
 	if (m_nodes.size() == 1) {
@@ -96,19 +96,26 @@ void BVH::insertLeaf(int object) {
 	refitTree(m_nodes[node].parent);
 }
 
-void BVH::render() const {
+void BVH::render(const RenderWindow& window) const {
 	Rectangle rect;
 	rect.outlineColor = vec4(255.0);
 	rect.outlineThickness = 1.0;
 	rect.rotation = 0.0f;
 
 	for (const Node& node : m_nodes) {
-		if (node.object != -1) {
-			continue;
-		}
+		//if (node.object != -1) {
+		//	continue;
+		//}
 		rect.size = node.aabb.size();
 		rect.position = node.aabb.lowerBound + rect.size * 0.5f;
-		rect.draw();
+		if (node.isLeaf()) {
+			rect.outlineThickness = 5;
+			rect.size = m_bodies[node.object]->getAABB().size();
+		}
+		else {
+			rect.outlineThickness = 1;
+		}
+		window.draw(rect);
 	}
 }
 
@@ -120,7 +127,7 @@ void BVH::query(const AABB& aabb, std::vector<RigidBody*>& result) const {
 		st.pop_back();
 
 		if (m_nodes[node].aabb.intersect(aabb)) {
-			if (m_nodes[node].isLeaf() && m_bodies[m_nodes[node].object]->getTransformedAABB().intersect(aabb)) {
+			if (m_nodes[node].isLeaf() && m_bodies[m_nodes[node].object]->getAABB().intersect(aabb)) {
 				result.push_back(m_bodies[m_nodes[node].object]);
 			}
 			else {
@@ -149,7 +156,7 @@ void BVH::refitTree(int node) {
 }
 
 void BVH::createParent(int node, int sibling, int object) {
-	AABB aabb = m_bodies[object]->getTransformedAABB();
+	AABB aabb = m_bodies[object]->getAABB();
 	enlargeAABB(aabb);
 	int oldParent = m_nodes[sibling].parent;
 	int newParent = m_nodes.emplace(aabb);
@@ -392,7 +399,7 @@ int BVH::getLeafIndex(const RigidBody* body) {
 	//		}
 	//		continue;
 	//	}
-	//	if (!m_nodes[node].aabb.contain(body->getTransformedAABB())) {
+	//	if (!m_nodes[node].aabb.contain(body->getAABB())) {
 	//		continue;
 	//	}
 	//	if (m_nodes[node].child[0] != -1) nodes.push(m_nodes[node].child[0]);

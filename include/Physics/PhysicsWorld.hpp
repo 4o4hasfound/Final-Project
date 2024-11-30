@@ -9,10 +9,11 @@
 
 #include "Math/Vector.hpp"
 
-#include "Physics/Collider.hpp"
 #include "Physics/RigidBody.hpp"
-#include "Physics/SphereCollider.hpp"
 #include "Physics/BoundingVolumeHierarchy.hpp"
+#include "Physics/Manifold.hpp"
+#include "Physics/BoundingCircle.hpp"
+#include "Physics/BoundingLine.hpp"
 
 #include "Render/Shape.hpp"
 #include "Render/RenderWindow.hpp"
@@ -24,68 +25,60 @@
 
 #include "Debug/Log.hpp"
 
+// Manages the simulation of physics in the game world, including rigid bodies, collisions, and spatial organization
 class PhysicsWorld {
 	friend class RigidBody;
+private:
+	struct pair_hash {
+		template<typename T1, typename T2>
+		bool operator()(const std::pair<T1, T2>& p) const {
+			return std::hash<T1>{}(p.first) ^ std::hash<T2>{}(p.second);
+		}
+	};
+
 public:
 	PhysicsWorld();
 	~PhysicsWorld();
 
-	template<typename BodyT = RigidBody, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
-	BodyT* createBody(RigidBody::BodyType type, const RigidBodySetting& setting = RigidBodySetting{});
+	// Creates and adds a new rigid body to the world
+	template<typename BodyT = RigidBody, typename ... T, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	BodyT* createBody(RigidBody::BodyType type, const T& ... arguments);
 
+	// Removes a rigid body from the world by its ID
 	void removeBody(int id);
+	// Removes a rigid body from the world by its pointer
 	void removeBody(RigidBody* body);
 
+	// Updates the physics simulation for one time step
 	void update(float dt);
-
+	
+	// Checks if a given rigid body is colliding with any other body
 	bool hasCollide(RigidBody* body) const;
 
-	void DebugDraw() const;
+	// Queries the list of rigid bodies that a given body is interacting with
+	// ToQuery limit the type of the return bodies
+	template<RigidBody::BodyType ToQuery = RigidBody::Any>
+	std::vector<RigidBody*> query(RigidBody* body) const;
 
-	std::vector<vec2> contactPoints;
+	template<RigidBody::BodyType ToQuery = RigidBody::Any>
+	std::vector<RigidBody*> query(const AABB& aabb) const;
+
+	template<RigidBody::BodyType ToQuery = RigidBody::Any>
+	std::vector<RigidBody*> query(const BoundingCircle& circle) const;
+
+	template<RigidBody::BodyType ToQuery = RigidBody::Any>
+	std::vector<RigidBody*> query(const BoundingLine& line) const;
+
+	// Draw the physics world
+	void DebugDraw(const RenderWindow& window) const;
 private:
-	PoolAllocator m_allocator;
 	FreeList<RigidBody*> m_bodies;
 
-	struct ResolveCollisionInfo {
-		vec2 impulse;
-		vec2 ra;
-		vec2 raPerp;
-		vec2 rb;
-		vec2 rbPerp;
-		float j;
-		vec2 frictionImpulse;
-
-		vec2 relativeVelocity;
-	};
-	struct pair_hash {
-		template <class T1, class T2>
-		std::size_t operator () (const std::pair<T1, T2>& p) const {
-			auto h1 = std::hash<T1>{}(p.first);
-			auto h2 = std::hash<T2>{}(p.second);
-
-			// Mainly for demonstration purposes, i.e. works but is overly simple
-			// In the real world, use sth. like boost.hash_combine
-			return h1 ^ h2;
-		}
-	};
-
-	void resolveCollision(const Manifold& manifold);
-	void resolveCollisionThreaded(const Manifold& manifold);
-	void getLinearAndRotationCollisionInfo(const Manifold& manifold, std::array<ResolveCollisionInfo, 2>& result);
-	void getFrictionCollisionInfo(const Manifold& manifold, std::array<ResolveCollisionInfo, 2>& result);
-
-	void getContactManifolds(std::vector<Manifold>& manifolds);
-	void getContactManifoldsThreaded(std::vector<Manifold>& manifolds);
-	void getContactManifoldsWorkgroup(FreeList<RigidBody*>::iterator start, FreeList<RigidBody*>::iterator end, std::vector<Manifold>& manifolds);
-
-	void resolveManifolds(std::vector<Manifold>& manifolds);
-	void resolveManifoldsThreaded(std::vector<Manifold>& manifolds);
-	void resolveManifoldsWorkgroup(int start, int end, std::vector<Manifold>& manifolds, std::unordered_map<std::pair<RigidBody*, RigidBody*>, bool, pair_hash>& resovled);
+	void resolveCollisions(std::vector<Manifold>& manifolds);
 
 	std::vector<std::thread> m_threads;
 	std::mutex m_lock;
-	BVH m_treeTiles;
+	BVH m_tree;
 };
 
 #include "Physics/PhysicsWorld.inl"

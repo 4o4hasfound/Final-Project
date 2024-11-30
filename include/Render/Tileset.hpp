@@ -4,8 +4,11 @@
 
 #include "Render/Texture.hpp"
 
+// Represents a collection of textures (tiles) that form a tileset image
+// Use subscript operator to get a certain texture in the tileset
 class Tileset {
 public:
+	// Load the tileset from a file, with "tilesize" for all the tiles
 	Tileset(const std::string& filename, const vec2& tilesize);
 	Tileset(const std::string& filename, float tilewidth, float tileheight);
 	~Tileset() = default;

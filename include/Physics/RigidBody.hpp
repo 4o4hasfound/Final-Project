@@ -1,134 +1,83 @@
 #pragma once
+#include <functional>
+
+#include "Physics/AABB.hpp"
+#include "Physics/Manifold.hpp"
+
+#include "Debug/Log.hpp"
 
 #include "Math/Vector.hpp"
 
-#include "Physics/AABB.hpp"
-#include "Physics/Collider.hpp"
-#include "Physics/Manifold.hpp"
+struct BodyStatus {
+	bool moving = 0;
+	bool inSkill = 0;
+	bool attacking = 0;
+	bool onGround = 1;
+	bool onWall = 0;
+	bool hasTouchWall = 0; // just some flag to change the onWall after the collision test. 
+	bool dead = 0;
+	bool hit = 0;
 
-class PhysicsWorld;
+	float health;
+	float attack;
 
-struct RigidBodySetting {
-	float angularVelocity = 0.0f;
-	vec2 velocity = vec2(0.0f);
+	float skillCooldown;
+	float skillDuration;
 
-	float mass = 0.0f;
-	float inertia = 0.0f;
-	float density = 0.0f;
-	float restitution = 0.0f;
-
-	float staticFriction = 0.0f;
-	float dynamicFriction = 0.0f;
-
-	float torque = 0.0f;
-	vec2 force = vec2(0.0f);
-
-	Transform transform{};
+	bool shocked = 0;
+	float shockDuration;
 };
 
 class RigidBody {
 	friend class PhysicsWorld;
 public:
+	// Different types of bodies, represented using binary values for efficient querying of body type groups.
+	// Example:
+	// Both Character & Dynamic and Enemy & Dynamic can be true simultaneously.
 	enum BodyType {
-		Static,
-		Dynamic
+		Static = 0b1000,
+		Static_Uncollidable = 0x1100,
+		Dynamic = 0b0001,
+		Character = 0b0011,
+		Enemy = 0b0101,
+		Any = 0b1111
 	};
-public:
-	~RigidBody();
 
-	void update(float dt, bool clearForces);
+	// aabb is in model space
+	RigidBody(BodyType type, AABB aabb = { {0.0f, 0.0f}, {0.0f, 0.0f} });
+	virtual ~RigidBody() = default;
 
-	template<typename ColliderType, typename ... Ts, typename = std::enable_if_t<std::is_base_of_v<Collider, ColliderType>>>
-	ColliderType* addCollider(Ts&&... params);
-
-	int getID() const;
-	PhysicsWorld* getWorld() const;
-
-	void move(const vec2& delta);
+	// Returns the aabb of the body in world space
+	AABB getAABB() const;
+	// Returns the body type
+	BodyType getType() const;
+	
+	// Move the body by a vector or two scalar value
+	void move(const vec2 delta);
 	void move(float x, float y);
-	void accelerate(const vec2& speed);
-	void accelerate(float x, float y);
-	void rotate(float delta);
-	void accelerateAngularVelocity(float speed);
-	void addForce(const vec2& force);
-	void addForce(float x, float y);
 
-	float getAngularVelocity() const;
-	void setAngularVelocity(float angularVelocity);
-	const vec2& getVelocity() const;
-	void setVelocity(const vec2& velocity);
-	void setVelocity(float x, float y);
-	float getMass() const;
-	void setMass(float mass);
-	float getInertia() const;
-	void setInertia(float inertia);
-	float getDensity() const;
-	void setDensity(float density);
-	float getRestitution() const;
-	void setRestitution(float restitution);
-	float getTorque() const;
-	void setTorque(float torque);
-	const vec2& getForce() const;
-	void setForce(const vec2& force);
-	void setForce(float x, float y);
-	float getStaticFriction() const;
-	void setStaticFriction(float staticFriction);
-	float getDynamicFriction() const;
-	void setDynamicFriction(float dynamicFriction);
-	const vec2& getPosition() const;
-	void setPosition(const vec2& position);
-	void setPosition(float x, float y);
-	float getRotation() const;
-	void setRotation(float rotation);
-	const Transform& getTransform() const;
-	void setTransform(const Transform& transform);
+	// Resolve collision with another body or with an AABB
+	Manifold resolveCollision(RigidBody* other);
+	Manifold resolveCollision(const AABB& aabb);
 
-	const AABB& getAABB() const;
-	AABB getTransformedAABB() const;
-
-	const BodyType type;
+	AABB aabb;
+	vec2 position = vec2(0);
+	vec2 velocity = vec2(0);
+	BodyStatus status;
+	bool freezed = 0;
 protected:
-	RigidBody(BodyType type, int id, PhysicsWorld* world);
-	RigidBody(BodyType type, const RigidBodySetting& setting, int id, PhysicsWorld* world);
+	BodyType m_type;
 
-	// Basic information
-	float m_angularVelocity = 0.0f;
-	vec2 m_velocity = vec2(0.0f);
+	int m_id;
 
-	float m_mass = 0.0f;
-	float m_inertia = 0.0f;
-	float m_density = 0.0f;
-	float m_restitution = 0.0f;
+	void update(float dt);
 
-	float m_staticFriction = 0.0f;
-	float m_dynamicFriction = 0.0f;
+	// myUpdate will be called before the actual update
+	// so by overriding it in the subclass, you can make your own update function
+	virtual void myUpdate(float dt);
+	// Callback function when two objects collide
+	virtual void onCollide(RigidBody* other, const Manifold& detail) {}
+	// Callback function when physics world is done resolving collision
+	virtual void afterCollisionTestCallback() {}
 
-	float m_torque = 0.0f;
-	vec2 m_force = vec2(0.0f);
-
-	float m_invMass = 0.0f;
-	float m_invInertia = 0.0f;
-
-	// Verlet
-	vec2 m_lastAcceleration = vec2(0.0f);
-	float m_lastAngularAcceleration = 0.0f;
-
-	// Physics World
-	const int m_id;
-
-	PhysicsWorld* m_world;
-
-	Transform m_transform;
-	AABB m_aabb;
-
-	std::unique_ptr<Collider> m_collider;
-
-	void updatePositionRK4(float dt);
-	void updateRotationRK4(float dt);
-	void updatePosition(float dt);
-	void updateRotation(float dt); 
-
-	void testCollision(RigidBody* other, std::vector<Manifold>& result);
 };
-
-#include "Physics/RigidBody.inl"

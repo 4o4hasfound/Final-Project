@@ -17,20 +17,25 @@ public:
 	RenderWindow(const std::string& windowName);
 	~RenderWindow();
 
+	// Clears the screen display
 	void clear(const vec3& color);
 	void clear(float r = 0.0f, float g = 0.0f, float b = 0.0f);
 
+	// Draw a drawable object
 	void draw(Drawable& target, Texture* texture = nullptr) const;
 
+	// Returns the size of the screen
 	const vec2& size() const;
 
+	// Returns the list of event
 	std::vector<ALLEGRO_EVENT> pollEvents();
 
 	ALLEGRO_DISPLAY* getDisplay() const;
-	vec2 getMouse() const;
 
+	// Called at the very end of the rendering loop
 	void flipDisplay() const;
 
+	// Returns true if the window is still running
 	bool running() const;
 
 	ViewPort viewport;

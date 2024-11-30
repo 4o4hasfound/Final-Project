@@ -4,11 +4,10 @@
 #include "Math/Vector.hpp"
 #include "Math/Functions.hpp"
 
-#include "Physics/Transform.hpp"
-
 #include "Render/Shape.hpp"
 #include "Render/RenderWindow.hpp"
 
+// Axis aligned bounding box
 class AABB {
 public:
 	vec2 lowerBound;
@@ -24,16 +23,24 @@ public:
 	bool intersect(const vec2& point) const;
 	bool contain(const AABB& other) const;
 	float area() const;
+
 	vec2 center() const;
 
-	void enlarge(const vec2& newSize);
+	float bottom() const;
+	float top() const;
+	float right() const;
+	float left() const;
 
-	AABB transform(const Transform& trans) const;
+	void setCenter(const vec2& _center);
+
+	void enlarge(const vec2& newSize);
 
 	AABB operator+(const vec2& position) const;
 	AABB& operator+=(const vec2& position);
 	AABB operator-(const vec2& position) const;
 	AABB& operator-=(const vec2& position);
+	AABB operator*(float factor) const;
+	AABB& operator*=(float factor);
 
 	AABB operator|(const AABB& other) const;
 	AABB& operator|=(const AABB& other);
@@ -41,5 +48,5 @@ public:
 	bool operator==(const AABB& other) const;
 	bool operator!=(const AABB& other) const;
 
-	void DebugDraw() const;
+	void DebugDraw(const RenderWindow& window) const;
 };

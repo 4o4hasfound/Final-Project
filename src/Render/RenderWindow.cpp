@@ -252,13 +252,6 @@ ALLEGRO_DISPLAY* RenderWindow::getDisplay() const {
 	return m_display;
 }
 
-vec2 RenderWindow::getMouse() const {
-	ALLEGRO_MOUSE_STATE state;
-	al_get_mouse_state(&state);
-
-	return vec2(state.x, state.y);
-}
-
 void RenderWindow::flipDisplay() const {
 	al_flip_display();
 }

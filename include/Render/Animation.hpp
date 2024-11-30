@@ -6,7 +6,6 @@
 
 class Animation {
 public:
-	//Animation(const std::vector<std::string>& textures, float frameDuration);
 	Animation(const std::vector<Texture>& textures, float frameDuration);
 	~Animation() = default;
 
@@ -15,10 +14,14 @@ public:
 
 	void reset();
 
+	// Returns the current playing frame
 	Texture* getFrame();
 
 	int getFrameIndex() const;
+
+	// Set the starting frame of the animatino
 	void setStartFrame(int start);
+	// Set the ending frame of the animatino
 	void setEndFrame(int end);
 
 	int getStartFrame() const { return m_start; }

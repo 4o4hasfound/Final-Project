@@ -2,6 +2,8 @@
 
 #include "Math/Vector.hpp"
 
+// A viewport act like a virtual screen in the world space,
+// which will then be projected onto our screen
 class ViewPort {
 public:
 	ViewPort();

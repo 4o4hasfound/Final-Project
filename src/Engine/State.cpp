@@ -16,9 +16,9 @@ StateManager::~StateManager() {
 }
 
 void StateManager::pushState(State* state) {
-	state->OnEnter();
+	state->onEnter();
 	if (!m_states.empty()) {
-		m_states.top()->OnSuspend();
+		m_states.top()->onSuspend();
 	}
 	m_states.push(state);
 }
@@ -29,21 +29,21 @@ State* StateManager::topState() {
 
 void StateManager::popState(int n) {
 	while (n-- && !m_states.empty()) {
-		m_states.top()->OnDestroy();
+		m_states.top()->onDestroy();
 		m_toRemove.push(m_states.top());
 		m_states.pop();
 	}
 	if (!m_states.empty()) {
-		m_states.top()->OnWakeup();
+		m_states.top()->onWakeup();
 	}
 }
 
 void StateManager::switchState(State* state) {
-	m_states.top()->OnDestroy();
+	m_states.top()->onDestroy();
 	m_toRemove.push(m_states.top());
 	m_states.pop();
 
-	state->OnEnter();
+	state->onEnter();
 	m_states.push(state);
 }
 

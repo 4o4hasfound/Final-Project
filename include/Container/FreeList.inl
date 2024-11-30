@@ -14,7 +14,8 @@ inline FreeList<T>::FreeList(int n)
 	: m_data(malloc(sizeof(Element) * n))
 	, m_dataEnd(m_data + n)
 	, m_capacity(m_data + n) 
-	, m_size(n){
+	, m_size(n)
+{
 
 	initElement(0, n);
 	fillDefault();
@@ -26,7 +27,8 @@ inline FreeList<T>::FreeList(int n, const T& t)
 	: m_data(malloc(sizeof(Element)* n))
 	, m_dataEnd(m_data + n)
 	, m_capacity(m_data + n)
-	, m_size(n){
+	, m_size(n)
+{
 
 	initElement(0, n);
 	fillValue(t);
@@ -37,7 +39,8 @@ inline FreeList<T>::FreeList(const std::initializer_list<T>& list)
 	: m_size(list.size())
 	, m_data((Element*)malloc(sizeof(Element)* list.size()))
 	, m_dataEnd(m_data + list.size())
-	, m_capacity(m_data + list.size()){
+	, m_capacity(m_data + list.size())
+{
 
 	initElement(0, list.size());
 	fillIter(list.begin(), list.end());
@@ -47,7 +50,8 @@ inline FreeList<T>::FreeList(const const_iterator& _start, const const_iterator&
 	: m_size((_end - _start))
 	, m_data((Element*)malloc(sizeof(Element)* m_size))
 	, m_dataEnd(m_data + m_size)
-	, m_capacity(m_data + m_size){
+	, m_capacity(m_data + m_size)
+{
 
 	initElement(0, m_size);
 	fillIter(_start, m_size);
@@ -58,7 +62,8 @@ inline FreeList<T>::FreeList(const const_reverse_iterator& _start, const const_r
 	: m_size(_end - _start)
 	, m_data((Element*)malloc(sizeof(Element)* m_size))
 	, m_dataEnd(m_data + m_size)
-	, m_capacity(m_data + m_size){
+	, m_capacity(m_data + m_size)
+{
 
 	initElement(0, m_size);
 	fillIter(_start, _end);
@@ -70,7 +75,8 @@ inline FreeList<T>::FreeList(const FreeList<T>& other)
 	, m_firstFree(other.m_firstFree)
 	, m_dataEnd(m_data + (other.m_dataEnd - other.m_data))
 	, m_capacity(m_data + other.capacity())
-	, m_size(other.m_size){
+	, m_size(other.m_size)
+{
 
 	
 }
@@ -81,7 +87,8 @@ inline FreeList<T>::FreeList(FreeList<T>&& other)
 	, m_firstFree(other.m_firstFree)
 	, m_dataEnd(other.m_dataEnd)
 	, m_capacity(other.m_capacity)
-	, m_size(other.m_size){
+	, m_size(other.m_size)
+{
 
 
 }

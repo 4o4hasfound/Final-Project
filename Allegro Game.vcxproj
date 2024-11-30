@@ -157,13 +157,13 @@
   <ItemGroup>
     <None Include="include\Container\FreeList.inl" />
     <None Include="include\Engine\State.inl" />
+    <None Include="include\Math\Function.inl" />
     <None Include="include\Math\Matrix.inl" />
     <None Include="include\Math\Vector1.inl" />
     <None Include="include\Math\Vector2.inl" />
     <None Include="include\Math\Vector3.inl" />
     <None Include="include\Math\Vector4.inl" />
     <None Include="include\Physics\PhysicsWorld.inl" />
-    <None Include="include\Physics\RigidBody.inl" />
     <None Include="include\Utils\PoolAllocator.inl" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -178,13 +178,11 @@
     <ClCompile Include="src\Game\Map\Map.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Physics\AABB.cpp" />
+    <ClCompile Include="src\Physics\BoundingCircle.cpp" />
+    <ClCompile Include="src\Physics\BoundingLine.cpp" />
     <ClCompile Include="src\Physics\BoundingVolumeHierarchy.cpp" />
-    <ClCompile Include="src\Physics\Collider.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
-    <ClCompile Include="src\Physics\RectCollider.cpp" />
     <ClCompile Include="src\Physics\RigidBody.cpp" />
-    <ClCompile Include="src\Physics\SphereCollider.cpp" />
-    <ClCompile Include="src\Physics\Transform.cpp" />
     <ClCompile Include="src\Render\Animation.cpp" />
     <ClCompile Include="src\Render\RenderWindow.cpp" />
     <ClCompile Include="src\Render\Shape.cpp" />
@@ -198,13 +196,13 @@
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp" />
     <ClInclude Include="include\Debug\Log.hpp" />
-    <ClInclude Include="include\Debug\Time.hpp" />
     <ClInclude Include="include\Engine\Engine.hpp" />
     <ClInclude Include="include\Engine\Keyboard.hpp" />
     <ClInclude Include="include\Engine\Mouse.hpp" />
     <ClInclude Include="include\Engine\State.hpp" />
     <ClInclude Include="include\Game\Map\GrassMap.hpp" />
     <ClInclude Include="include\Game\Map\Map.hpp" />
+    <ClInclude Include="include\Game\Player.hpp" />
     <ClInclude Include="include\Math\Constants.hpp" />
     <ClInclude Include="include\Math\Functions.hpp" />
     <ClInclude Include="include\Math\Matrix.hpp" />
@@ -215,14 +213,12 @@
     <ClInclude Include="include\Math\Vector4.hpp" />
     <ClInclude Include="include\Math\vec_config.hpp" />
     <ClInclude Include="include\Physics\AABB.hpp" />
+    <ClInclude Include="include\Physics\BoundingCircle.hpp" />
+    <ClInclude Include="include\Physics\BoundingLine.hpp" />
     <ClInclude Include="include\Physics\BoundingVolumeHierarchy.hpp" />
-    <ClInclude Include="include\Physics\Collider.hpp" />
     <ClInclude Include="include\Physics\Manifold.hpp" />
     <ClInclude Include="include\Physics\PhysicsWorld.hpp" />
-    <ClInclude Include="include\Physics\RectCollider.hpp" />
     <ClInclude Include="include\Physics\RigidBody.hpp" />
-    <ClInclude Include="include\Physics\SphereCollider.hpp" />
-    <ClInclude Include="include\Physics\Transform.hpp" />
     <ClInclude Include="include\Render\Animation.hpp" />
     <ClInclude Include="include\Render\Drawable.hpp" />
     <ClInclude Include="include\Render\RenderWindow.hpp" />
@@ -232,7 +228,6 @@
     <ClInclude Include="include\Render\ViewPort.hpp" />
     <ClInclude Include="include\Skill\Skill.hpp" />
     <ClInclude Include="include\Utils\Clock.hpp" />
-    <ClInclude Include="include\Utils\MathFunctions.hpp" />
     <ClInclude Include="include\Utils\Noise.hpp" />
     <ClInclude Include="include\Utils\PoolAllocator.hpp" />
     <ClInclude Include="include\Utils\Random.hpp" />

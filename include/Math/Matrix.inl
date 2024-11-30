@@ -55,14 +55,16 @@ constexpr mat2<T>::mat2(mat2<U> const& m)
 // -- Accesses --
 
 template<typename T>
-typename mat2<T>::col_type& mat2<T>::operator[](typename std::size_t i){
+typename mat2<T>::col_type& mat2<T>::operator[](typename std::size_t i)
+{
 
 	assert(i < this->length());
 	return this->value[i];
 }
 
 template<typename T>
-constexpr typename mat2<T>::col_type const& mat2<T>::operator[](typename std::size_t i) const{
+constexpr typename mat2<T>::col_type const& mat2<T>::operator[](typename std::size_t i) const
+{
 
 	assert(i < this->length());
 	return this->value[i];
@@ -72,7 +74,8 @@ constexpr typename mat2<T>::col_type const& mat2<T>::operator[](typename std::si
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator=(mat2<U> const& m){
+mat2<T>& mat2<T>::operator=(mat2<U> const& m)
+{
 
 	this->value[0] = m[0];
 	this->value[1] = m[1];
@@ -81,7 +84,8 @@ mat2<T>& mat2<T>::operator=(mat2<U> const& m){
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator+=(U scalar){
+mat2<T>& mat2<T>::operator+=(U scalar)
+{
 
 	this->value[0] += scalar;
 	this->value[1] += scalar;
@@ -90,7 +94,8 @@ mat2<T>& mat2<T>::operator+=(U scalar){
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator+=(mat2<U> const& m){
+mat2<T>& mat2<T>::operator+=(mat2<U> const& m)
+{
 
 	this->value[0] += m[0];
 	this->value[1] += m[1];
@@ -99,7 +104,8 @@ mat2<T>& mat2<T>::operator+=(mat2<U> const& m){
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator-=(U scalar){
+mat2<T>& mat2<T>::operator-=(U scalar)
+{
 
 	this->value[0] -= scalar;
 	this->value[1] -= scalar;
@@ -108,7 +114,8 @@ mat2<T>& mat2<T>::operator-=(U scalar){
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator-=(mat2<U> const& m){
+mat2<T>& mat2<T>::operator-=(mat2<U> const& m)
+{
 
 	this->value[0] -= m[0];
 	this->value[1] -= m[1];
@@ -117,7 +124,8 @@ mat2<T>& mat2<T>::operator-=(mat2<U> const& m){
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator*=(U scalar){
+mat2<T>& mat2<T>::operator*=(U scalar)
+{
 
 	this->value[0] *= scalar;
 	this->value[1] *= scalar;
@@ -126,14 +134,16 @@ mat2<T>& mat2<T>::operator*=(U scalar){
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator*=(mat2<U> const& m){
+mat2<T>& mat2<T>::operator*=(mat2<U> const& m)
+{
 
 	return (*this = *this * m);
 }
 
 template<typename T>
 template<typename U>
-mat2<T>& mat2<T>::operator/=(U scalar){
+mat2<T>& mat2<T>::operator/=(U scalar)
+{
 
 	this->value[0] /= scalar;
 	this->value[1] /= scalar;
@@ -143,7 +153,8 @@ mat2<T>& mat2<T>::operator/=(U scalar){
 // -- Increment and decrement operators --
 
 template<typename T>
-mat2<T>& mat2<T>::operator++(){
+mat2<T>& mat2<T>::operator++()
+{
 
 	++this->value[0];
 	++this->value[1];
@@ -151,7 +162,8 @@ mat2<T>& mat2<T>::operator++(){
 }
 
 template<typename T>
-mat2<T>& mat2<T>::operator--(){
+mat2<T>& mat2<T>::operator--()
+{
 
 	--this->value[0];
 	--this->value[1];
@@ -159,7 +171,8 @@ mat2<T>& mat2<T>::operator--(){
 }
 
 template<typename T>
-mat2<T> mat2<T>::operator++(int){
+mat2<T> mat2<T>::operator++(int)
+{
 
 	mat2<T> Result(*this);
 	++*this;
@@ -167,7 +180,8 @@ mat2<T> mat2<T>::operator++(int){
 }
 
 template<typename T>
-mat2<T> mat2<T>::operator--(int){
+mat2<T> mat2<T>::operator--(int)
+{
 
 	mat2<T> Result(*this);
 	--*this;
@@ -177,13 +191,15 @@ mat2<T> mat2<T>::operator--(int){
 // -- Unary arithmetic operators --
 
 template<typename T>
-mat2<T> operator+(mat2<T> const& m){
+mat2<T> operator+(mat2<T> const& m)
+{
 
 	return m;
 }
 
 template<typename T>
-mat2<T> operator-(mat2<T> const& m){
+mat2<T> operator-(mat2<T> const& m)
+{
 
 	return mat2<T>(
 		-m[0],
@@ -193,7 +209,8 @@ mat2<T> operator-(mat2<T> const& m){
 // -- Binary arithmetic operators --
 
 template<typename T>
-mat2<T> operator+(mat2<T> const& m, T scalar){
+mat2<T> operator+(mat2<T> const& m, T scalar)
+{
 
 	return mat2<T>(
 		m[0] + scalar,
@@ -201,7 +218,8 @@ mat2<T> operator+(mat2<T> const& m, T scalar){
 }
 
 template<typename T>
-mat2<T> operator+(T scalar, mat2<T> const& m){
+mat2<T> operator+(T scalar, mat2<T> const& m)
+{
 
 	return mat2<T>(
 		m[0] + scalar,
@@ -209,7 +227,8 @@ mat2<T> operator+(T scalar, mat2<T> const& m){
 }
 
 template<typename T>
-mat2<T> operator+(mat2<T> const& m1, mat2<T> const& m2){
+mat2<T> operator+(mat2<T> const& m1, mat2<T> const& m2)
+{
 
 	return mat2<T>(
 		m1[0] + m2[0],
@@ -217,7 +236,8 @@ mat2<T> operator+(mat2<T> const& m1, mat2<T> const& m2){
 }
 
 template<typename T>
-mat2<T> operator-(mat2<T> const& m, T scalar){
+mat2<T> operator-(mat2<T> const& m, T scalar)
+{
 
 	return mat2<T>(
 		m[0] - scalar,
@@ -225,7 +245,8 @@ mat2<T> operator-(mat2<T> const& m, T scalar){
 }
 
 template<typename T>
-mat2<T> operator-(T scalar, mat2<T> const& m){
+mat2<T> operator-(T scalar, mat2<T> const& m)
+{
 
 	return mat2<T>(
 		scalar - m[0],
@@ -233,7 +254,8 @@ mat2<T> operator-(T scalar, mat2<T> const& m){
 }
 
 template<typename T>
-mat2<T> operator-(mat2<T> const& m1, mat2<T> const& m2){
+mat2<T> operator-(mat2<T> const& m1, mat2<T> const& m2)
+{
 
 	return mat2<T>(
 		m1[0] - m2[0],
@@ -241,7 +263,8 @@ mat2<T> operator-(mat2<T> const& m1, mat2<T> const& m2){
 }
 
 template<typename T>
-mat2<T> operator*(mat2<T> const& m, T scalar){
+mat2<T> operator*(mat2<T> const& m, T scalar)
+{
 
 	return mat2<T>(
 		m[0] * scalar,
@@ -249,7 +272,8 @@ mat2<T> operator*(mat2<T> const& m, T scalar){
 }
 
 template<typename T>
-mat2<T> operator*(T scalar, mat2<T> const& m){
+mat2<T> operator*(T scalar, mat2<T> const& m)
+{
 
 	return mat2<T>(
 		m[0] * scalar,
@@ -261,7 +285,8 @@ typename mat2<T>::col_type operator*
 	(
 		mat2<T> const& m,
 		typename mat2<T>::row_type const& v
-		){
+		)
+{
 
 	return vec<2, T>(
 		m[0][0] * v.x + m[1][0] * v.y,
@@ -273,7 +298,8 @@ typename mat2<T>::row_type operator*
 	(
 		typename mat2<T>::col_type const& v,
 		mat2<T> const& m
-		){
+		)
+{
 
 	return vec<2, T>(
 		v.x * m[0][0] + v.y * m[0][1],
@@ -281,7 +307,8 @@ typename mat2<T>::row_type operator*
 }
 
 template<typename T>
-mat2<T> operator*(mat2<T> const& m1, mat2<T> const& m2){
+mat2<T> operator*(mat2<T> const& m1, mat2<T> const& m2)
+{
 
 	return mat2<T>(
 		m1[0][0] * m2[0][0] + m1[1][0] * m2[0][1],
@@ -291,7 +318,8 @@ mat2<T> operator*(mat2<T> const& m1, mat2<T> const& m2){
 }
 
 template<typename T>
-mat2<T> operator/(mat2<T> const& m, T scalar){
+mat2<T> operator/(mat2<T> const& m, T scalar)
+{
 
 	return mat2<T>(
 		m[0] / scalar,
@@ -299,7 +327,8 @@ mat2<T> operator/(mat2<T> const& m, T scalar){
 }
 
 template<typename T>
-mat2<T> operator/(T scalar, mat2<T> const& m){
+mat2<T> operator/(T scalar, mat2<T> const& m)
+{
 
 	return mat2<T>(
 		scalar / m[0],
@@ -309,13 +338,15 @@ mat2<T> operator/(T scalar, mat2<T> const& m){
 // -- Boolean operators --
 
 template<typename T>
-bool operator==(mat2<T> const& m1, mat2<T> const& m2){
+bool operator==(mat2<T> const& m1, mat2<T> const& m2)
+{
 
 	return (m1[0] == m2[0]) && (m1[1] == m2[1]);
 }
 
 template<typename T>
-bool operator!=(mat2<T> const& m1, mat2<T> const& m2){
+bool operator!=(mat2<T> const& m1, mat2<T> const& m2)
+{
 
 	return (m1[0] != m2[0]) || (m1[1] != m2[1]);
 }

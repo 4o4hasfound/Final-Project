@@ -17,8 +17,19 @@
 
 class Engine {
 public:
+	// Call this function at the very beginning of the propgram
+	// This handles the initialization of:
+	// 1. allegro
+	// 2. allegro plugins
+	// 3. Keyboard
+	// 4. Mouse
+	// 5. ThreadPool
 	static void init();
+
+	// Call this function at the very end of the program
 	static void terminate();
+
+	// Call this function at every frame
 	static void update();
 private:
 	Engine() = delete;

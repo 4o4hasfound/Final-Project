@@ -280,13 +280,20 @@ void Rectangle::draw(const RenderWindow* window, Texture* texture) {
 		}
 	}
 	else {
+		int flag = 0;
+		if (flip.x) {
+			flag |= ALLEGRO_FLIP_HORIZONTAL;
+		}
+		if (flip.y) {
+			flag |= ALLEGRO_FLIP_VERTICAL;
+		}
 		al_draw_scaled_bitmap(
 			texture->getBitmap(), 
 			0, 0,
 			texture->getSize().x, texture->getSize().y,
 			std::round(position.x), std::roundf(position.y),
 			size.x, size.y,
-			0
+			flag
 		);
 	}
 	al_identity_transform(&trans);
@@ -346,4 +353,27 @@ void Circle::draw(const RenderWindow* window, Texture* texture) {
 			outlineThickness
 		);
 	}
+}
+
+Line::Line() {
+
+}
+
+Line::Line(const vec2 _start, const vec2 _end, float _thickness)
+	: start(_start), end(_end), thickness(thickness) {
+}
+
+void Line::draw(Texture* texture) {
+	al_draw_line(
+		start.x,
+		start.y,
+		end.x,
+		end.y,
+		al_map_rgba(color.r, color.g, color.b, color.a),
+		thickness
+	);
+}
+
+void Line::draw(const RenderWindow* window, Texture* texture) {
+
 }

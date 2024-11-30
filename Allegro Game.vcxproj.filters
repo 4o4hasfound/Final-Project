@@ -94,11 +94,11 @@
     <None Include="include\Math\Matrix.inl">
       <Filter>標頭檔\Math</Filter>
     </None>
-    <None Include="include\Physics\RigidBody.inl">
-      <Filter>標頭檔\Physics</Filter>
-    </None>
     <None Include="include\Physics\PhysicsWorld.inl">
       <Filter>標頭檔\Physics</Filter>
+    </None>
+    <None Include="include\Math\Function.inl">
+      <Filter>標頭檔\Math</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -141,22 +141,10 @@
     <ClCompile Include="src\Physics\BoundingVolumeHierarchy.cpp">
       <Filter>來源檔案\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Collider.cpp">
-      <Filter>來源檔案\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
       <Filter>來源檔案\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\RectCollider.cpp">
-      <Filter>來源檔案\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Physics\RigidBody.cpp">
-      <Filter>來源檔案\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Physics\SphereCollider.cpp">
-      <Filter>來源檔案\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Physics\Transform.cpp">
       <Filter>來源檔案\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\Keyboard.cpp">
@@ -180,15 +168,18 @@
     <ClCompile Include="include\Render\Tileset.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\BoundingCircle.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\BoundingLine.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp">
       <Filter>標頭檔\Container</Filter>
     </ClInclude>
     <ClInclude Include="include\Debug\Log.hpp">
-      <Filter>標頭檔\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Debug\Time.hpp">
       <Filter>標頭檔\Debug</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine\Engine.hpp">
@@ -213,9 +204,6 @@
       <Filter>標頭檔\Render</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils\Clock.hpp">
-      <Filter>標頭檔\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Utils\MathFunctions.hpp">
       <Filter>標頭檔\Utils</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils\PoolAllocator.hpp">
@@ -260,25 +248,13 @@
     <ClInclude Include="include\Physics\BoundingVolumeHierarchy.hpp">
       <Filter>標頭檔\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Physics\Collider.hpp">
-      <Filter>標頭檔\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="include\Physics\Manifold.hpp">
       <Filter>標頭檔\Physics</Filter>
     </ClInclude>
     <ClInclude Include="include\Physics\PhysicsWorld.hpp">
       <Filter>標頭檔\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Physics\RectCollider.hpp">
-      <Filter>標頭檔\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="include\Physics\RigidBody.hpp">
-      <Filter>標頭檔\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics\SphereCollider.hpp">
-      <Filter>標頭檔\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics\Transform.hpp">
       <Filter>標頭檔\Physics</Filter>
     </ClInclude>
     <ClInclude Include="include\Weapon\Weapon.hpp">
@@ -307,6 +283,15 @@
     </ClInclude>
     <ClInclude Include="include\Render\Tileset.hpp">
       <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Player.hpp">
+      <Filter>標頭檔\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\BoundingCircle.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\BoundingLine.hpp">
+      <Filter>標頭檔\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

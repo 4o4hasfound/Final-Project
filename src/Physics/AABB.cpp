@@ -50,7 +50,30 @@ float AABB::area() const {
 }
 
 vec2 AABB::center() const {
-	return lowerBound + (upperBound - lowerBound) * 0.5f;
+	return lowerBound + size() * 0.5f;
+}
+
+float AABB::bottom() const {
+	return upperBound.y;
+}
+
+float AABB::top() const {
+	return lowerBound.y;
+}
+
+float AABB::right() const {
+	return upperBound.x;
+}
+
+float AABB::left() const {
+	return lowerBound.x;
+}
+
+
+void AABB::setCenter(const vec2& _center) {
+	const vec2 delta = _center - center();
+	lowerBound += delta;
+	upperBound += delta;
 }
 
 void AABB::enlarge(const vec2& newSize) {
@@ -58,26 +81,6 @@ void AABB::enlarge(const vec2& newSize) {
 
 	lowerBound -= delta;
 	upperBound += delta;
-}
-
-AABB AABB::transform(const Transform& trans) const {
-	AABB ret(*this);
-
-	const vec2 center = ret.lowerBound + ret.size() * 0.5f + trans.position;
-	const vec2 size = ret.size() * trans.scale;
-
-	const float cosThetaAbs = abs(cos(trans.rotation));
-	const float sinThetaAbs = abs(sin(trans.rotation));
-
-	const vec2 newSize{
-		size.y * sinThetaAbs + size.x * cosThetaAbs,
-		size.y * cosThetaAbs + size.x * sinThetaAbs
-	};
-
-	ret.lowerBound = newSize * -0.5f + center;
-	ret.upperBound = newSize * 0.5f + center;
-
-	return ret;
 }
 
 AABB AABB::operator+(const vec2& position) const {
@@ -109,6 +112,22 @@ AABB& AABB::operator-=(const vec2& position) {
 	return *this;
 }
 
+AABB AABB::operator*(float factor) const {
+	AABB ret(*this);
+
+	ret.lowerBound *= factor;
+	ret.upperBound *= factor;
+
+	return ret;
+}
+
+AABB& AABB::operator*=(float factor) {
+	lowerBound *= factor;
+	upperBound *= factor;
+
+	return *this;
+}
+
 AABB AABB::operator|(const AABB& other) const {
 	AABB ret;
 	ret.lowerBound.x = std::min(lowerBound.x, other.lowerBound.x);
@@ -132,10 +151,10 @@ bool AABB::operator!=(const AABB& other) const {
 	return lowerBound != other.lowerBound || upperBound != other.upperBound;
 }
 
-void AABB::DebugDraw() const {
+void AABB::DebugDraw(const RenderWindow& window) const {
 	Rectangle rect(size());
 	rect.position = lowerBound + size() * 0.5f;
 	rect.outlineThickness = 1.0f;
-	rect.outlineColor = vec4(255, 255, 255, 0);
-	rect.draw();
+	rect.outlineColor = vec4(255, 255, 255, 255);
+	window.draw(rect);
 }

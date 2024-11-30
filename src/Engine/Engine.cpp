@@ -33,6 +33,8 @@ void Engine::init() {
 
 	Mouse::initialize();
 	Keyboard::initialize();
+
+	// You can comment this out if threading aren't used
 	ThreadPool::launch(24);
 }
 

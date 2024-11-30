@@ -2,19 +2,19 @@
 
 GrassMap::GrassMap(const vec2& size) {
 	m_waterTiles.size = vec2(100);
-	m_waterTiles.setGridSize(size / m_waterTiles.size + vec2(10));
+	m_waterTiles.setGridSize(size * 2 / m_waterTiles.size);
 	m_landTiles.size = vec2(100);
-	m_landTiles.setGridSize(size / m_landTiles.size + vec2(10));
+	m_landTiles.setGridSize(size * 2 / m_landTiles.size);
 	m_flowerTiles.size = vec2(75);
-	m_flowerTiles.setGridSize(size / m_flowerTiles.size + vec2(10));
+	m_flowerTiles.setGridSize(size * 1.5 / m_flowerTiles.size);
 	m_treeTiles.size = vec2(75);
-	m_treeTiles.setGridSize(size / m_treeTiles.size + vec2(10));
+	m_treeTiles.setGridSize(size * 1.5 / m_treeTiles.size);
 }
 
-void GrassMap::update(ViewPort& position) {
-	generateWaterLand(position.position);
-	generateFlower(position.position);
-	generateTree(position.position);
+void GrassMap::update(const ViewPort& viewport) {
+	generateWaterLand(viewport);
+	generateFlower(viewport);
+	generateTree(viewport);
 }
 
 void GrassMap::draw(RenderWindow& window) {
@@ -23,13 +23,60 @@ void GrassMap::draw(RenderWindow& window) {
 	drawTree(window);
 }
 
-bool GrassMap::intersect() {
+void GrassMap::resolveCollision(RigidBody* body) {
+	Tiles& tiles = m_waterTiles;
 
-	return false;
+	ivec2 lowerIndex = max(ivec2(
+		(body->getAABB().lowerBound - tiles.position) / tiles.size - 1
+	), ivec2(0));
+	ivec2 upperIndex = min(ivec2(
+		(body->getAABB().upperBound - tiles.position) / tiles.size + 1
+	), ivec2(m_waterTiles.grid.size(), m_waterTiles.grid[0].size()));
+	for (int i = lowerIndex.y; i <= upperIndex.y; ++i) {
+		for (int j = lowerIndex.x; j <= upperIndex.x; ++j) {
+			if (!tiles[i][j].exist) {
+				continue;
+			}
+			const vec2 position = vec2(j, i) * tiles.size + tiles.position;
+			AABB aabb{
+				position,
+				position + tiles.size
+			};
+			body->resolveCollision(aabb);
+		}
+	}
 }
 
-void GrassMap::generateWaterLand(const vec2& position) {
-	m_waterTiles.position = position - m_waterTiles.size * 5;
+void GrassMap::resolveCollision(RigidBody* body, RenderWindow& window) {
+	Tiles& tiles = m_waterTiles;
+	ivec2 lowerIndex = max(ivec2(
+		(body->getAABB().lowerBound - tiles.position) / tiles.size - 1
+	), 0);
+	ivec2 upperIndex = min(ivec2(
+		(body->getAABB().upperBound - tiles.position) / tiles.size + 1
+	), ivec2(m_waterTiles.grid.size(), m_waterTiles.grid[0].size()));
+	for (int i = lowerIndex.y; i <= upperIndex.y; ++i) {
+		for (int j = lowerIndex.x; j <= upperIndex.x; ++j) {
+			if (!tiles[i][j].exist) {
+				continue;
+			}
+			const vec2 position = vec2(j, i) * tiles.size + tiles.position;
+			AABB aabb{
+				position,
+				position + tiles.size
+			};
+			aabb.DebugDraw(window);
+			body->resolveCollision(aabb);
+		}
+	}
+}
+
+bool GrassMap::intersect(const AABB& aabb) {
+	return m_waterTiles.intersect(aabb);
+}
+
+void GrassMap::generateWaterLand(const ViewPort& viewport) {
+	m_waterTiles.position = viewport.position - viewport.size * 0.5;
 	m_waterTiles.position /= m_waterTiles.size;
 	m_waterTiles.position = vec2(
 		std::floor(m_waterTiles.position.x),
@@ -69,8 +116,8 @@ void GrassMap::generateWaterLand(const vec2& position) {
 	}
 }
 
-void GrassMap::generateFlower(const vec2& position) {
-	m_flowerTiles.position = position - m_flowerTiles.size * 5;
+void GrassMap::generateFlower(const ViewPort& viewport) {
+	m_flowerTiles.position = viewport.position - viewport.size * 0.25;
 	m_flowerTiles.position /= m_flowerTiles.size;
 	m_flowerTiles.position = vec2(
 		std::floor(m_flowerTiles.position.x),
@@ -107,8 +154,8 @@ void GrassMap::generateFlower(const vec2& position) {
 	}
 }
 
-void GrassMap::generateTree(const vec2& position) {
-	m_treeTiles.position = position - m_treeTiles.size * 5;
+void GrassMap::generateTree(const ViewPort& viewport) {
+	m_treeTiles.position = viewport.position - viewport.size * 0.25;
 	m_treeTiles.position /= m_treeTiles.size;
 	m_treeTiles.position = vec2(
 		std::floor(m_treeTiles.position.x),
@@ -150,7 +197,14 @@ void GrassMap::drawWaterLand(RenderWindow& window) {
 		for (int j = 0; j < m_waterTiles[0].size(); ++j) {
 			rect.position = vec2(j, i) * m_waterTiles.size + m_waterTiles.position + m_waterTiles.size * 0.5;
 			rect.rotation = m_waterTiles[i][j].rotation;
+			rect.outlineColor = vec4(255);
+			rect.outlineThickness = 5;
+			//window.draw(rect);
+			rect.outlineThickness = 0;
 			if (m_waterTiles[i][j].exist) {
+				rect.outlineThickness = 5;
+				//window.draw(rect);
+				rect.outlineThickness = 0;
 				Texture* texture = getLandTexture(j, i);
 				window.draw(rect, texture);
 			}
@@ -172,6 +226,10 @@ void GrassMap::drawFlower(RenderWindow& window) {
 			}
 			const vec2 pos = vec2(j, i) * m_flowerTiles.size + m_flowerTiles.position + tile.offset;
 			rect.position = pos + rect.size * 0.5;
+			rect.outlineColor = vec4(255);
+			rect.outlineThickness = 5;
+			//window.draw(rect);
+			rect.outlineThickness = 0;
 			if (m_waterTiles.intersect(pos, rect.size) || m_treeTiles.intersect(pos, rect.size)) {
 				continue;
 			}

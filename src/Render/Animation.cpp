@@ -20,7 +20,7 @@ bool Animation::update(float dt) {
 }
 
 void Animation::reset() {
-	m_progress = (m_start - 1) * m_frameDuration;
+	m_progress = std::max(0.0f, (m_start - 1) * m_frameDuration);
 }
 
 Texture* Animation::getFrame() {

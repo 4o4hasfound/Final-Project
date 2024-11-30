@@ -10,15 +10,20 @@ public:
 	GrassMap(const vec2& size);
 	virtual ~GrassMap() = default;
 
-	virtual void update(ViewPort& position) override;
+	virtual void update(const ViewPort& viewport) override;
 	virtual void draw(RenderWindow& window) override;
+	virtual void resolveCollision(RigidBody* body) override;
+	virtual void resolveCollision(RigidBody* body, RenderWindow& window);
 
-	virtual bool intersect() override;
+	virtual bool intersect(const AABB& aabb) override;
+
 private:
-	float m_waterThreshold = 0.35;
+	// Some value for procedural generation
+	float m_waterThreshold = 0.45;
 	float m_flowerThreshold = 0.35;
 	float m_treeThreshold = 0.2;
-	Tiles m_waterTiles, m_landTiles, m_flowerTiles, m_treeTiles;
+
+	// Load textures and tileset
 	Texture m_water = Texture("assets/water.png");
 	Texture m_land = Texture("assets/grass.png");
 	Texture m_flower = Texture("assets/red_flower/Red_Flower_3.png");
@@ -57,11 +62,16 @@ private:
 	Tileset m_earth = Tileset("assets/TileSet_V1.png", vec2(32));
 	Texture m_tree = Texture("assets/tree.png");
 
-	void generateWaterLand(const vec2& position);
-	void generateFlower(const vec2& position);
-	void generateTree(const vec2& position);
+	// Tiles
+	Tiles m_waterTiles, m_landTiles, m_flowerTiles, m_treeTiles;
+
+	void generateWaterLand(const ViewPort& viewport);
+	void generateFlower(const ViewPort& viewport);
+	void generateTree(const ViewPort& viewport);
 	void drawWaterLand(RenderWindow& window);
 	void drawFlower(RenderWindow& window);
 	void drawTree(RenderWindow& window);
+
+	// Determines what the water texture will be based on its neighbors
 	Texture* getLandTexture(int x, int y);
 };

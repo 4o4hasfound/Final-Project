@@ -3,6 +3,10 @@
 
 #include <allegro5/allegro.h>
 
+// pressed: if the key is pressed down
+// released: if the key is not pressed down
+// keydown: if the key has just been clicked
+// keyup: if the key has just been released
 struct KeyState {
 	bool pressed;
 	bool released;
@@ -181,9 +185,14 @@ public:
 
 	Keyboard() = delete;
 
+	// Set all key states to the intiailzie state
+	// (pressed = 0, released = 0, keydown = 0, keyup = 0)
 	static void initialize();
+
+	// Update all the key states
 	static void update();
 
+	// Returns a keystate of a certain key code
 	static KeyState get(KeyCode code);
 private:
 	static std::array<KeyState, KeyCode::KEY_MAX> s_states;

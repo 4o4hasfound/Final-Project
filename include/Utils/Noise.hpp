@@ -5,6 +5,7 @@
 
 #include "Math/Vector.hpp"
 
+// Some constexpr helper functions
 namespace {
     template<typename T>
     constexpr void constexprSwap(T& a, T& b) {
@@ -43,16 +44,19 @@ class Noise {
 public:
 	Noise() = delete;
 
+    // Get a noise value that ranges from [-1, 1]
     static float get(float x);
     static float get(const vec1& v);
     static float get(float x, float y);
     static float get(const vec2& v);
 
+    // Get an uniform noise value that ranges from [0, 1]
     static float getUniform(float x);
     static float getUniform(const vec1& v);
     static float getUniform(float x, float y);
     static float getUniform(const vec2& v);
 
+    // Get an uniform noise value that ranges from [start, end]
     static int getRange(float x, int start, int end);
     static int getRange(const vec1& v, int start, int end);
     static int getRange(float x, float y, int start, int end);

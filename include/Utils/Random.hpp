@@ -7,6 +7,7 @@ class Random {
 public:
 	Random() = delete;
 
+	// type char, short, int, long, long long
 	template<typename T = int>
 	static T getInt();
 	template<typename T = int>
@@ -14,6 +15,7 @@ public:
 	template<typename T = int>
 	static T getInt(T start, T end);
 
+	// type float, double, long double
 	template<typename T = float>
 	static T getReal();
 	template<typename T = float>
