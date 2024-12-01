@@ -49,12 +49,6 @@
     <Filter Include="標頭檔\Math">
       <UniqueIdentifier>{38dc5f09-4a55-495a-b22e-9f1a0b4ea1c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="標頭檔\Weapon">
-      <UniqueIdentifier>{87b47d76-51da-4c81-8450-e9ba029b5800}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="標頭檔\Skill">
-      <UniqueIdentifier>{fd7ecf80-4644-4aa3-992a-f351081ec45c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="標頭檔\Game">
       <UniqueIdentifier>{3e3cb65a-1621-4f57-b7fe-c61c082313eb}</UniqueIdentifier>
     </Filter>
@@ -66,6 +60,12 @@
     </Filter>
     <Filter Include="來源檔案\Game\Map">
       <UniqueIdentifier>{5873ed72-d81b-4462-a4ed-440e68ecf1a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\Skill">
+      <UniqueIdentifier>{fd7ecf80-4644-4aa3-992a-f351081ec45c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\Weapon">
+      <UniqueIdentifier>{87b47d76-51da-4c81-8450-e9ba029b5800}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +174,12 @@
     <ClCompile Include="src\Physics\BoundingLine.cpp">
       <Filter>來源檔案\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Audio.cpp">
+      <Filter>來源檔案\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Player.cpp">
+      <Filter>來源檔案\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp">
@@ -257,12 +263,6 @@
     <ClInclude Include="include\Physics\RigidBody.hpp">
       <Filter>標頭檔\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Weapon\Weapon.hpp">
-      <Filter>標頭檔\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Skill\Skill.hpp">
-      <Filter>標頭檔\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="include\Engine\Keyboard.hpp">
       <Filter>標頭檔\Engine</Filter>
     </ClInclude>
@@ -292,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="include\Physics\BoundingLine.hpp">
       <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\Skill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Weapon\Weapon.hpp">
+      <Filter>標頭檔\Game\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Audio.hpp">
+      <Filter>標頭檔\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

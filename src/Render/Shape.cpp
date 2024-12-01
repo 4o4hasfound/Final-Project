@@ -256,6 +256,11 @@ void Rectangle::draw(const RenderWindow* window, Texture* texture) {
 			std::round(-window->viewport.position.x),
 			std::round(-window->viewport.position.y)
 		);
+		al_scale_transform(
+			&trans,
+			(window->size() / window->viewport.size).x,
+			(window->size() / window->viewport.size).y
+		);
 	}
 	al_use_transform(&trans);
 	if (!texture) {
@@ -335,7 +340,13 @@ void Circle::draw(const RenderWindow* window, Texture* texture) {
 			-window->viewport.position.x,
 			-window->viewport.position.y
 		);
+		al_scale_transform(
+			&trans,
+			(window->size() / window->viewport.size).x,
+			(window->size() / window->viewport.size).y
+		);
 	}
+	al_use_transform(&trans);
 	if (!outlineThickness) {
 		al_draw_filled_circle(
 			position.x,
@@ -353,6 +364,8 @@ void Circle::draw(const RenderWindow* window, Texture* texture) {
 			outlineThickness
 		);
 	}
+	al_identity_transform(&trans);
+	al_use_transform(&trans);
 }
 
 Line::Line() {
@@ -375,5 +388,31 @@ void Line::draw(Texture* texture) {
 }
 
 void Line::draw(const RenderWindow* window, Texture* texture) {
+	ALLEGRO_TRANSFORM trans;
+	al_identity_transform(&trans);
 
+	if (window && !absolutePosition) {
+		al_translate_transform(
+			&trans,
+			-window->viewport.position.x,
+			-window->viewport.position.y
+		);
+		al_scale_transform(
+			&trans,
+			(window->size() / window->viewport.size).x,
+			(window->size() / window->viewport.size).y
+		);
+	}
+	al_use_transform(&trans);
+	
+	al_draw_line(
+		start.x,
+		start.y,
+		end.x,
+		end.y,
+		al_map_rgba(color.r, color.g, color.b, color.a),
+		thickness
+	);
+	al_identity_transform(&trans);
+	al_use_transform(&trans);
 }

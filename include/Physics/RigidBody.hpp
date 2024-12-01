@@ -8,26 +8,6 @@
 
 #include "Math/Vector.hpp"
 
-struct BodyStatus {
-	bool moving = 0;
-	bool inSkill = 0;
-	bool attacking = 0;
-	bool onGround = 1;
-	bool onWall = 0;
-	bool hasTouchWall = 0; // just some flag to change the onWall after the collision test. 
-	bool dead = 0;
-	bool hit = 0;
-
-	float health;
-	float attack;
-
-	float skillCooldown;
-	float skillDuration;
-
-	bool shocked = 0;
-	float shockDuration;
-};
-
 class RigidBody {
 	friend class PhysicsWorld;
 public:
@@ -63,7 +43,6 @@ public:
 	AABB aabb;
 	vec2 position = vec2(0);
 	vec2 velocity = vec2(0);
-	BodyStatus status;
 	bool freezed = 0;
 protected:
 	BodyType m_type;

@@ -80,6 +80,7 @@
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonColor>true</Allegro_AddonColor>
     <Allegro_AddonVideo>true</Allegro_AddonVideo>
+    <Allegro_LibraryType>DynamicRelease</Allegro_LibraryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)include</ExternalIncludePath>
@@ -91,6 +92,7 @@
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonColor>true</Allegro_AddonColor>
     <Allegro_AddonVideo>true</Allegro_AddonVideo>
+    <Allegro_LibraryType>DynamicRelease</Allegro_LibraryType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -170,12 +172,14 @@
   <ItemGroup>
     <ClCompile Include="include\Render\Tileset.cpp" />
     <ClCompile Include="src\Debug\Log.cpp" />
+    <ClCompile Include="src\Engine\Audio.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Engine\Keyboard.cpp" />
     <ClCompile Include="src\Engine\Mouse.cpp" />
     <ClCompile Include="src\Engine\State.cpp" />
     <ClCompile Include="src\Game\Map\GrassMap.cpp" />
     <ClCompile Include="src\Game\Map\Map.cpp" />
+    <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Physics\AABB.cpp" />
     <ClCompile Include="src\Physics\BoundingCircle.cpp" />
@@ -196,6 +200,7 @@
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp" />
     <ClInclude Include="include\Debug\Log.hpp" />
+    <ClInclude Include="include\Engine\Audio.hpp" />
     <ClInclude Include="include\Engine\Engine.hpp" />
     <ClInclude Include="include\Engine\Keyboard.hpp" />
     <ClInclude Include="include\Engine\Mouse.hpp" />
@@ -203,6 +208,8 @@
     <ClInclude Include="include\Game\Map\GrassMap.hpp" />
     <ClInclude Include="include\Game\Map\Map.hpp" />
     <ClInclude Include="include\Game\Player.hpp" />
+    <ClInclude Include="include\Game\Skill\Skill.hpp" />
+    <ClInclude Include="include\Game\Weapon\Weapon.hpp" />
     <ClInclude Include="include\Math\Constants.hpp" />
     <ClInclude Include="include\Math\Functions.hpp" />
     <ClInclude Include="include\Math\Matrix.hpp" />
@@ -226,13 +233,11 @@
     <ClInclude Include="include\Render\Texture.hpp" />
     <ClInclude Include="include\Render\Tileset.hpp" />
     <ClInclude Include="include\Render\ViewPort.hpp" />
-    <ClInclude Include="include\Skill\Skill.hpp" />
     <ClInclude Include="include\Utils\Clock.hpp" />
     <ClInclude Include="include\Utils\Noise.hpp" />
     <ClInclude Include="include\Utils\PoolAllocator.hpp" />
     <ClInclude Include="include\Utils\Random.hpp" />
     <ClInclude Include="include\Utils\ThreadPool.hpp" />
-    <ClInclude Include="include\Weapon\Weapon.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

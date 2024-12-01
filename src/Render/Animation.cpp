@@ -10,8 +10,21 @@ Animation::Animation(const std::vector<Texture>& textures, float frameDuration)
 	m_size = m_textures[0].getSize();
 }
 
-bool Animation::update(float dt) {
+bool Animation::update(float dt, bool loop) {
 	m_progress += dt;
+	if (m_progress >= m_frameDuration * m_end) {
+		m_progress = m_frameDuration * (m_end)-0.01;
+
+		if (loop) {
+			reset();
+		}
+		return 1;
+	}
+	return 0;
+}
+
+bool Animation::advance() {
+	m_progress += m_frameDuration;
 	if (m_progress >= m_frameDuration * m_end) {
 		m_progress = m_frameDuration * (m_end)-0.01;
 		return 1;

@@ -228,8 +228,26 @@ const vec2& RenderWindow::size() const {
 	return m_size;
 }
 
-std::vector<ALLEGRO_EVENT> RenderWindow::pollEvents() {
-	std::vector<ALLEGRO_EVENT> events;
+void RenderWindow::setTitle(const std::string& title) {
+	al_set_window_title(m_display, title.c_str());
+}
+
+void RenderWindow::pollEvents() {
+	ALLEGRO_EVENT event;
+	ALLEGRO_TIMEOUT timeout;
+
+	al_init_timeout(&timeout, 0.001);
+
+	bool get_event;
+	while ((get_event = al_wait_for_event_until(m_eventQueue, &event, &timeout))) {
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+			m_running = false;
+			break;
+		}
+	}
+}
+
+void RenderWindow::pollEvents(std::vector<ALLEGRO_EVENT>& events) {
 	ALLEGRO_EVENT event;
 	ALLEGRO_TIMEOUT timeout;
 
@@ -238,14 +256,14 @@ std::vector<ALLEGRO_EVENT> RenderWindow::pollEvents() {
 	bool get_event;
 	while ((get_event = al_wait_for_event_until(m_eventQueue, &event, &timeout))) {
 		switch (event.type) {
-			case ALLEGRO_EVENT_DISPLAY_CLOSE:
-				m_running = false;
-				break;
-			default:
-				events.push_back(event);
+		case ALLEGRO_EVENT_DISPLAY_CLOSE:
+			m_running = false;
+			break;
+		default:
+			events.push_back(event);
+			break;
 		}
 	}
-	return events;
 }
 
 ALLEGRO_DISPLAY* RenderWindow::getDisplay() const {

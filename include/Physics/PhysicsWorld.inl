@@ -1,7 +1,7 @@
 #include "PhysicsWorld.hpp"
 template<typename BodyT, typename ... T, typename>
-BodyT* PhysicsWorld::createBody(RigidBody::BodyType type, const T& ... arguments) {
-	BodyT* body = new BodyT(type, arguments...);
+BodyT* PhysicsWorld::createBody(const T& ... arguments) {
+	BodyT* body = new BodyT(arguments...);
 	int id = m_bodies.push(body);
 	body->m_id = id;
 

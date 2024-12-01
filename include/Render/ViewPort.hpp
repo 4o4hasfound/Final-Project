@@ -13,6 +13,8 @@ public:
 	void setCenter(const vec2& mid);
 	void setCenter(const vec2& mid, const vec2& _size);
 
+	vec2 getCenter() const;
+
 	vec2 position;
 	vec2 size;
 };

@@ -43,6 +43,7 @@ public:
 	int size() const;
 	int capacity() const;
 	bool empty() const;
+	void clear();
 
 	T& front();
 	const T& front() const;

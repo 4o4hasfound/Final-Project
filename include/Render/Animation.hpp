@@ -10,7 +10,10 @@ public:
 	~Animation() = default;
 
 	// Return 1 if reached the end
-	bool update(float dt);
+	bool update(float dt, bool loop = false);
+	
+	// Advance to next frame
+	bool advance();
 
 	void reset();
 

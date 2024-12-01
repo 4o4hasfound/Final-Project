@@ -42,7 +42,7 @@ public:
 
 	// Creates and adds a new rigid body to the world
 	template<typename BodyT = RigidBody, typename ... T, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
-	BodyT* createBody(RigidBody::BodyType type, const T& ... arguments);
+	BodyT* createBody(const T& ... arguments);
 
 	// Removes a rigid body from the world by its ID
 	void removeBody(int id);

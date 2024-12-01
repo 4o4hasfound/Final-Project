@@ -31,18 +31,17 @@ void GrassMap::resolveCollision(RigidBody* body) {
 	), ivec2(0));
 	ivec2 upperIndex = min(ivec2(
 		(body->getAABB().upperBound - tiles.position) / tiles.size + 1
-	), ivec2(m_waterTiles.grid.size(), m_waterTiles.grid[0].size()));
+	), ivec2(m_waterTiles.grid[0].size(), m_waterTiles.grid.size()));
 	for (int i = lowerIndex.y; i <= upperIndex.y; ++i) {
 		for (int j = lowerIndex.x; j <= upperIndex.x; ++j) {
-			if (!tiles[i][j].exist) {
+			if (!tiles[i][j].exist || existAdditionTrail(j, i)) {
 				continue;
 			}
 			const vec2 position = vec2(j, i) * tiles.size + tiles.position;
-			AABB aabb{
-				position,
-				position + tiles.size
-			};
-			body->resolveCollision(aabb);
+			std::vector<AABB> aabbs = getWaterBoundingBox(j, i);
+			for (auto& aabb : aabbs) {
+				body->resolveCollision(aabb + position);
+			}
 		}
 	}
 }
@@ -57,22 +56,33 @@ void GrassMap::resolveCollision(RigidBody* body, RenderWindow& window) {
 	), ivec2(m_waterTiles.grid.size(), m_waterTiles.grid[0].size()));
 	for (int i = lowerIndex.y; i <= upperIndex.y; ++i) {
 		for (int j = lowerIndex.x; j <= upperIndex.x; ++j) {
-			if (!tiles[i][j].exist) {
+			if (!tiles[i][j].exist || existAdditionTrail(j, i)) {
 				continue;
 			}
 			const vec2 position = vec2(j, i) * tiles.size + tiles.position;
-			AABB aabb{
-				position,
-				position + tiles.size
-			};
-			aabb.DebugDraw(window);
-			body->resolveCollision(aabb);
+			std::vector<AABB> aabbs = getWaterBoundingBox(j, i);
+			for (auto& aabb : aabbs) {
+				body->resolveCollision(aabb + position);
+				(aabb + position).DebugDraw(window);
+			}
+			//AABB aabb{
+			//	position,
+			//	position + tiles.size
+			//};
 		}
 	}
 }
 
 bool GrassMap::intersect(const AABB& aabb) {
 	return m_waterTiles.intersect(aabb);
+}
+
+void GrassMap::setTile(const vec2& point, bool exist) {
+	ivec2 index = ivec2((point - m_waterTiles.position) / m_waterTiles.size);
+	if (index.y < 0 || index.x < 0 || index.y >= m_waterTiles.grid.size() || index.x >= m_waterTiles.grid[0].size()) {
+		return;
+	}
+	m_additionalTrail.insert(vec2(index) * m_waterTiles.size + m_waterTiles.position);
 }
 
 void GrassMap::generateWaterLand(const ViewPort& viewport) {
@@ -101,17 +111,17 @@ void GrassMap::generateWaterLand(const ViewPort& viewport) {
 			Noise::lacunarity = 2;
 			Noise::octaves = 4;
 
+			int landIndex = std::max(2, static_cast<int>(Noise::getUniform(pos * 3)));
 			if (threshold < m_waterThreshold) {
 				tile.exist = true;
 				tile.texture = &m_water;
 				tileLand.exist = false;
 			}
 			else {
-				int landIndex = std::max(2, static_cast<int>(Noise::getUniform(pos * 3)));
 				tile.exist = false;
 				tileLand.exist = true;
-				tileLand.texture = &m_earth[6][landIndex];
 			}
+			tileLand.texture = &m_earth[6][landIndex];
 		}
 	}
 }
@@ -195,22 +205,33 @@ void GrassMap::drawWaterLand(RenderWindow& window) {
 
 	for (int i = 0; i < m_waterTiles.grid.size(); ++i) {
 		for (int j = 0; j < m_waterTiles[0].size(); ++j) {
-			rect.position = vec2(j, i) * m_waterTiles.size + m_waterTiles.position + m_waterTiles.size * 0.5;
+			const vec2 position = vec2(j, i) * m_waterTiles.size + m_waterTiles.position;
+			rect.position = position + m_waterTiles.size * 0.5;
 			rect.rotation = m_waterTiles[i][j].rotation;
 			rect.outlineColor = vec4(255);
 			rect.outlineThickness = 5;
 			//window.draw(rect);
 			rect.outlineThickness = 0;
-			if (m_waterTiles[i][j].exist) {
+			if (!m_waterTiles[i][j].exist || m_additionalTrail.count(position)) {
+				window.draw(rect, m_landTiles[i][j].texture);
+			}
+			else {
 				rect.outlineThickness = 5;
 				//window.draw(rect);
 				rect.outlineThickness = 0;
 				Texture* texture = getLandTexture(j, i);
 				window.draw(rect, texture);
 			}
-			else {
-				window.draw(rect, m_landTiles[i][j].texture);
-			}
+			//if (m_waterTiles[i][j].exist) {
+			//	rect.outlineThickness = 5;
+			//	//window.draw(rect);
+			//	rect.outlineThickness = 0;
+			//	Texture* texture = getLandTexture(j, i);
+			//	window.draw(rect, texture);
+			//}
+			//else {
+			//	window.draw(rect, m_landTiles[i][j].texture);
+			//}
 		}
 	}
 }
@@ -260,28 +281,28 @@ void GrassMap::drawTree(RenderWindow& window) {
 }
 
 Texture* GrassMap::getLandTexture(int x, int y) {
-	bool right = m_landTiles.exist(x + 1, y);
-	bool left = m_landTiles.exist(x - 1, y);
-	bool up = m_landTiles.exist(x, y - 1);
-	bool down = m_landTiles.exist(x, y + 1);
+	bool right = m_landTiles.exist(x + 1, y) || existAdditionTrail(x + 1, y);
+	bool left = m_landTiles.exist(x - 1, y) || existAdditionTrail(x - 1, y);
+	bool up = m_landTiles.exist(x, y - 1) || existAdditionTrail(x, y - 1);
+	bool down = m_landTiles.exist(x, y + 1) || existAdditionTrail(x, y + 1);
 
-	bool rightup = m_landTiles.exist(x + 1, y - 1);
-	bool rightdown = m_landTiles.exist(x + 1, y + 1);
-	bool leftup = m_landTiles.exist(x - 1, y - 1);
-	bool leftdown = m_landTiles.exist(x - 1, y + 1);
+	bool rightup = m_landTiles.exist(x + 1, y - 1) || existAdditionTrail(x + 1, y - 1);
+	bool rightdown = m_landTiles.exist(x + 1, y + 1) || existAdditionTrail(x + 1, y + 1);
+	bool leftup = m_landTiles.exist(x - 1, y - 1) || existAdditionTrail(x - 1, y - 1);
+	bool leftdown = m_landTiles.exist(x - 1, y + 1) || existAdditionTrail(x - 1, y + 1);
 	if (right && left && up && down) {
 		return &m_earth[12][6];
 	}
-	else if (right && !left && up && down) {
+	else if (right && up && down) {
 		return &m_earth[12][5];
 	}
-	else if (right && left && !up && down) {
+	else if (right && left && down) {
 		return &m_earth[12][4];
 	}
-	else if (!right && left && up && down) {
+	else if (left && up && down) {
 		return &m_earth[12][3];
 	}
-	else if (right && left && up && !down) {
+	else if (right && left && up) {
 		return &m_earth[12][2];
 	}
 	else if (left && down && rightup) {
@@ -408,4 +429,175 @@ Texture* GrassMap::getLandTexture(int x, int y) {
 		return &m_earth[7][1];
 	}
 	return &m_earth[13][0];
+}
+
+std::vector<AABB> GrassMap::getWaterBoundingBox(int x, int y) {
+	bool right = m_landTiles.exist(x + 1, y) || existAdditionTrail(x + 1, y);
+	bool left = m_landTiles.exist(x - 1, y) || existAdditionTrail(x - 1, y);
+	bool up = m_landTiles.exist(x, y - 1) || existAdditionTrail(x, y - 1);
+	bool down = m_landTiles.exist(x, y + 1) || existAdditionTrail(x, y + 1);
+
+	bool rightup = m_landTiles.exist(x + 1, y - 1) || existAdditionTrail(x + 1, y - 1);
+	bool rightdown = m_landTiles.exist(x + 1, y + 1) || existAdditionTrail(x + 1, y + 1);
+	bool leftup = m_landTiles.exist(x - 1, y - 1) || existAdditionTrail(x - 1, y - 1);
+	bool leftdown = m_landTiles.exist(x - 1, y + 1) || existAdditionTrail(x - 1, y + 1);
+
+	const float offset = 18;
+	const vec2& size = m_waterTiles.size;
+
+	const AABB leftAABB = { {0, offset}, {offset, size.y - offset} };
+	const AABB rightAABB = { {size.x - offset, offset}, {size.x, size.y - offset} };
+	const AABB upAABB = { {offset, 0}, {size.x - offset, offset} };
+	const AABB downAABB = { {offset, size.y - offset}, {size.x - offset, size.y} };
+	const AABB leftupAABB = { {0, 0}, {offset, offset} };
+	const AABB leftdownAABB = { {0, size.y - offset}, {offset, size.y} };
+	const AABB rightupAABB = { {size.x - offset, 0}, {size.x, offset} };
+	const AABB rightdownAABB = { {size.x - offset, size.y - offset}, {size.x, size.y} };
+	const AABB middleAABB = { {offset, offset}, {size.x - offset, size.y - offset} };
+
+	if (right && left && up && down) {
+		return { middleAABB };
+	}
+	else if (right && !left && up && down) {
+		return {middleAABB, leftAABB};
+	}
+	else if (right && left && !up && down) {
+		return { middleAABB, upAABB };
+	}
+	else if (!right && left && up && down) {
+		return { middleAABB, rightAABB };
+	}
+	else if (right && left && up && !down) {
+		return { middleAABB, downAABB };
+	}
+	else if (left && down && rightup) {
+		return { middleAABB, upAABB, rightAABB };
+	}
+	else if (left && down) {
+		return { middleAABB, rightAABB, upAABB, rightupAABB };
+	}
+	else if (right && down && leftup) {
+		return { middleAABB, leftAABB, upAABB};
+	}
+	else if (right && down && !leftup) {
+		return { middleAABB, leftAABB, upAABB, leftupAABB };
+	}
+	else if (right && up && leftdown) {
+		return { middleAABB, leftAABB, downAABB };
+	}
+	else if (right && up) {
+		return { middleAABB, leftAABB, downAABB, leftdownAABB };
+	}
+	else if (left && up && rightdown) {
+		return { middleAABB, rightAABB, downAABB };
+	}
+	else if (left && up && !rightdown) {
+		return { middleAABB, rightAABB, downAABB, rightdownAABB };
+	}
+	else if (up && down) {
+		return { middleAABB, leftAABB, rightAABB };
+	}
+	else if (left && right) {
+		return { middleAABB, upAABB, downAABB };
+	}
+	else if (down && leftup && rightup) {
+		return { middleAABB, leftAABB, rightAABB, upAABB };
+	}
+	else if (down && rightup) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, leftupAABB };
+	}
+	else if (down && leftup) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, rightupAABB };
+	}
+	else if (down) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, leftupAABB, rightupAABB };
+	}
+	else if (right && leftup && leftdown) {
+		return { middleAABB, leftAABB, upAABB, downAABB };
+	}
+	else if (right && leftup) {
+		return { middleAABB, leftAABB, upAABB, downAABB, leftdownAABB };
+	}
+	else if (right && leftdown) {
+		return { middleAABB, leftAABB, upAABB, downAABB, leftupAABB };
+	}
+	else if (right) {
+		return { middleAABB, leftAABB, upAABB, downAABB, leftupAABB, leftdownAABB };
+	}
+	else if (up && leftdown && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, downAABB };
+	}
+	else if (up && leftdown) {
+		return { middleAABB, leftAABB, rightAABB, downAABB, rightdownAABB };
+	}
+	else if (up && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, downAABB, leftdownAABB };
+	}
+	else if (up) {
+		return { middleAABB, leftAABB, rightAABB, downAABB, leftdownAABB, rightdownAABB };
+	}
+	else if (left && rightup && rightdown) {
+		return { middleAABB, rightAABB, upAABB, downAABB };
+	}
+	else if (left && rightdown) {
+		return { middleAABB, rightAABB, upAABB, downAABB, rightupAABB };
+	}
+	else if (left && rightup) {
+		return { middleAABB, rightAABB, upAABB, downAABB, rightdownAABB };
+	}
+	else if (left) {
+		return { middleAABB, rightAABB, upAABB, downAABB, rightupAABB, rightdownAABB };
+
+	}
+	else if (leftup && rightup && leftdown && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB };
+	}
+	else if (rightup && leftdown && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftupAABB };
+	}
+	else if (leftup && leftdown && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, rightupAABB };
+	}
+	else if (leftdown && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftupAABB, rightupAABB };
+	}
+	else if (leftup && rightup && leftdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, rightdownAABB };
+	}
+	else if (rightup && leftdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftupAABB, rightdownAABB };
+	}
+	else if (leftup && leftdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, rightupAABB, rightdownAABB };
+	}
+	else if (leftdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, rightupAABB, rightdownAABB, leftupAABB };
+	}
+	else if (leftup && rightup && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftdownAABB };
+	}
+	else if (rightup && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftupAABB, leftdownAABB };
+	}
+	else if (leftup && rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftdownAABB, rightupAABB };
+	}
+	else if (rightdown) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftdownAABB, leftupAABB, rightupAABB };
+	}
+	else if (leftup && rightup) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftdownAABB, rightdownAABB };
+	}
+	else if (rightup) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftdownAABB, rightdownAABB, leftupAABB };
+	}
+	else if (leftup) {
+		return { middleAABB, leftAABB, rightAABB, upAABB, downAABB, leftdownAABB, rightdownAABB, rightupAABB };
+	}
+	return { AABB{ {0, 0}, size } };
+}
+
+bool GrassMap::existAdditionTrail(int x, int y) {
+	const vec2 position = m_waterTiles.position + vec2(x, y) * m_waterTiles.size;
+	return m_additionalTrail.count(position);
 }

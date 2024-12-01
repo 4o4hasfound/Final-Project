@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_set>
 
 #include "Game/Map/Map.hpp"
 
@@ -6,6 +7,11 @@
 #include "Render/Tileset.hpp"
 
 class GrassMap : public Map {
+	struct vec2_hash {
+		std::size_t operator()(const vec2& v) const {
+			return std::hash<float>{}(v.x) ^ std::hash<float>{}(v.y);
+		}
+	};
 public:
 	GrassMap(const vec2& size);
 	virtual ~GrassMap() = default;
@@ -17,6 +23,7 @@ public:
 
 	virtual bool intersect(const AABB& aabb) override;
 
+	void setTile(const vec2& point, bool exist);
 private:
 	// Some value for procedural generation
 	float m_waterThreshold = 0.45;
@@ -62,6 +69,8 @@ private:
 	Tileset m_earth = Tileset("assets/TileSet_V1.png", vec2(32));
 	Texture m_tree = Texture("assets/tree.png");
 
+	std::unordered_set<vec2, vec2_hash> m_additionalTrail;
+
 	// Tiles
 	Tiles m_waterTiles, m_landTiles, m_flowerTiles, m_treeTiles;
 
@@ -74,4 +83,10 @@ private:
 
 	// Determines what the water texture will be based on its neighbors
 	Texture* getLandTexture(int x, int y);
+
+	// Determines what aabbs will composite the bound of the water tile
+	std::vector<AABB> getWaterBoundingBox(int x, int y);
+
+	// Returns if an additional trail exist
+	bool existAdditionTrail(int x, int y);
 };

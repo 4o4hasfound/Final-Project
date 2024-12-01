@@ -128,6 +128,15 @@ inline bool FreeList<T>::empty() const {
 }
 
 template<typename T>
+inline void FreeList<T>::clear() {
+	for (int i = 0; i < dataSize(); ++i) {
+		m_data[i].removed = true;
+		m_data[i].element.~T();
+	}
+	m_size = 0;
+}
+
+template<typename T>
 inline T& FreeList<T>::front() {
 	return *begin();
 }

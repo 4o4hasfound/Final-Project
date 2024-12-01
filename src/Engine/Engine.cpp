@@ -10,6 +10,8 @@ void Engine::init() {
 	al_init();
 	al_install_mouse();
 	al_install_keyboard();
+	al_install_audio();
+	al_reserve_samples(20);
 
 	if (!al_init_acodec_addon()) {
 		Logger::Log<Error>("Failed to initialize allegro acodec addon");

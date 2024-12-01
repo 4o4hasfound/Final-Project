@@ -26,9 +26,12 @@ public:
 
 	// Returns the size of the screen
 	const vec2& size() const;
+	
+	void setTitle(const std::string& title);
 
-	// Returns the list of event
-	std::vector<ALLEGRO_EVENT> pollEvents();
+	// poll events
+	void pollEvents();
+	void pollEvents(std::vector<ALLEGRO_EVENT>& events);
 
 	ALLEGRO_DISPLAY* getDisplay() const;
 
