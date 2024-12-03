@@ -18,7 +18,7 @@ public:
 	void reset();
 
 	// Returns the current playing frame
-	Texture* getFrame();
+	const Texture* getFrame() const;
 
 	int getFrameIndex() const;
 

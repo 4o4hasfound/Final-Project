@@ -220,7 +220,7 @@ void RenderWindow::clear(float r, float g, float b) {
 	al_clear_to_color(al_map_rgb(r, g, b));
 }
 
-void RenderWindow::draw(Drawable& target, Texture* texture) const {
+void RenderWindow::draw(Drawable& target, const Texture* texture) const {
 	target.draw(this, texture);
 }
 

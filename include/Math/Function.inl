@@ -324,3 +324,8 @@ constexpr inline vec<4, T> max(vec<4, T> const& v1, vec<4, U> const& v2) {
 		std::max<T>(v1.w, v2.w)
 	);
 }
+
+template<typename T>
+constexpr inline T sign(const T& t) {
+	return t > 0 ? static_cast<T>(1) : t < 0? static_cast<T>(-1): 0;
+}

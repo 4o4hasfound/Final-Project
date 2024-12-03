@@ -67,6 +67,18 @@
     <Filter Include="標頭檔\Game\Weapon">
       <UniqueIdentifier>{87b47d76-51da-4c81-8450-e9ba029b5800}</UniqueIdentifier>
     </Filter>
+    <Filter Include="來源檔案\Game\Player">
+      <UniqueIdentifier>{065dde30-0932-4395-a37b-ceed12ec4533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Game\Enemy">
+      <UniqueIdentifier>{c91e2691-cef9-4af1-b0d7-981fd5785894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\Enemy">
+      <UniqueIdentifier>{b66d4a74-76a2-44d3-956f-4e3c6163f9c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\Player">
+      <UniqueIdentifier>{17effdd5-d130-4e92-8fd6-a9897f1f0eea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -177,8 +189,17 @@
     <ClCompile Include="src\Engine\Audio.cpp">
       <Filter>來源檔案\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\Player.cpp">
-      <Filter>來源檔案\Game</Filter>
+    <ClCompile Include="src\Game\Enemy\Enemy.cpp">
+      <Filter>來源檔案\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Player\Player.cpp">
+      <Filter>來源檔案\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Player\Mushroom.cpp">
+      <Filter>來源檔案\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Enemy\DroidZapper.cpp">
+      <Filter>來源檔案\Game\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,9 +305,6 @@
     <ClInclude Include="include\Render\Tileset.hpp">
       <Filter>標頭檔\Render</Filter>
     </ClInclude>
-    <ClInclude Include="include\Game\Player.hpp">
-      <Filter>標頭檔\Game</Filter>
-    </ClInclude>
     <ClInclude Include="include\Physics\BoundingCircle.hpp">
       <Filter>標頭檔\Physics</Filter>
     </ClInclude>
@@ -301,6 +319,18 @@
     </ClInclude>
     <ClInclude Include="include\Engine\Audio.hpp">
       <Filter>標頭檔\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Enemy\Enemy.hpp">
+      <Filter>標頭檔\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Player\Player.hpp">
+      <Filter>標頭檔\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Player\Mushroom.hpp">
+      <Filter>標頭檔\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Enemy\DroidZapper.hpp">
+      <Filter>標頭檔\Game\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

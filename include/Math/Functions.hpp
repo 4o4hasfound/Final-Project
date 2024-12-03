@@ -110,4 +110,7 @@ constexpr inline vec<3, T> max(vec<3, T> const& v1, vec<3, U> const& v2);
 template<typename T, typename U>
 constexpr inline vec<4, T> max(vec<4, T> const& v1, vec<4, U> const& v2);
 
+template<typename T>
+constexpr inline T sign(const T& t);
+
 #include "Math/Function.inl"

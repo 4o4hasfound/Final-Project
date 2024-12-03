@@ -141,10 +141,5 @@ Manifold RigidBody::resolveCollision(const AABB& aabb) {
 }
 
 void RigidBody::update(float dt) {
-	myUpdate(dt);
 	position += velocity * dt;
-}
-
-void RigidBody::myUpdate(float dt) {
-
 }

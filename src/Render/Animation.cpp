@@ -36,7 +36,7 @@ void Animation::reset() {
 	m_progress = std::max(0.0f, (m_start - 1) * m_frameDuration);
 }
 
-Texture* Animation::getFrame() {
+const Texture* Animation::getFrame() const {
 	const int index = static_cast<int>(m_progress / m_frameDuration);
 	return &m_textures[index];
 }

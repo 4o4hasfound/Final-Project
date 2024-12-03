@@ -49,11 +49,8 @@ protected:
 
 	int m_id;
 
-	void update(float dt);
+	virtual void update(float dt);
 
-	// myUpdate will be called before the actual update
-	// so by overriding it in the subclass, you can make your own update function
-	virtual void myUpdate(float dt);
 	// Callback function when two objects collide
 	virtual void onCollide(RigidBody* other, const Manifold& detail) {}
 	// Callback function when physics world is done resolving collision

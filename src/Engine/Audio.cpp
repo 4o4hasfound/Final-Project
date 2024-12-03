@@ -26,7 +26,7 @@ void Audio::load(const std::string& filename) {
 	}
 }
 
-void Audio::play(float speed) {
+void Audio::play(float speed, float sound) {
 	for (auto itr = ids.begin(), end = ids.end(); itr != end; ++itr) {
 		ALLEGRO_SAMPLE_ID id = *itr;
 		ALLEGRO_SAMPLE_INSTANCE* instance = al_lock_sample_id(&id);
@@ -37,7 +37,7 @@ void Audio::play(float speed) {
 		al_unlock_sample_id(&id);
 	}
 	ALLEGRO_SAMPLE_ID id;
-	al_play_sample(sample, 1.0, 0.0, speed, ALLEGRO_PLAYMODE_ONCE, &id);
+	al_play_sample(sample, sound, 0.0, speed, ALLEGRO_PLAYMODE_ONCE, &id);
 	ids.push(id);
 }
 

@@ -26,7 +26,7 @@ public:
 
 	void load(const std::string& filename);
 
-	void play(float speed);
+	void play(float speed, float sound = 1.0);
 	bool playing();
 
 	void stop();

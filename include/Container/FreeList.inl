@@ -204,13 +204,6 @@ inline int FreeList<T>::emplace(Ts && ...val) {
 		if (m_dataEnd == m_capacity) {
 			int cap = capacity();
 			Element* tmp = (Element*)realloc(m_data, sizeof(Element) * cap * 2);
-
-			if (tmp == nullptr) {
-				// No room for realloc, use malloc instead
-				tmp = (Element*)malloc(sizeof(Element) * cap * 2);
-				std::copy(m_data, m_capacity, tmp);
-				free(m_data);
-			}
 			m_data = tmp;
 			m_capacity = m_data + cap * 2;
 			m_dataEnd = m_data + cap;
@@ -241,13 +234,6 @@ inline void FreeList<T>::reserve(int length) {
 	int cap = capacity();
 	int data = dataSize();
 	Element* tmp = (Element*)realloc(m_data, sizeof(Element) * length);
-
-	if (tmp == nullptr) {
-		// No room for realloc, use malloc instead
-		tmp = (Element*)malloc(sizeof(Element) * length);
-		std::copy(m_data, m_capacity, tmp);
-		free(m_data);
-	}
 	m_data = tmp;
 	m_capacity = m_data + length;
 	m_dataEnd = m_data + data;

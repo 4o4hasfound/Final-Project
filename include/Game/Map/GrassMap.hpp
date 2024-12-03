@@ -21,7 +21,14 @@ public:
 	virtual void resolveCollision(RigidBody* body) override;
 	virtual void resolveCollision(RigidBody* body, RenderWindow& window);
 
+	virtual bool intersect(const vec2& pos, const vec2& size) override;
 	virtual bool intersect(const AABB& aabb) override;
+	virtual bool intersect(const BoundingCircle& circle) override;
+	virtual bool intersect(const BoundingLine& line) override;
+
+	virtual bool intersect(const BoundingLine& line, RenderWindow& window) override;
+
+	const Tiles& getWaterTiles() const;
 
 	void setTile(const vec2& point, bool exist);
 private:

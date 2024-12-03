@@ -49,7 +49,7 @@
 //
 //}
 //
-//void Rectangle::draw(RenderWindow* target, Texture* texture) {
+//void Rectangle::draw(RenderWindow* target, const Texture* texture) {
 //    glDisable(GL_CULL_FACE);
 //
 //    s_shader.use();
@@ -129,7 +129,7 @@
 //
 //}
 //
-//void Circle::draw(RenderWindow* target, Texture* texture) {
+//void Circle::draw(RenderWindow* target, const Texture* texture) {
 //    glDisable(GL_CULL_FACE);
 //
 //    s_shader.use();
@@ -205,7 +205,7 @@ Rectangle::Rectangle(const vec2& _size)
 
 }
 
-void Rectangle::draw(Texture* texture) {
+void Rectangle::draw(const Texture* texture) {
 	ALLEGRO_TRANSFORM trans;
 	al_identity_transform(&trans);
 	al_translate_transform(&trans, -position.x - size.x * 0.5, -position.y - size.y * 0.5);
@@ -242,7 +242,7 @@ void Rectangle::draw(Texture* texture) {
 	al_use_transform(&trans);
 }
 
-void Rectangle::draw(const RenderWindow* window, Texture* texture) {
+void Rectangle::draw(const RenderWindow* window, const Texture* texture) {
 	ALLEGRO_TRANSFORM trans;
 	al_identity_transform(&trans);
 	al_translate_transform(&trans, std::round(-position.x - size.x * 0.5), std::round(-position.y - size.y * 0.5));
@@ -310,7 +310,7 @@ Circle::Circle(float _radius)
 
 }
 
-void Circle::draw(Texture* texture) {
+void Circle::draw(const Texture* texture) {
 	if (!outlineThickness) {
 		al_draw_filled_circle(
 			position.x,
@@ -330,7 +330,7 @@ void Circle::draw(Texture* texture) {
 	}
 }
 
-void Circle::draw(const RenderWindow* window, Texture* texture) {
+void Circle::draw(const RenderWindow* window, const Texture* texture) {
 	ALLEGRO_TRANSFORM trans;
 	al_identity_transform(&trans);
 
@@ -376,7 +376,7 @@ Line::Line(const vec2 _start, const vec2 _end, float _thickness)
 	: start(_start), end(_end), thickness(thickness) {
 }
 
-void Line::draw(Texture* texture) {
+void Line::draw(const Texture* texture) {
 	al_draw_line(
 		start.x,
 		start.y,
@@ -387,7 +387,7 @@ void Line::draw(Texture* texture) {
 	);
 }
 
-void Line::draw(const RenderWindow* window, Texture* texture) {
+void Line::draw(const RenderWindow* window, const Texture* texture) {
 	ALLEGRO_TRANSFORM trans;
 	al_identity_transform(&trans);
 

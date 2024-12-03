@@ -8,6 +8,8 @@
 #include "Math/Vector.hpp"
 
 #include "Physics/AABB.hpp"
+#include "Physics/BoundingCircle.hpp"
+#include "Physics/BoundingLine.hpp"
 #include "Physics/RigidBody.hpp"
 
 #include "Render/Shape.hpp"
@@ -31,7 +33,11 @@ public:
 	virtual void resolveCollision(RigidBody* body) = 0;
 
 	// Returns if the aabb intersect with the map
+	virtual bool intersect(const vec2& pos, const vec2& size) = 0;
 	virtual bool intersect(const AABB& aabb) = 0;
+	virtual bool intersect(const BoundingCircle& circle) = 0;
+	virtual bool intersect(const BoundingLine& line) = 0;
+	virtual bool intersect(const BoundingLine& line, RenderWindow& window) = 0;
 protected:
 	// Represents a single tile on the map
 	struct Tile {

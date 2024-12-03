@@ -6,21 +6,33 @@ BoundingLine::BoundingLine()
 
 BoundingLine::BoundingLine(float x1, float y1, float x2, float y2)
 	: start(x1, y1), end(x2, y2) {
+	if (start > end) {
+		std::swap(start, end);
+	}
 }
 
 
 BoundingLine::BoundingLine(const vec2& p1, float x2, float y2)
 	: start(p1), end(x2, y2) {
+	if (start > end) {
+		std::swap(start, end);
+	}
 }
 
 
 BoundingLine::BoundingLine(float x1, float y1, const vec2& p2)
 	: start(x1, y1), end(p2) {
+	if (start > end) {
+		std::swap(start, end);
+	}
 }
 
 
 BoundingLine::BoundingLine(const vec2& p1, const vec2& p2)
 	: start(p1), end(p2) {
+	if (start > end) {
+		std::swap(start, end);
+	}
 }
 
 
@@ -53,18 +65,31 @@ bool BoundingLine::intersect(const AABB& other) const {
 	const float b = start.x - end.x;
 	const float c = end.x * start.y - start.x * end.y;
 
-	const float tl = other.left() * a + other.top() * b + c;
-	const float tr = other.right() * a + other.top() * b + c;
-	const float br = other.right() * a + other.bottom() * b + c;
-	const float bl = other.left() * a + other.bottom() * b + c;
-	if (tl > 0 && tr > 0 && br > 0 && bl > 0
-		|| tl < 0 && tr < 0 && br < 0 && bl < 0) {
+	const float sa = sign(other.left() * a + other.top() * b + c);
+	const float sb = sign(other.right() * a + other.top() * b + c);
+	const float sc = sign(other.right() * a + other.bottom() * b + c);
+	const float sd = sign(other.left() * a + other.bottom() * b + c);
+
+	//Logger::Log<Debug>(sa, sb, sc, sd);
+
+	if (sa == sb && sb == sc && sc == sd && sd == sa) {
 		return false;
 	}
 
-	const vec2 pos{ std::min(start.x, end.x), std::min(start.y, end.y) };
-	const vec2 size{ std::abs(start.x - end.x), std::abs(start.y - end.y) };
-	return AABB(pos, size).intersect(other);
+	if (start.x > other.right() && end.x > other.right()) {
+		return false;
+	}
+	if (start.x < other.left() && end.x < other.left()) {
+		return false;
+	}
+	if (start.y > other.bottom() && end.y > other.bottom()) {
+		return false;
+	}
+	if (start.y < other.top() && end.y < other.top()) {
+		return false;
+	}
+
+	return true;
 }
 
 void BoundingLine::draw(RenderWindow& window) const {

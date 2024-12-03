@@ -41,7 +41,9 @@ void PhysicsWorld::removeBody(int id) {
 	m_bodies.remove(id);
 }
 void PhysicsWorld::removeBody(RigidBody* body) {
+	m_tree.remove(body->m_id);
 	m_bodies.remove(body->m_id);
+	delete body;
 }
 
 void PhysicsWorld::resolveCollisions(std::vector<Manifold>& manifolds) {

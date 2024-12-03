@@ -22,7 +22,7 @@ public:
 	void clear(float r = 0.0f, float g = 0.0f, float b = 0.0f);
 
 	// Draw a drawable object
-	void draw(Drawable& target, Texture* texture = nullptr) const;
+	void draw(Drawable& target, const Texture* texture = nullptr) const;
 
 	// Returns the size of the screen
 	const vec2& size() const;
