@@ -46,20 +46,15 @@ using llvec2 = vec<2, std::int64_t>;
 using llvec3 = vec<3, std::int64_t>;
 using llvec4 = vec<4, std::int64_t>;
 
-using usvec1 = vec<1, std::int16_t>;
-using usvec2 = vec<2, std::int16_t>;
-using usvec3 = vec<3, std::int16_t>;
-using usvec4 = vec<4, std::int16_t>;
+using usvec1 = vec<1, std::uint16_t>;
+using usvec2 = vec<2, std::uint16_t>;
+using usvec3 = vec<3, std::uint16_t>;
+using usvec4 = vec<4, std::uint16_t>;
 
-using uivec1 = vec<1, std::int32_t>;
-using uivec2 = vec<2, std::int32_t>;
-using uivec3 = vec<3, std::int32_t>;
-using uivec4 = vec<4, std::int32_t>;
-
-using llvec1 = vec<1, std::int64_t>;
-using llvec2 = vec<2, std::int64_t>;
-using llvec3 = vec<3, std::int64_t>;
-using llvec4 = vec<4, std::int64_t>;
+using uivec1 = vec<1, std::uint32_t>;
+using uivec2 = vec<2, std::uint32_t>;
+using uivec3 = vec<3, std::uint32_t>;
+using uivec4 = vec<4, std::uint32_t>;
 
 using ullvec1 = vec<1, std::uint64_t>;
 using ullvec2 = vec<2, std::uint64_t>;

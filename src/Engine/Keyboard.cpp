@@ -14,7 +14,7 @@ void Keyboard::initialize() {
 }
 
 void Keyboard::update() {
-	s_lastStates = s_states;
+	s_lastStates.swap(s_states);
 	ALLEGRO_KEYBOARD_STATE state;
 	al_get_keyboard_state(&state);
 	for (int i = 0; i < s_states.size(); ++i) {

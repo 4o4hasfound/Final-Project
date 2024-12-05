@@ -210,7 +210,13 @@ void Rectangle::draw(const Texture* texture) {
 	al_identity_transform(&trans);
 	al_translate_transform(&trans, -position.x - size.x * 0.5, -position.y - size.y * 0.5);
 	if (rotation) {
+		if (useRotationCenter) {
+			al_translate_transform(&trans, -rotationCenter.x, -rotationCenter.y);
+		}
 		al_rotate_transform(&trans, -rotation);
+		if (useRotationCenter) {
+			al_translate_transform(&trans, rotationCenter.x, rotationCenter.y);
+		}
 	}
 	al_translate_transform(&trans, position.x, position.y);
 	al_use_transform(&trans);
@@ -247,7 +253,13 @@ void Rectangle::draw(const RenderWindow* window, const Texture* texture) {
 	al_identity_transform(&trans);
 	al_translate_transform(&trans, std::round(-position.x - size.x * 0.5), std::round(-position.y - size.y * 0.5));
 	if (rotation) {
+		if (useRotationCenter) {
+			al_translate_transform(&trans, -rotationCenter.x, -rotationCenter.y);
+		}
 		al_rotate_transform(&trans, -rotation);
+		if (useRotationCenter) {
+			al_translate_transform(&trans, rotationCenter.x, rotationCenter.y);
+		}
 	}
 	al_translate_transform(&trans, position.x, position.y);
 	if (window && !absolutePosition) {

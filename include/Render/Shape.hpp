@@ -23,6 +23,9 @@ public:
 	vec4 color = vec4(0, 0, 0, 255);
 	float rotation = 0.0f;
 
+	bool useRotationCenter = false;
+	vec2 rotationCenter = vec2(0);
+
 	float outlineThickness = 0.0f;
 	vec4 outlineColor = vec4(0, 0, 0, 255);
 

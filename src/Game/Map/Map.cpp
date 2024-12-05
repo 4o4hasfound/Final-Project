@@ -61,3 +61,7 @@ std::vector<Map::Tile>& Map::Tiles::operator[](int index) {
 const std::vector<Map::Tile>& Map::Tiles::operator[](int index) const {
 	return grid[index];
 }
+
+const Map::Tiles* Map::getCollisionTiles() const {
+	return nullptr;
+}

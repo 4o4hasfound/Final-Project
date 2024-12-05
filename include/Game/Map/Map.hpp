@@ -19,25 +19,6 @@
 #include "Utils/Noise.hpp"
 
 class Map {
-public:
-	Map() = default;
-	virtual ~Map() = default;
-
-	// Update the map, recalculate the whole map
-	virtual void update(const ViewPort& viewport) = 0;
-	
-	// Render the map onto the screen
-	virtual void draw(RenderWindow& window) = 0;
-
-	// Resolve the collision for the body
-	virtual void resolveCollision(RigidBody* body) = 0;
-
-	// Returns if the aabb intersect with the map
-	virtual bool intersect(const vec2& pos, const vec2& size) = 0;
-	virtual bool intersect(const AABB& aabb) = 0;
-	virtual bool intersect(const BoundingCircle& circle) = 0;
-	virtual bool intersect(const BoundingLine& line) = 0;
-	virtual bool intersect(const BoundingLine& line, RenderWindow& window) = 0;
 protected:
 	// Represents a single tile on the map
 	struct Tile {
@@ -66,4 +47,26 @@ protected:
 		std::vector<Tile>& operator[](int index);
 		const std::vector<Tile>& operator[](int index) const;
 	};
+public:
+	Map() = default;
+	virtual ~Map() = default;
+
+	// Update the map, recalculate the whole map
+	virtual void update(const ViewPort& viewport) = 0;
+	
+	// Render the map onto the screen
+	virtual void draw(RenderWindow& window) = 0;
+
+	// Resolve the collision for the body
+	virtual void resolveCollision(RigidBody* body) = 0;
+
+	virtual const Tiles* getCollisionTiles() const;
+
+	// Returns if the aabb intersect with the map
+	virtual bool intersect(const vec2& pos, const vec2& size) = 0;
+	virtual bool intersect(const AABB& aabb) = 0;
+	virtual bool intersect(const BoundingCircle& circle) = 0;
+	virtual bool intersect(const BoundingLine& line) = 0;
+	virtual bool intersect(const BoundingLine& line, RenderWindow& window) = 0;
+protected:
 };

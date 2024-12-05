@@ -12,6 +12,11 @@
 
 #include "Engine/Keyboard.hpp"
 #include "Engine/Mouse.hpp"
+#include "Engine/State.hpp"
+
+#include "Render/RenderWindow.hpp"
+
+#include "Utils/Clock.hpp"
 
 #include "Debug/Log.hpp"
 
@@ -29,10 +34,18 @@ public:
 	// Call this function at the very end of the program
 	static void terminate();
 
-	// Call this function at every frame
-	static void update();
+
+	// Run the main loop
+	static void run();
+
+	static RenderWindow* window;
+	static StateManager states;
 private:
 	Engine() = delete;
-	
+
+	// Call this function at every frame
+	static void update();
+
 	static bool initialized;
+	static Clock deltaTime;
 };

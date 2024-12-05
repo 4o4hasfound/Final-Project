@@ -188,15 +188,23 @@ bool GrassMap::intersect(const BoundingLine& line, RenderWindow& window) {
 
 	return false;
 }
-const Map::Tiles& GrassMap::getWaterTiles() const {
-	return m_waterTiles;
+const Map::Tiles* GrassMap::getCollisionTiles() const {
+	return &m_waterTiles;
 }
 void GrassMap::setTile(const vec2& point, bool exist) {
 	ivec2 index = ivec2((point - m_waterTiles.position) / m_waterTiles.size);
 	if (index.y < 0 || index.x < 0 || index.y >= m_waterTiles.grid.size() || index.x >= m_waterTiles.grid[0].size()) {
 		return;
 	}
-	m_additionalTrail.insert(vec2(index) * m_waterTiles.size + m_waterTiles.position);
+	if (exist) {
+		m_additionalTrail.insert(vec2(index) * m_waterTiles.size + m_waterTiles.position);
+	}
+	else {
+		auto itr = m_additionalTrail.find(vec2(index) * m_waterTiles.size + m_waterTiles.position);
+		if (itr != m_additionalTrail.end()) {
+			m_additionalTrail.erase(itr);
+		}
+	}
 }
 
 void GrassMap::generateWaterLand(const ViewPort& viewport) {

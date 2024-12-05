@@ -12,6 +12,7 @@
 
 class RenderWindow {
 public:
+	RenderWindow();
 	RenderWindow(int width, int height, const std::string& windowName);
 	RenderWindow(const vec2& size, const std::string& windowName);
 	RenderWindow(const std::string& windowName);

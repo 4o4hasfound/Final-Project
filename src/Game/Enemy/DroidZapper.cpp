@@ -3,7 +3,7 @@
 static EnemyConfig enemyConfig{
 	100.0,
 	20.0,
-	350.0,
+	250.0,
 
 	3,
 	vec2{ 58.0, 41.0f },

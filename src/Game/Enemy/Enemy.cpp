@@ -33,7 +33,7 @@ void Enemy::pathFind(Map* map, Player* player, RenderWindow& window) {
 	if (map->intersect(getAABB())) {
 		status.state = Patrol;
 		do {
-			const vec2 direction = { Random::getReal<float>(-300, 300), Random::getReal<float>(-300, 300) };
+			const vec2 direction = { Random::getReal<float>(-500, 500), Random::getReal<float>(-500, 500) };
 			status.playerLastPosition = position + direction;
 		} while (map->intersect(status.playerLastPosition, aabb.size()));
 	}

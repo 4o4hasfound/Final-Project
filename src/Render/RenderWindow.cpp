@@ -166,6 +166,10 @@
 //	}
 //}
 
+RenderWindow::RenderWindow(): m_display(nullptr) {
+
+}
+
 RenderWindow::RenderWindow(int width, int height, const std::string& windowName)
 	: m_size(width, height), m_display(al_create_display(width, height)) {
 	if (!m_display) {
@@ -210,6 +214,7 @@ RenderWindow::~RenderWindow() {
 	if (m_display) {
 		al_destroy_display(m_display);
 	}
+	m_display = nullptr;
 }
 
 void RenderWindow::clear(const vec3& color) {

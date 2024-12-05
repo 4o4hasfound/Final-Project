@@ -79,6 +79,15 @@
     <Filter Include="標頭檔\Game\Player">
       <UniqueIdentifier>{17effdd5-d130-4e92-8fd6-a9897f1f0eea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="來源檔案\Game\States">
+      <UniqueIdentifier>{cb442a87-5c47-40c6-8771-dd8a6d15511e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\States">
+      <UniqueIdentifier>{d02f3013-aec6-4274-88a6-896080c272ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Game\Weapon">
+      <UniqueIdentifier>{ef2c156a-22ee-4c4c-ad85-c508ac72f17e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -200,6 +209,21 @@
     </ClCompile>
     <ClCompile Include="src\Game\Enemy\DroidZapper.cpp">
       <Filter>來源檔案\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Enemy\EnemyManager.cpp">
+      <Filter>來源檔案\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\States\TestState.cpp">
+      <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Player\Adventurer.cpp">
+      <Filter>來源檔案\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Weapon\Weapon.cpp">
+      <Filter>來源檔案\Game\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Weapon\Rifle.cpp">
+      <Filter>來源檔案\Game\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +355,18 @@
     </ClInclude>
     <ClInclude Include="include\Game\Enemy\DroidZapper.hpp">
       <Filter>標頭檔\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Enemy\EnemyManager.hpp">
+      <Filter>標頭檔\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\States\TestState.hpp">
+      <Filter>標頭檔\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Player\Adventurer.hpp">
+      <Filter>標頭檔\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Weapon\Rifle.hpp">
+      <Filter>標頭檔\Game\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

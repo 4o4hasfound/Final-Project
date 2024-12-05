@@ -28,7 +28,7 @@ public:
 
 	virtual bool intersect(const BoundingLine& line, RenderWindow& window) override;
 
-	const Tiles& getWaterTiles() const;
+	virtual const Tiles* getCollisionTiles() const override;
 
 	void setTile(const vec2& point, bool exist);
 private:

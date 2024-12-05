@@ -15,6 +15,14 @@ StateManager::~StateManager() {
 	}
 }
 
+bool StateManager::empty() const {
+	return m_states.empty();
+}
+
+int StateManager::size() const {
+	return m_states.size();
+}
+
 void StateManager::pushState(State* state) {
 	state->onEnter();
 	if (!m_states.empty()) {
@@ -24,6 +32,9 @@ void StateManager::pushState(State* state) {
 }
 
 State* StateManager::topState() {
+	if (m_states.empty()) {
+		return nullptr;
+	}
 	return m_states.top();
 }
 

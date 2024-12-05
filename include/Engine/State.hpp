@@ -10,6 +10,9 @@ public:
 	StateManager();
 	~StateManager();
 
+	bool empty() const;
+	int size() const;
+
 	// Pushes a new state onto the stack
 	void pushState(State* state);
 
@@ -28,16 +31,16 @@ public:
 	
 	// Creates a new state using the specified constructor arguments
 	template<typename StateType, typename ...T, typename = std::enable_if_t<std::is_base_of_v<State, StateType>>>
-	State* makeState(const T&... t);
+	State* makeState(T&... t);
 
 	// Creates a new state using the specified constructor arguments
 	// then push it onto the stack
 	template<typename StateType, typename ...T, typename = std::enable_if_t<std::is_base_of_v<State, StateType>>>
-	State* emplaceState(const T&... t);
+	State* emplaceState(T&... t);
 
 	// Replaces the current state with a newly created state
 	template<typename StateType, typename ...T, typename = std::enable_if_t<std::is_base_of_v<State, StateType>>>
-	State* emplaceSwitchState(const T&... t);
+	State* emplaceSwitchState(T&... t);
 private:
 	std::stack<State*> m_states;
 	std::stack<State*> m_toRemove;
@@ -60,7 +63,7 @@ public:
 	virtual void onWakeup() {};
 
 	virtual void reset() {};
-	virtual void update() {};
+	virtual void update(RenderWindow& window, float dt) {};
 	virtual void render(RenderWindow& window) {};
 	virtual bool shouldClose() = 0;
 protected:

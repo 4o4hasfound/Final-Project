@@ -15,7 +15,13 @@
 
 struct PlayerStatus {
 	bool moving = 0;
+	bool crouching = 0;
+	bool running = 0;
+	bool walking = 0;
 	int direction = 1;
+
+	vec2 pivot;
+	int weaponIndex = 0;
 };
 
 struct PlayerConfig {
