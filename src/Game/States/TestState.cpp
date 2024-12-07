@@ -82,10 +82,37 @@ void TestState::render(RenderWindow& window) {
 	// Draw character
 	m_player->draw(window);
 
+	drawBullets();
+
+	Circle circle(4);
+	vec2 delta;
+	vec2 offset;
+
+	Weapon* weapon = dynamic_cast<Adventurer*>(m_player)->m_weapon;
+	if (m_player->status.direction == 1) {
+		circle.position = m_player->position - m_player->config.center * m_player->config.scale + m_player->status.pivot * m_player->config.scale;
+	}
+	else {
+		circle.position = m_player->position - m_player->config.center * m_player->config.scale + m_player->status.pivot * m_player->config.scale;
+	}
+
+	//circle.position = m_player->position + m_player->config.size * m_player->config.scale * 0.5 - delta;
+	//circle.position += offset * m_player->config.scale;
+
+	window.draw(circle);
+
 	// Fps
 	window.setTitle(std::to_string(m_frameCount / m_totalFps).c_str());
 }
 
 bool TestState::shouldClose() {
 	return false;
+}
+
+void TestState::drawBullets() {
+	auto bullets = m_world.getBodies<Bullet>(RigidBody::BulletType);
+
+	for (Bullet* bullet : bullets) {
+		bullet->draw(m_window);
+	}
 }

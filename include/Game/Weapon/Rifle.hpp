@@ -20,17 +20,9 @@ public:
 	Rifle(Player* player, PhysicsWorld* world, RenderWindow* window);
 	~Rifle() = default;
 
-	virtual void update(float dt) override;
-	virtual void draw(RenderWindow& window) override;
-
 private:
-	Player* m_player;
-	PhysicsWorld* m_world;
-	RenderWindow* m_window;
-	Tileset m_tileset;
-	Animation m_animation;
 	Audio m_audio{ "assets/Scar/sound.mp3" };
-	FreeList<Bullet*> m_bullets;
 
-	void attack();
+	virtual void shoot() override;
+	virtual void myUpdate(float dt) override;
 };

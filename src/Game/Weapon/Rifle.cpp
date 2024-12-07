@@ -1,94 +1,92 @@
 #include "Game/Weapon/Rifle.hpp"
-
+//struct WeaponConfig {
+//	float attack;
+//	int ammo;
+//	float shootInterval;
+//
+//	float scale = 1.0;
+//	vec2 size;
+//	vec2 center;
+//	vec2 muzzlePosition;
+//	vec2 gripPosition;
+//
+//	std::string shootAnimationFilename;
+//	vec2 shootAnimationSize;
+//	std::vector<vec2> shootAnimationIndexes;
+//	float shootAnimationDuration;
+//
+//	std::string loadAnimationFilename;
+//	vec2 loadAnimationSize;
+//	std::vector<vec2> loadAnimationIndexes;
+//	float loadAnimationDuration;
+//};
 static WeaponConfig weaponConfig{
 	10.0,
 	30.0,
+	0.4,
+	0.05,
 
-	1.0,
-	vec2{80, 32},
-	vec2{49.0, 23.0},
-	vec2{8.5, 13.0},
-	AABB{
-		vec2{4, 3},
-		vec2{75, 30}
-	} - vec2{39.5, 16.5}
+	1.3,
+	vec2{96, 48},
+	vec2{47.5, 29.5},
+
+	"assets/Guns/AK47/shoot.png",
+	std::vector<vec2>{
+		{0, 0}, 
+		{0, 1}, 
+		{0, 2}, 
+		{0, 3}
+	},
+	0.0125,
+	"assets/Guns/AK47/shootSound.mp3",
+
+	"assets/Guns/AK47/load.png",
+	std::vector<vec2>{
+		{0, 0}, 
+		{0, 1}, 
+		{0, 2}, 
+		{0, 3}, 
+		{0, 4}, 
+		{0, 5}, 
+		{0, 6}, 
+		{0, 7},
+		{0, 8},
+		{0, 9},
+		{0, 10},
+		{0, 11},
+		{0, 12},
+		{0, 13},
+		{0, 14},
+		{0, 15},
+		{0, 16},
+		{0, 17},
+		{0, 18},
+		{0, 19},
+		{0, 20},
+		{0, 21},
+		{0, 22},
+		{0, 23},
+		{0, 24},
+		{0, 25},
+		{0, 26},
+		{0, 27},
+	},
+	0.1,
+	"assets/Guns/AK47/loadSound.wav"
 };
 
 Rifle::Rifle(Player* player, PhysicsWorld* world, RenderWindow* window)
-	: Weapon(weaponConfig)
-	, m_player(player)
-	, m_world(world)
-	, m_window(window)
-	, m_tileset("assets/Scar/SCAR-100ms.png", weaponConfig.size)
-	, m_animation({
-		m_tileset[0][0],
-		m_tileset[1][0],
-	}, 0.04){
+	: Weapon(weaponConfig, player, world, window) {
+
 }
 
-void Rifle::update(float dt) {
-	if (!Mouse::get(Mouse::LEFT).pressed || !status.hold) {
-		status.fire = 0;
-		m_animation.reset();
-		m_animation.advance();
-	}
-	else {
-		if (!status.fire) {
-			m_animation.reset();
-			m_audio.play(1.0);
-			attack();
-		}
-		status.fire = 1;
-		if (m_animation.update(dt, true)) {
-			m_audio.play(1.0);
-			attack();
-		}
-	}
-	const vec2 delta = Mouse::getPosition() - m_window->size() * 0.5;
-	rotation = std::fmodf(std::atan2(delta.x, delta.y) + PI * 1.5, PI_TWO);
-}
-
-void Rifle::draw(RenderWindow& window) {
-	const auto bullets = m_world->getBodies<Bullet>(RigidBody::BulletType);
-	for (Bullet* bullet: bullets) {
-		bullet->draw(window);
-	}
-
-	Rectangle rect(config.size * config.scale);
-	vec2 delta;
-	vec2 offset;
-
-	if (m_player->status.direction == -1) {
-		delta = config.center * config.scale;
-		offset = vec2(-m_player->status.pivot.x + m_player->config.center.x, m_player->status.pivot.y - m_player->config.center.y);
-	}
-	else {
-		delta = vec2(config.size.x - config.center.x, config.center.y) * config.scale;
-		offset = m_player->status.pivot - m_player->config.center;
-	}
-
-	rect.position = m_player->position + rect.size * 0.5 - delta;
-	rect.position += status.direction * offset * m_player->config.scale;
-	rect.rotation = rotation;
-
-	rect.flip.x = -1;
-
-	if ((rect.rotation >= PI * 0.5 && rect.rotation <= PI * 1.5)) {
-		rect.flip.x = !rect.flip.x;
-		rect.rotation -= PI;
-	}
-
-	window.draw(rect, m_animation.getFrame());
-}
-
-void Rifle::attack() {
+void Rifle::shoot() {
 	if (status.ammoLeft <= 0) {
 		status.ammoLeft = 0;
 	}
 	--status.ammoLeft;
 
 	Bullet* bullet = m_world->createBody<Bullet>(40, 3);
-	m_bullets.push(bullet);
 
 	float rotateOffset;
 	if (m_player->status.walking) {
@@ -97,7 +95,7 @@ void Rifle::attack() {
 	else if (m_player->status.crouching && m_player->status.moving) {
 		rotateOffset = Random::getReal<float>(-0.08, 0.08);
 	}
-	else if (!m_player->status.crouching && !m_player->status.moving){
+	else if (!m_player->status.crouching && !m_player->status.moving) {
 		rotateOffset = Random::getReal<float>(-0.075, 0.075);
 	}
 	else if (m_player->status.crouching && !m_player->status.moving) {
@@ -117,21 +115,22 @@ void Rifle::attack() {
 	//	Random::getInt(0, 255)
 	//};
 
-	vec2 delta;
-	vec2 offset;
-
-	if (m_player->status.direction == -1) {
-		delta = config.center * config.scale;
-		offset = vec2(-m_player->status.pivot.x + m_player->config.center.x, m_player->status.pivot.y - m_player->config.center.y);
-	}
-	else {
-		delta = vec2(config.size.x - config.center.x, config.center.y) * config.scale;
-		offset = m_player->status.pivot - m_player->config.center;
-	}
-
-	bullet->position = m_player->position + config.size * config.scale * 0.5 - delta;
-	bullet->position += status.direction * offset * m_player->config.scale;
+	bullet->position = getWorldPivotPoint();
+	//bullet->position += vec2(sin(rotation), cos(rotation)) * 30;
 	//bullet->position += bullet->direction * bullet->speed * 0.25;
 
 	bullet->initialPosition = bullet->position;
+}
+
+void Rifle::myUpdate(float dt) {
+	if (Mouse::get(Mouse::LEFT).pressed) {
+		status.shoot = true;
+	}
+	else {
+		status.shoot = false;
+	}
+
+	if (Mouse::get(Mouse::RIGHT).pressed) {
+		status.load = true;
+	}
 }

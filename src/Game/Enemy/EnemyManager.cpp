@@ -62,7 +62,7 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 				continue;
 			}
       		if (position <= window.viewport.position || position >= window.viewport.position + window.viewport.size) {
-				if (Random::getReal<float>(0, 1) < 0.2 && bodies.size() + additionalEnemy < 80) {
+				if (Random::getReal<float>(0, 1) < 0.1 && bodies.size() + additionalEnemy < 40) {
 					DroidZapperEnemy* enemy = world.createBody<DroidZapperEnemy>();
 					enemy->position = position;
 					enemy->m_runAnimation = m_runAnimation;

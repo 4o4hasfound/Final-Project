@@ -10,8 +10,9 @@ public:
 	~Adventurer() = default;
 
 	virtual void draw(RenderWindow& window) const override;
-protected:
+
 	Weapon* m_weapon;
+protected:
 	Audio m_audio{ "assets/grassSound.mp3" };
 
 	Animation m_crouchAnimation{ {

@@ -90,11 +90,11 @@ void Adventurer::myUpdate(float dt) {
 
 	if (Keyboard::get(Keyboard::KEY_0).pressed || Keyboard::get(Keyboard::KEY_PAD_0).pressed) {
 		status.weaponIndex = 0;
-		m_weapon->status.hold = 0;
+		m_weapon->status.playerHolding = 0;
 	}
 	if (Keyboard::get(Keyboard::KEY_1).pressed || Keyboard::get(Keyboard::KEY_PAD_1).pressed) {
 		status.weaponIndex = 1;
-		m_weapon->status.hold = 1;
+		m_weapon->status.playerHolding = 1;
 	}
 
 	status.crouching = Keyboard::get(Keyboard::KEY_LSHIFT).pressed;
@@ -105,7 +105,7 @@ void Adventurer::myUpdate(float dt) {
 		status.pivot = vec2(19, 29);
 	}
 	else {
-		status.pivot = vec2(23, 24);
+		status.pivot = vec2(19, 24);
 	}
 
 	// Normalize velocity vector

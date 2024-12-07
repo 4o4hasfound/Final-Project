@@ -58,4 +58,6 @@ private:
 	int m_frameCount = 0;
 
 	bool m_mapHasUpdateOnce = false;
+
+	void drawBullets();
 };

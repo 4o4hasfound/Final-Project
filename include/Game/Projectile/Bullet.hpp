@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Physics/AABB.hpp"
 #include "Physics/RigidBody.hpp"
 #include "Physics/PhysicsWorld.hpp"

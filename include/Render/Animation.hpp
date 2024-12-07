@@ -3,18 +3,23 @@
 #include <vector>
 
 #include "Render/Texture.hpp"
+#include "Render/Tileset.hpp"
 
 class Animation {
 public:
 	Animation() = default;
 	Animation(const std::vector<Texture>& textures, float frameDuration);
+	Animation(const std::string& filename, const vec2& size, const std::vector<vec2>& index, float frameDuration);
 	~Animation() = default;
 
 	// Return 1 if reached the end
 	bool update(float dt, bool loop = false);
 	
 	// Advance to next frame
-	bool advance();
+	bool advance(int i = 1);
+
+	void toBegin();
+	void toEnd();
 
 	void reset();
 
