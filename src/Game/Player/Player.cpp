@@ -1,7 +1,7 @@
 #include "Game/Player/Player.hpp"
 
 Player::Player(const PlayerConfig& _config)
-	: RigidBody(RigidBody::Character, {_config.aabb * _config.scale})
+	: RigidBody(RigidBody::CharacterType, {_config.aabb * _config.scale})
 	, config(_config){
 
 }

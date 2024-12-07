@@ -6,7 +6,7 @@
 
 class Adventurer : public Player {
 public:
-	Adventurer(RenderWindow* window);
+	Adventurer(PhysicsWorld* world, RenderWindow* window);
 	~Adventurer() = default;
 
 	virtual void draw(RenderWindow& window) const override;

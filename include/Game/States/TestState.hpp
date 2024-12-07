@@ -55,7 +55,7 @@ private:
 
 	// Average fps
 	float m_totalFps = 0;
-	float m_frameCount = 0;
+	int m_frameCount = 0;
 
 	bool m_mapHasUpdateOnce = false;
 };

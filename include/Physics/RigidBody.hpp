@@ -15,12 +15,13 @@ public:
 	// Example:
 	// Both Character & Dynamic and Enemy & Dynamic can be true simultaneously.
 	enum BodyType {
-		Static = 0b1000,
-		Static_Uncollidable = 0x1100,
-		Dynamic = 0b0001,
-		Character = 0b0011,
-		Enemy = 0b0101,
-		Any = 0b1111
+		Static =		1 << 30,
+		Dynamic =		1 << 29,
+		Uncollidable =	1 << 28,
+		CharacterType =				Dynamic | 1<<0,
+		EnemyType =					Dynamic | 1<<1,
+		BulletType = Dynamic | Uncollidable | 1<<2,
+		Any = 0x7FFFFFFF
 	};
 
 	// aabb is in model space
@@ -44,6 +45,7 @@ public:
 	vec2 position = vec2(0);
 	vec2 velocity = vec2(0);
 	bool freezed = 0;
+	bool alive = 1;
 protected:
 	BodyType m_type;
 

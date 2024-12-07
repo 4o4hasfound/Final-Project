@@ -16,7 +16,7 @@
 
 class EnemyManager {
 public:
-	EnemyManager() = default;
+	EnemyManager(PhysicsWorld* world);
 	~EnemyManager() = default;
 
 	void update(float dt, PhysicsWorld& world, const Map& map, const RenderWindow& window);
@@ -24,9 +24,16 @@ public:
 	void pathFind(Map* map, Player* player, RenderWindow& window);
 	void attack(Player* player);
 	void resolveCollision(Map* map);
-
-	FreeList<Enemy*> bodies;
 private:
 	void generateEnemies(float dt, PhysicsWorld& world, const Map& map, const RenderWindow& window);
 	void removeEnemies(float dt, PhysicsWorld& world, const Map& map, const RenderWindow& window);
+
+	PhysicsWorld* m_world;
+	Tileset m_runset;
+	Tileset m_idleset;
+	Tileset m_atkset;
+
+	Animation m_runAnimation;
+	Animation m_idleAnimation;
+	Animation m_atkAnimation;
 };

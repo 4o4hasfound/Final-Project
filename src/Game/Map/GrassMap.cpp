@@ -142,6 +142,7 @@ bool GrassMap::intersect(const BoundingLine& line) {
 	ivec2 upperIndex = min(ivec2(
 		(aabb.upperBound - tiles.position) / tiles.size + 1
 	), ivec2(m_waterTiles.grid[0].size() - 1, m_waterTiles.grid.size() - 1));
+
 	for (int i = lowerIndex.y; i <= upperIndex.y; ++i) {
 		for (int j = lowerIndex.x; j <= upperIndex.x; ++j) {
 			if (!tiles[i][j].exist || existAdditionTrail(j, i)) {
@@ -215,6 +216,7 @@ void GrassMap::generateWaterLand(const ViewPort& viewport) {
 		std::floor(m_waterTiles.position.y)
 	) * m_waterTiles.size;
 	m_landTiles.position = m_waterTiles.position;
+
 	for (int i = 0; i < m_waterTiles.grid.size(); ++i) {
 		for (int j = 0; j < m_waterTiles[0].size(); ++j) {
 			Tile& tile = m_waterTiles[i][j];
@@ -226,14 +228,9 @@ void GrassMap::generateWaterLand(const ViewPort& viewport) {
 				std::floor(pos.y)
 			) * m_waterTiles.size;
 
-			Noise::octaves = 12;
-			Noise::lacunarity = 2;
-			Noise::persistence = 0.5;
-			float threshold = (Noise::get(pos) + 1) * 0.5;
-			Noise::lacunarity = 2;
-			Noise::octaves = 4;
+			float threshold = (Noise::get<12>(pos) + 1) * 0.5;
 
-			int landIndex = std::max(2, static_cast<int>(Noise::getUniform(pos * 3)));
+			int landIndex = std::max(2, static_cast<int>(Noise::getUniform<4>(pos * 3, 0.5, 2)));
 			if (threshold < m_waterThreshold) {
 				tile.exist = true;
 				tile.texture = &m_water;
@@ -266,16 +263,12 @@ void GrassMap::generateFlower(const ViewPort& viewport) {
 				std::floor(pos.y)
 			) * m_flowerTiles.size;
 
-			Noise::octaves = 12;
-			Noise::lacunarity = 2.5;
-			float threshold = (Noise::get(pos) + 1) * 0.5;
-			Noise::lacunarity = 2;
-			Noise::octaves = 4;
-			tile.offset = vec2(Noise::get(pos)) * m_flowerTiles.size;
+			float threshold = (Noise::get<12>(pos, 0.5, 2.5) + 1) * 0.5;
+			tile.offset = vec2(Noise::get<4>(pos)) * m_flowerTiles.size;
 
 			if (threshold < m_flowerThreshold) {
 				tile.exist = true;
-				float value = std::max(0.0, Noise::getUniform(pos * 2) - 0.00001);
+				float value = std::max(0.0, Noise::getUniform<4>(pos * 2) - 0.00001);
 				std::vector<Texture>& flower = m_flowers[static_cast<int>(value * 5)];
 				tile.texture = &flower[static_cast<int>(value * 20) % flower.size()];
 			}
@@ -304,12 +297,8 @@ void GrassMap::generateTree(const ViewPort& viewport) {
 				std::floor(pos.y)
 			) * m_treeTiles.size;
 
-			Noise::octaves = 10;
-			Noise::lacunarity = 2.2;
-			float threshold = (Noise::get(pos) + 1) * 0.5;
-			Noise::lacunarity = 2;
-			Noise::octaves = 4;
-			tile.offset = vec2(Noise::get(pos)) * m_treeTiles.size;
+			float threshold = (Noise::get<10>(pos, 0.5, 2.2) + 1) * 0.5;
+			tile.offset = vec2(Noise::get<4>(pos)) * m_treeTiles.size;
 
 			if (threshold < m_treeThreshold) {
 				tile.exist = true;

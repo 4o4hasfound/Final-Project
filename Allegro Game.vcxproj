@@ -131,6 +131,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +149,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -185,6 +187,7 @@
     <ClCompile Include="src\Game\Player\Adventurer.cpp" />
     <ClCompile Include="src\Game\Player\Mushroom.cpp" />
     <ClCompile Include="src\Game\Player\Player.cpp" />
+    <ClCompile Include="src\Game\Projectile\Bullet.cpp" />
     <ClCompile Include="src\Game\States\TestState.cpp" />
     <ClCompile Include="src\Game\Weapon\Rifle.cpp" />
     <ClCompile Include="src\Game\Weapon\Weapon.cpp" />
@@ -221,6 +224,7 @@
     <ClInclude Include="include\Game\Player\Adventurer.hpp" />
     <ClInclude Include="include\Game\Player\Mushroom.hpp" />
     <ClInclude Include="include\Game\Player\Player.hpp" />
+    <ClInclude Include="include\Game\Projectile\Bullet.hpp" />
     <ClInclude Include="include\Game\Skill\Skill.hpp" />
     <ClInclude Include="include\Game\States\TestState.hpp" />
     <ClInclude Include="include\Game\Weapon\Rifle.hpp" />

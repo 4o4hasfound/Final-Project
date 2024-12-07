@@ -1,12 +1,17 @@
 #include "Game/Enemy/Enemy.hpp"
 
 Enemy::Enemy(const EnemyConfig& _config)
-	: RigidBody(RigidBody::Character, _config.aabb * _config.scale)
+	: RigidBody(RigidBody::EnemyType, _config.aabb * _config.scale)
 	, config(_config) {
-
+	status.health = config.health;
+	status.knockbackCD = 0;
 }
 
 void Enemy::update(float dt) {
+	status.knockbackCD -= dt;
+	if (status.knockbackCD < 0) {
+		status.knockbackCD = 0;
+	}
 	if (status.needUpdate) {
 		myUpdate(dt);
 		position += velocity * dt;
@@ -25,6 +30,10 @@ void Enemy::attack(Player* player) {
 }
 
 void Enemy::pathFind(Map* map, Player* player, RenderWindow& window) {
+	if (status.knockbackCD > 0) {
+		return;
+	}
+
 	status.playerPosition = player->position;
 	status.needUpdate = (distance(position, player->position) < 1000);
 
@@ -74,6 +83,19 @@ void Enemy::pathFind(Map* map, Player* player, RenderWindow& window) {
 	if (distance(position, status.playerLastPosition) < 10.0) {
 		status.state = Seek;
 	}
+}
+
+bool Enemy::hit(float damage, const vec2& knockback) {
+	status.health -= damage;
+	status.knockbackCD = 0.1;
+	velocity = knockback;
+	if (status.health <= 0) {
+		status.health = 0;
+		alive = 0;
+		return true;
+	}
+
+	return false;
 }
 
 void Enemy::myUpdate(float dt) {

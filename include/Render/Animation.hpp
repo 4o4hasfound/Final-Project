@@ -6,6 +6,7 @@
 
 class Animation {
 public:
+	Animation() = default;
 	Animation(const std::vector<Texture>& textures, float frameDuration);
 	~Animation() = default;
 

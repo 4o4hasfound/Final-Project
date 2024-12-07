@@ -49,11 +49,15 @@ public:
 	// Removes a rigid body from the world by its pointer
 	void removeBody(RigidBody* body);
 
+	std::vector<RigidBody*> getBodies(int bodyType);
+	template<typename BodyT, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	std::vector<BodyT*> getBodies(int bodyType);
+
 	// Updates the physics simulation for one time step
 	void update(float dt);
 	
 	// Checks if a given rigid body is colliding with any other body
-	bool hasCollide(RigidBody* body) const;
+	bool hasCollide(RigidBody* body);
 
 	// Queries the list of rigid bodies that a given body is interacting with
 	// ToQuery limit the type of the return bodies
@@ -75,6 +79,9 @@ private:
 	FreeList<RigidBody*> m_bodies;
 
 	void resolveCollisions(std::vector<Manifold>& manifolds);
+	
+	// Remove the unalive bodies
+	void updateBodies();
 
 	std::vector<std::thread> m_threads;
 	std::mutex m_lock;

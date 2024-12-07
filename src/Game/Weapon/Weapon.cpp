@@ -8,3 +8,7 @@ Weapon::Weapon(const WeaponConfig& _config)
 void Weapon::update(float dt) {
 
 }
+
+void Weapon::updateEnemies(EnemyManager* manager) {
+
+}

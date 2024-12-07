@@ -10,6 +10,20 @@ BodyT* PhysicsWorld::createBody(const T& ... arguments) {
 	return body;
 }
 
+template<typename BodyT, typename>
+std::vector<BodyT*> PhysicsWorld::getBodies(int bodyType) {
+	updateBodies();
+	std::vector<BodyT*> ret;
+
+	for (RigidBody* body : m_bodies) {
+		if (body->getType() == bodyType) {
+			ret.push_back(dynamic_cast<BodyT*>(body));
+		}
+	}
+
+	return ret;
+}
+
 template<RigidBody::BodyType ToQuery>
 std::vector<RigidBody*> PhysicsWorld::query(RigidBody* body) const {
 	std::vector<RigidBody*> collideBodies;

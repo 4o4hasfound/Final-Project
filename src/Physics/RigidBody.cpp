@@ -25,10 +25,6 @@ void RigidBody::move(float x, float y) {
 Manifold RigidBody::resolveCollision(RigidBody* other){
 	Manifold manifold{ this, other };
 
-	if ((getType() & RigidBody::Static_Uncollidable) || (other->getType() & RigidBody::Static_Uncollidable)) {
-		return manifold;
-	}
-
 	const vec2 ha = this->aabb.size() * 0.5;
 	const vec2 hb = other->aabb.size() * 0.5;
 	const vec2 d = other->getAABB().center() - this->getAABB().center();
@@ -58,20 +54,26 @@ Manifold RigidBody::resolveCollision(RigidBody* other){
 		}
 	}
 
+	if (this->getType() & RigidBody::Uncollidable || other->getType() & RigidBody::Uncollidable) {
+		this->onCollide(other, manifold);
+		other->onCollide(this, manifold);
+
+		return manifold;
+	}
+
 	if (!(this->getType() & RigidBody::Static) && !(other->getType() & RigidBody::Static)) {
 		this->move(-manifold.normal * manifold.depth * 0.5f);
 		other->move(manifold.normal * manifold.depth * 0.5f);
-		this->onCollide(other, manifold);
-		other->onCollide(this, manifold);
 	}
 	else if (!(this->getType() & RigidBody::Static)) {
 		this->move(-manifold.normal * manifold.depth);
-		this->onCollide(other, manifold);
 	}
 	else if (!(other->getType() & RigidBody::Static)) {
 		other->move(manifold.normal * manifold.depth);
-		other->onCollide(this, manifold);
 	}
+
+	this->onCollide(other, manifold);
+	other->onCollide(this, manifold);
 
 	if (!(this->getType() & RigidBody::Static)) {
 		if (manifold.normal.x) {
@@ -124,10 +126,8 @@ Manifold RigidBody::resolveCollision(const AABB& aabb) {
 		}
 	}
 
-
-	if (!(getType() & RigidBody::Static)) {
+	if (!(getType() & RigidBody::Static) && !(getType() & RigidBody::Uncollidable)) {
 		move(-manifold.normal * manifold.depth);
-		onCollide(nullptr, manifold);
 
 		if (manifold.normal.x) {
 			this->velocity.x = 0;
@@ -136,6 +136,8 @@ Manifold RigidBody::resolveCollision(const AABB& aabb) {
 			this->velocity.y = 0;
 		}
 	}
+
+	onCollide(nullptr, manifold);
 
 	return manifold;
 }

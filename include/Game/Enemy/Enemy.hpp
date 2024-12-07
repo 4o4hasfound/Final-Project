@@ -30,6 +30,9 @@ enum EnemyState {
 };
 
 struct EnemyStatus {
+	int health;
+	float knockbackCD = 0;
+
 	bool moving = 0;
 	int direction = 1;
 	bool attacking = 0;
@@ -62,6 +65,8 @@ public:
 	virtual void attack(Player* player);
 
 	void pathFind(Map* map, Player* player, RenderWindow& window);
+
+	bool hit(float damage, const vec2& knockback);
 
 	EnemyStatus status;
 	const EnemyConfig config;

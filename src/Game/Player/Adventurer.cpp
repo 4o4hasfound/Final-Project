@@ -14,9 +14,9 @@ static PlayerConfig playerConfig{
 	} - vec2{ 23.0f, 21.0f }
 };
 
-Adventurer::Adventurer(RenderWindow* window)
+Adventurer::Adventurer(PhysicsWorld* world, RenderWindow* window)
 	: Player(playerConfig)
-	, m_weapon(new Rifle(this, window)) {
+	, m_weapon(new Rifle(this, world, window)) {
 
 }
 
@@ -97,7 +97,7 @@ void Adventurer::myUpdate(float dt) {
 		m_weapon->status.hold = 1;
 	}
 
-	status.crouching = walking && Keyboard::get(Keyboard::KEY_LSHIFT).pressed;
+	status.crouching = Keyboard::get(Keyboard::KEY_LSHIFT).pressed;
 	status.running = walking && status.weaponIndex == 0 && Keyboard::get(Keyboard::KEY_LCTRL).pressed;
 	status.walking = walking && !status.crouching && !status.running;
 
@@ -138,10 +138,10 @@ void Adventurer::myUpdate(float dt) {
 		if (!m_audio.playing()) {
 			// Speed up a little bit
 			if (status.walking) {
-				m_audio.play(1.3 * 0.75, 30.0);
+				m_audio.play(1.3 * 0.75, 20.0);
 			}
 			else if (status.running) {
-				m_audio.play(1.3, 30.0);
+				m_audio.play(1.3, 20.0);
 			}
 		}
 	}

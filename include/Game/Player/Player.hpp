@@ -35,6 +35,8 @@ struct PlayerConfig {
 	AABB aabb;
 };
 
+class EnemyManager;
+
 class Player: public RigidBody {
 public:
 	Player(const PlayerConfig& config);

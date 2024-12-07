@@ -1,7 +1,7 @@
 #include "Game/Enemy/DroidZapper.hpp"
 
 static EnemyConfig enemyConfig{
-	100.0,
+	1000.0,
 	20.0,
 	250.0,
 
@@ -15,14 +15,7 @@ static EnemyConfig enemyConfig{
 };
 
 DroidZapperEnemy::DroidZapperEnemy()
-	: Enemy(enemyConfig)
-	, m_audio("assets/grassSound.mp3")
-	, m_runset("assets/Droid Zapper/run.png", enemyConfig.size)
-	, m_idleset("assets/Droid Zapper/wake.png", enemyConfig.size)
-	, m_atkset("assets/Droid Zapper/attack.png", enemyConfig.size)
-	, m_runAnimation({ m_runset[0][0], m_runset[1][0], m_runset[2][0], m_runset[3][0], m_runset[4][0], m_runset[5][0] }, 1.0 / 12)
-	, m_idleAnimation({ m_idleset[0][0], m_idleset[1][0], m_idleset[2][0], m_idleset[3][0], m_idleset[4][0], m_idleset[5][0] }, 1.0 / 12)
-	, m_atkAnimation({ m_atkset[0][0], m_atkset[1][0], m_atkset[2][0], m_atkset[3][0], m_atkset[4][0], m_atkset[5][0], m_atkset[6][0], m_atkset[7][0], m_atkset[8][0], m_atkset[9][0] }, 1.0 / 12){
+	: Enemy(enemyConfig) {
 
 }
 
@@ -93,28 +86,18 @@ void DroidZapperEnemy::myUpdate(float dt) {
 	//	velocity.x = 0;
 	//}
 
-	if (sign(velocity.x)) {
-		status.direction = sign(velocity.x);
-	}
-
-	// Normalize velocity vector
-	if (velocity.x || velocity.y) {
-		velocity = normalize(velocity) * config.speed;
-	}
-
-	// Handle audio
-	if (!status.moving) {
-		velocity = vec2(0);
-		m_audio.stop();
-	}
-	else {
-		if (!m_audio.playing()) {
-			// Speed up a little bit
-			float sound = std::min(1.0, std::pow(std::max((500.0f-distance(position, status.playerPosition)) / 500.0f, 0.0f), 2));
-			//Logger::Log<Debug>(sound);
-			m_audio.play(1.3, sound);
+	if (status.knockbackCD == 0) {
+		if (sign(velocity.x)) {
+			status.direction = sign(velocity.x);
 		}
+
+		// Normalize velocity vector
+		if (velocity.x || velocity.y) {
+			velocity = normalize(velocity) * config.speed;
+		}
+
 	}
+
 
 	// Handle animation changes
 	if (status.attacking) {

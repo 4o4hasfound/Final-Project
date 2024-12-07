@@ -3,9 +3,10 @@
 TestState::TestState(StateManager& manager, RenderWindow& window)
 	: State(manager)
 	, m_window(window)
-	, m_map(window.viewport.size) {
+	, m_map(window.viewport.size)
+	, m_enemies(&m_world) {
 	m_window.viewport.size *= 0.75;
-	m_player = m_world.createBody<Adventurer>(&window);
+	m_player = m_world.createBody<Adventurer>(&m_world, &window);
 }
 
 void TestState::onEnter() {
@@ -31,8 +32,10 @@ void TestState::reset() {
 void TestState::update(RenderWindow& window, float dt) {
 	if (m_tickClock.duration() > m_tick) {
 		m_tickClock.reset();
-		
-		m_enemies.update(m_tick, m_world, m_map, window);
+
+		if (m_mapHasUpdateOnce) {
+			m_enemies.update(m_tick, m_world, m_map, window);
+		}
 	}
 
 	m_enemies.attack(m_player);
@@ -67,8 +70,8 @@ void TestState::update(RenderWindow& window, float dt) {
 	m_map.update(window.viewport);
 	m_mapHasUpdateOnce = true;
 
+	++m_frameCount;
 	m_totalFps += dt;
-	m_frameCount += 1;
 }
 
 void TestState::render(RenderWindow& window) {
