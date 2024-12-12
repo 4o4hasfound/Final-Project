@@ -49,29 +49,26 @@ public:
 	// Removes a rigid body from the world by its pointer
 	void removeBody(RigidBody* body);
 
-	std::vector<RigidBody*> getBodies(int bodyType);
+	std::vector<RigidBody*> getBodies(RigidBody::BodyType bodyType);
 	template<typename BodyT, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
-	std::vector<BodyT*> getBodies(int bodyType);
+	std::vector<BodyT*> getBodies(RigidBody::BodyType bodyType);
 
 	// Updates the physics simulation for one time step
 	void update(float dt);
 	
-	// Checks if a given rigid body is colliding with any other body
-	bool hasCollide(RigidBody* body);
-
 	// Queries the list of rigid bodies that a given body is interacting with
 	// ToQuery limit the type of the return bodies
-	template<RigidBody::BodyType ToQuery = RigidBody::Any>
-	std::vector<RigidBody*> query(RigidBody* body) const;
+	template<typename BodyT = RigidBody, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	typename std::vector<BodyT*> query(RigidBody* body, RigidBody::BodyType bodyType = RigidBody::Any) const;
 
-	template<RigidBody::BodyType ToQuery = RigidBody::Any>
-	std::vector<RigidBody*> query(const AABB& aabb) const;
+	template<typename BodyT = RigidBody, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	typename std::vector<BodyT*> query(const AABB& aabb, RigidBody::BodyType bodyType = RigidBody::Any) const;
 
-	template<RigidBody::BodyType ToQuery = RigidBody::Any>
-	std::vector<RigidBody*> query(const BoundingCircle& circle) const;
+	template<typename BodyT = RigidBody, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	std::vector<BodyT*> query(const BoundingCircle& circle, RigidBody::BodyType bodyType = RigidBody::Any) const;
 
-	template<RigidBody::BodyType ToQuery = RigidBody::Any>
-	std::vector<RigidBody*> query(const BoundingLine& line) const;
+	template<typename BodyT = RigidBody, typename = std::enable_if_t<std::is_base_of_v<RigidBody, BodyT>>>
+	std::vector<BodyT*> query(const BoundingLine& line, RigidBody::BodyType bodyType = RigidBody::Any) const;
 
 	// Draw the physics world
 	void DebugDraw(const RenderWindow& window) const;

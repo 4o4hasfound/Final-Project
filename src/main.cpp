@@ -4,7 +4,7 @@
 int main() {
 	Engine::init();
 
-	Engine::states.emplaceState<TestState>(*(Engine::window));
+	Engine::states.emplaceState<TestState>(Engine::window);
 	Engine::run();
 
 	Engine::terminate();

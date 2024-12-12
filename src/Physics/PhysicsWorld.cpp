@@ -28,13 +28,6 @@ void PhysicsWorld::update(float dt) {
 	}
 }
 
-bool PhysicsWorld::hasCollide(RigidBody* body) {
-	updateBodies();
-	std::vector<RigidBody*> collideBodies;
-	m_tree.query(body->getAABB(), collideBodies);
-	return !collideBodies.empty();
-}
-
 void PhysicsWorld::DebugDraw(const RenderWindow& window) const {
 	m_tree.render(window);
 }
@@ -51,12 +44,12 @@ void PhysicsWorld::removeBody(RigidBody* body) {
 	delete body;
 }
 
-std::vector<RigidBody*> PhysicsWorld::getBodies(int bodyType) {
+std::vector<RigidBody*> PhysicsWorld::getBodies(RigidBody::BodyType bodyType) {
 	updateBodies();
 	std::vector<RigidBody*> ret;
 	
 	for (RigidBody* body : m_bodies) {
-		if (body->getType() & bodyType) {
+		if ((body->getType() & bodyType) == bodyType) {
 			ret.push_back(body);
 		}
 	}

@@ -23,6 +23,8 @@ public:
 
 	void reset();
 
+	bool playing() const;
+
 	// Returns the current playing frame
 	const Texture* getFrame() const;
 
@@ -41,6 +43,7 @@ private:
 	int m_start = 0, m_end;
 	float m_progress = 0.0;
 	float m_frameDuration;
+	bool m_playing = false;
 
 	int m_length;
 	vec2 m_size;

@@ -110,7 +110,7 @@ void BVH::render(const RenderWindow& window) const {
 		rect.position = node.aabb.lowerBound + rect.size * 0.5f;
 		if (node.isLeaf()) {
 			rect.outlineThickness = 5;
-			rect.size = m_bodies[node.object]->getAABB().size();
+			//rect.size = m_bodies[node.object]->getAABB().size();
 		}
 		else {
 			rect.outlineThickness = 1;

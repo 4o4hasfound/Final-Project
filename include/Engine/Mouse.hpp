@@ -5,6 +5,8 @@
 
 #include "Math/Vector.hpp"
 
+#include "Debug/Log.hpp"
+
 // pressed: if the button is pressed down
 // released: if the button is not pressed down
 // buttondown: if the button has just been clicked
@@ -42,10 +44,14 @@ public:
 
 	// Returns how much the mouse has moved since last frame
 	static vec2 getDeltaPosition();
+
+	static int getScroll();
 private:
 	static std::array<MouseState, MouseCode::BUTTON_MAX> s_states;
 	static std::array<MouseState, MouseCode::BUTTON_MAX> s_lastStates;
 	static vec2 s_position;
 	static vec2 s_lastPosition;
 	static vec2 s_deltaPosition;
+	static int s_scroll;
+	static int s_lastScroll;
 };

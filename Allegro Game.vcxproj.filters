@@ -94,6 +94,9 @@
     <Filter Include="來源檔案\Game\Projectile">
       <UniqueIdentifier>{2c5b0765-b147-4cf1-8e36-e4a254b5b770}</UniqueIdentifier>
     </Filter>
+    <Filter Include="來源檔案\Game\Skill">
+      <UniqueIdentifier>{ed17621a-fde5-4471-9ddc-cc37a39367ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -233,6 +236,42 @@
     </ClCompile>
     <ClCompile Include="src\Game\Projectile\Bullet.cpp">
       <Filter>來源檔案\Game\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Weapon\Shotgun.cpp">
+      <Filter>來源檔案\Game\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Projectile\Rocket.cpp">
+      <Filter>來源檔案\Game\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Projectile\Projectile.cpp">
+      <Filter>來源檔案\Game\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\BoundingBox.cpp">
+      <Filter>來源檔案\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Weapon\RPG.cpp">
+      <Filter>來源檔案\Game\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Font.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Text.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Enemy\BlueSoldier.cpp">
+      <Filter>來源檔案\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Weapon\Glock.cpp">
+      <Filter>來源檔案\Game\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\Skill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\HealSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\States\ChooseSkillState.cpp">
+      <Filter>來源檔案\Game\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +418,39 @@
     </ClInclude>
     <ClInclude Include="include\Game\Projectile\Bullet.hpp">
       <Filter>標頭檔\Game\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Weapon\Shotgun.hpp">
+      <Filter>標頭檔\Game\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Projectile\Rocket.hpp">
+      <Filter>標頭檔\Game\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Projectile\Projectile.hpp">
+      <Filter>標頭檔\Game\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\BoundingBox.hpp">
+      <Filter>標頭檔\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Weapon\RPG.hpp">
+      <Filter>標頭檔\Game\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Text.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Font.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Enemy\BlueSoldier.hpp">
+      <Filter>標頭檔\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Weapon\Glock.hpp">
+      <Filter>標頭檔\Game\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\HealSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\States\ChooseSkillState.hpp">
+      <Filter>標頭檔\Game\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

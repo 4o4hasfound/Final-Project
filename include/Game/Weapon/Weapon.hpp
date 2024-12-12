@@ -1,19 +1,23 @@
 #pragma once
 
 #include "Engine/Mouse.hpp"
+#include "Engine/Audio.hpp"
+
+#include "Game/Player/Player.hpp"
+#include "Game/Enemy/Enemy.hpp"
 
 #include "Physics/PhysicsWorld.hpp"
 
-#include "Game/Enemy/EnemyManager.hpp"
-
 #include "Render/RenderWindow.hpp"
+#include "Render/Animation.hpp"
+#include "Render/Texture.hpp"
 
 #include "Math/Vector.hpp"
 
 struct WeaponStatus {
 	bool shoot = 0;
 	bool load = 0;
-	bool playerHolding = 0;
+	bool holding = 0;
 
 	int direction = 1;
 	int ammoLeft = 0;
@@ -24,6 +28,7 @@ struct WeaponStatus {
 struct WeaponConfig {
 	float attack;
 	int ammo;
+	int reloadAmmo;
 	float accuracy;
 	float shootInterval;
 
@@ -42,19 +47,29 @@ struct WeaponConfig {
 	std::string loadSound;
 };
 
-struct Player;
+class Player;
+class Enemy;
 
 class Weapon {
 public:
 	Weapon(const WeaponConfig& _config, Player* player, PhysicsWorld* world, RenderWindow* window);
+	Weapon(const WeaponConfig& _config, Enemy* player, PhysicsWorld* world, RenderWindow* window);
 	virtual ~Weapon() = default;
 
 	virtual void update(float dt);
 	virtual void draw(RenderWindow& window);
 
+	void bind(Player* player);
+	void bind(Enemy* enemy);
+
+	vec2 getWorldPivotPoint() const;
+
+	bool finishShooting() const;
+	bool finishLoading() const;
+
 	float rotation = 0.0f;
 	WeaponStatus status;
-	const WeaponConfig config;
+	WeaponConfig config;
 protected:
 	Animation m_shootAnimation;
 	Animation m_loadAnimation;
@@ -64,10 +79,16 @@ protected:
 	Audio m_loadSound;
 
 	Player* m_player;
+	Enemy* m_enemy;
 	PhysicsWorld* m_world;
 	RenderWindow* m_window;
 
 	virtual void shoot();
 	virtual void myUpdate(float dt);
-	vec2 getWorldPivotPoint() const;
+	
+	virtual void updateStatus(float dt);
+	virtual void updateOnShoot(float dt);
+	virtual void updateOnLoad(float dt);
+	virtual void updateOnNoShootLoad(float dt);
+
 };

@@ -5,6 +5,8 @@ std::array<MouseState, Mouse::BUTTON_MAX> Mouse::s_lastStates;
 vec2 Mouse::s_position;
 vec2 Mouse::s_lastPosition;
 vec2 Mouse::s_deltaPosition;
+int Mouse::s_scroll;
+int Mouse::s_lastScroll;
 
 void Mouse::initialize() {
 	for (auto& state : s_states) {
@@ -15,13 +17,16 @@ void Mouse::initialize() {
 	}
 	s_lastStates = s_states;
 	s_position = s_lastPosition = vec2(0);
+	s_lastScroll = s_scroll = 0;
 }
 
 void Mouse::update() {
 	s_lastStates = s_states;
 	s_lastPosition = s_position;
+	s_lastScroll = s_scroll;
 	ALLEGRO_MOUSE_STATE state;
 	al_get_mouse_state(&state);
+	s_scroll = state.z;
 	for (int i = 0; i < s_states.size(); ++i) {
 		s_states[i].pressed = al_mouse_button_down(&state, i + 1);
 		s_states[i].released = !s_states[i].pressed;
@@ -42,4 +47,8 @@ const vec2& Mouse::getPosition() {
 
 vec2 Mouse::getDeltaPosition() {
 	return s_position - s_lastPosition;
+}
+
+int Mouse::getScroll() {
+	return s_scroll - s_lastScroll;
 }

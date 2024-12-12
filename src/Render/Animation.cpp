@@ -7,7 +7,7 @@ Animation::Animation(const std::vector<Texture>& textures, float frameDuration)
 	, m_end(textures.size()) {
 	assert(!m_textures.empty());
 
-	m_size = m_textures[0].getSize();
+	m_size = m_textures[0].size();
 }
 
 Animation::Animation(const std::string& filename, const vec2& size, const std::vector<vec2>& index, float frameDuration)
@@ -25,12 +25,17 @@ Animation::Animation(const std::string& filename, const vec2& size, const std::v
 }
 
 bool Animation::update(float dt, bool loop) {
+	m_playing = true;
 	m_progress += dt;
 	if (m_progress >= m_frameDuration * m_end) {
 		m_progress = m_frameDuration * (m_end)-0.01;
 
 		if (loop) {
 			reset();
+			m_playing = true;
+		}
+		else {
+			m_playing = false;
 		}
 		return 1;
 	}
@@ -56,6 +61,11 @@ void Animation::toEnd() {
 
 void Animation::reset() {
 	m_progress = std::max(0.0f, (m_start - 1) * m_frameDuration);
+	m_playing = false;
+}
+
+bool Animation::playing() const {
+	return m_playing;
 }
 
 const Texture* Animation::getFrame() const {

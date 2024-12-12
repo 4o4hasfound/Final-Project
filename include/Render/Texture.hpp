@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <unordered_map>
+
 #include <allegro5/bitmap.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/bitmap_io.h>
@@ -9,6 +11,7 @@
 #include "Math/Vector.hpp"
 
 class Texture {
+	friend class Engine;
 public:
 	Texture();
 	// Empty texture
@@ -32,10 +35,15 @@ public:
 	// Load the texture from a file
 	void load(const std::string& filename);
 
-	const vec2& getSize() const;
+	const vec2& size() const;
 	ALLEGRO_BITMAP* getBitmap() const;
 
+	bool empty() const;
 private:
 	vec2 m_size;
 	ALLEGRO_BITMAP* m_texture;
+
+	static std::unordered_map<std::string, ALLEGRO_BITMAP*> s_textureMap;
+	
+	static void cleanup();
 };

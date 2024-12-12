@@ -7,6 +7,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_video.h>
+#include <allegro5/allegro_ttf.h>
 
 #include "Utils/ThreadPool.hpp"
 
@@ -15,6 +16,7 @@
 #include "Engine/State.hpp"
 
 #include "Render/RenderWindow.hpp"
+#include "Render/Texture.hpp"
 
 #include "Utils/Clock.hpp"
 

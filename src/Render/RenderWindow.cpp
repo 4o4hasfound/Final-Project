@@ -111,7 +111,7 @@
 //int RenderWindow::getHeight() const {
 //	return m_size.y;
 //}
-//vec2 RenderWindow::getSize() const {
+//vec2 RenderWindow::size() const {
 //	return m_size;
 //}
 //

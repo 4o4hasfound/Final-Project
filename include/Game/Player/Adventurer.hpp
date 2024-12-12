@@ -3,6 +3,9 @@
 #include "Game/Player/Player.hpp"
 
 #include "Game/Weapon/Rifle.hpp"
+#include "Game/Weapon/Shotgun.hpp"
+#include "Game/Weapon/RPG.hpp"
+#include "Game/Weapon/Glock.hpp"
 
 class Adventurer : public Player {
 public:
@@ -11,8 +14,13 @@ public:
 
 	virtual void draw(RenderWindow& window) const override;
 
-	Weapon* m_weapon;
 protected:
+	virtual void myUpdate(float dt) override;
+	void fistAttack(float dt);
+
+	void drawUI(RenderWindow& window) const;
+
+	std::vector<std::unique_ptr<Weapon>> m_weapons;
 	Audio m_audio{ "assets/grassSound.mp3" };
 
 	Animation m_crouchAnimation{ {
@@ -95,6 +103,4 @@ protected:
 		Texture{"assets/Adventurer/adventurer-run-punch-05.png"},
 		Texture{"assets/Adventurer/adventurer-run-punch-06.png"},
 	},  1.0 / 10 };
-
-	virtual void myUpdate(float dt) override;
 };

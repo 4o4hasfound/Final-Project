@@ -15,7 +15,7 @@ std::vector<Texture>& Tileset::operator[](int index) {
 }
 
 void Tileset::setupTiles() {
-	const ivec2 totalSize = ivec2(m_tileset.getSize() / m_tilesize);
+	const ivec2 totalSize = ivec2(m_tileset.size() / m_tilesize);
 	m_tiles.resize(totalSize.y);
 	for (int i = 0; i < totalSize.y; ++i) {
 		m_tiles[i].reserve(totalSize.x);

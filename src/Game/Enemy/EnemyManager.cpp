@@ -1,17 +1,11 @@
 #include "Game/Enemy/EnemyManager.hpp"
 
 EnemyManager::EnemyManager(PhysicsWorld* world)
-	: m_world(world)
-	, m_runset("assets/Droid Zapper/run.png", vec2(58, 41))
-	, m_idleset("assets/Droid Zapper/wake.png", vec2(58, 41))
-	, m_atkset("assets/Droid Zapper/attack.png", vec2(58, 41))
-	, m_runAnimation({ m_runset[0][0], m_runset[1][0], m_runset[2][0], m_runset[3][0], m_runset[4][0], m_runset[5][0] }, 1.0 / 12)
-	, m_idleAnimation({ m_idleset[0][0], m_idleset[1][0], m_idleset[2][0], m_idleset[3][0], m_idleset[4][0], m_idleset[5][0] }, 1.0 / 12)
-	, m_atkAnimation({ m_atkset[0][0], m_atkset[1][0], m_atkset[2][0], m_atkset[3][0], m_atkset[4][0], m_atkset[5][0], m_atkset[6][0], m_atkset[7][0], m_atkset[8][0], m_atkset[9][0] }, 1.0 / 12) {
-
+	: m_world(world) {
+	
 }
 
-void EnemyManager::update(float dt, PhysicsWorld& world, const Map& map, const RenderWindow& window) {
+void EnemyManager::update(float dt, PhysicsWorld& world, const Map& map, RenderWindow& window) {
 	removeEnemies(dt, world, map, window);
 	generateEnemies(dt, world, map, window);
 }
@@ -48,7 +42,7 @@ void EnemyManager::resolveCollision(Map* map) {
 	}
 }
 
-void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map, const RenderWindow& window) {
+void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map, RenderWindow& window) {
 	const auto* tiles = map.getCollisionTiles();
 	const auto bodies = m_world->getBodies<Enemy>(RigidBody::EnemyType);
 
@@ -62,12 +56,9 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 				continue;
 			}
       		if (position <= window.viewport.position || position >= window.viewport.position + window.viewport.size) {
-				if (Random::getReal<float>(0, 1) < 0.1 && bodies.size() + additionalEnemy < 40) {
-					DroidZapperEnemy* enemy = world.createBody<DroidZapperEnemy>();
+				if (Random::getReal<float>(0, 1) < 0.1 && bodies.size() + additionalEnemy < 50) {
+					BlueSoldier* enemy = world.createBody<BlueSoldier>(&world, &window);
 					enemy->position = position;
-					enemy->m_runAnimation = m_runAnimation;
-					enemy->m_atkAnimation = m_atkAnimation;
-					enemy->m_idleAnimation = m_idleAnimation;
 					++additionalEnemy;
 				}
 			}

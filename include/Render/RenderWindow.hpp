@@ -7,6 +7,7 @@
 
 #include "Render/Drawable.hpp"
 #include "Render/ViewPort.hpp"
+#include "Render/Text.hpp"
 
 #include "Debug/Log.hpp"
 

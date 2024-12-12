@@ -10,18 +10,31 @@
 
 #include "Physics/RigidBody.hpp"
 
+#include "Game/Skill/Skill.hpp"
+
 #include "Math/Vector.hpp"
 #include "Math/Functions.hpp"
 
 struct PlayerStatus {
+	float health;
+	int level = 0;
+	int exp = 0;
+	int maxExp = 0;
+	float knockbackCD = 0;
+
 	bool moving = 0;
 	bool crouching = 0;
 	bool running = 0;
 	bool walking = 0;
+	bool punching = 0;
+	bool runPunching = 0;
+	bool levelUp = 0;
 	int direction = 1;
 
 	vec2 pivot;
 	int weaponIndex = 0;
+
+	std::vector<Skill*> skills;
 };
 
 struct PlayerConfig {
@@ -43,10 +56,13 @@ public:
 	~Player() = default;
 
 	virtual void update(float dt);
-	virtual void draw(RenderWindow& window) const = 0;
+	virtual void draw(RenderWindow& window) const;
+
+	bool hit(float damage, const vec2& knockback);
+	void addExp(int amount);
 
 	PlayerStatus status;
-	const PlayerConfig config;
+	PlayerConfig config;
 protected:
 	// myUpdate will be called before the actual update
 	// so by overriding it in the subclass, you can make your own update function

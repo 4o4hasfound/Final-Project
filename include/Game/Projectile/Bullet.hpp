@@ -7,21 +7,23 @@
 
 #include "Game/Player/Player.hpp"
 #include "Game/Enemy/EnemyManager.hpp"
+#include "Game/Projectile/Projectile.hpp"
 
 #include "Math/Vector.hpp"
 
-class Bullet: public RigidBody {
+class Bullet: public Projectile {
 public:
-	Bullet(float speed, float _height = 4.0);
+	Bullet(float speed, float maxDistance, float _height = 4.0);
 	~Bullet() = default;
 
-	void draw(RenderWindow& window) const;
+	virtual void draw(RenderWindow& window) const override;
 
 	float damage;
 	float knockback = 10.0;
 	float height;
 	float speed;
 	float rotation;
+	float maxDistance;
 	vec2 direction{ 0 };
 	vec3 color{ 255 };
 	vec2 initialPosition;

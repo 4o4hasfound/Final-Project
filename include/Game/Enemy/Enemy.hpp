@@ -22,11 +22,13 @@
 #include "Math/Functions.hpp"
 
 #include "Utils/Random.hpp"
+#include "Debug/Log.hpp"
 
 enum EnemyState {
-	Hunt,
-	Patrol,
-	Seek
+	Hunt,	// See player, run towards the last seen position of player
+	Patrol, // Didn't see player, patrol around
+	Attack, // See player and has enter attack range
+	Seek	// Stand still
 };
 
 struct EnemyStatus {
@@ -34,20 +36,28 @@ struct EnemyStatus {
 	float knockbackCD = 0;
 
 	bool moving = 0;
+	bool dying = 0;
+	bool leaving = 0;
 	int direction = 1;
 	bool attacking = 0;
 
 	bool needUpdate = false;
+	bool seePlayer = false;
 	vec2 playerLastPosition;
 	vec2 playerPosition;
 
+	vec2 pivot;
+
 	EnemyState state = Patrol;
+	float huntingTimer = 0;
 };
 
 struct EnemyConfig {
 	float health;
 	float attack;
 	float speed;
+	float attackRangeMin;
+	float attackRangeMax;
 
 	float scale = 1.0f;
 	vec2 size{ 0.0, 0.0f };
@@ -75,5 +85,8 @@ protected:
 	// so by overriding it in the subclass
 	virtual void myUpdate(float dt);
 
-
+	virtual void onHunt(Map* map, Player* player, RenderWindow& window);
+	virtual void onPatrol(Map* map, Player* player, RenderWindow& window);
+	virtual void onAttack(Map* map, Player* player, RenderWindow& window);
+	virtual void onSeek(Map* map, Player* player, RenderWindow& window);
 };

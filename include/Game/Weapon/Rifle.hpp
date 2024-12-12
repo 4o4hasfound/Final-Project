@@ -6,6 +6,7 @@
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Player/Player.hpp"
 #include "Game/Projectile/Bullet.hpp"
+#include "Game/Projectile/Rocket.hpp"
 
 #include "Render/Shape.hpp"
 #include "Render/Texture.hpp"
@@ -18,11 +19,10 @@
 class Rifle : public Weapon {
 public:
 	Rifle(Player* player, PhysicsWorld* world, RenderWindow* window);
+	Rifle(Enemy* enemy, PhysicsWorld* world, RenderWindow* window);
 	~Rifle() = default;
 
 private:
-	Audio m_audio{ "assets/Scar/sound.mp3" };
-
 	virtual void shoot() override;
-	virtual void myUpdate(float dt) override;
+	//virtual void myUpdate(float dt) override;
 };

@@ -37,6 +37,10 @@ void Engine::init() {
 		Logger::Log<Error>("Failed to initialize allegro video addon");
 	}
 
+	if (!al_init_ttf_addon()) {
+		Logger::Log<Error>("Failed to initialize allegro ttf addon");
+	}
+
 	Mouse::initialize();
 	Keyboard::initialize();
 
@@ -48,6 +52,7 @@ void Engine::init() {
 
 void Engine::terminate() {
 	ThreadPool::terminate();
+	Texture::cleanup();
 	delete window;
 }
 

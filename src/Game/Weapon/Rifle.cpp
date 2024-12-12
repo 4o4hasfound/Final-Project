@@ -1,30 +1,11 @@
 #include "Game/Weapon/Rifle.hpp"
-//struct WeaponConfig {
-//	float attack;
-//	int ammo;
-//	float shootInterval;
-//
-//	float scale = 1.0;
-//	vec2 size;
-//	vec2 center;
-//	vec2 muzzlePosition;
-//	vec2 gripPosition;
-//
-//	std::string shootAnimationFilename;
-//	vec2 shootAnimationSize;
-//	std::vector<vec2> shootAnimationIndexes;
-//	float shootAnimationDuration;
-//
-//	std::string loadAnimationFilename;
-//	vec2 loadAnimationSize;
-//	std::vector<vec2> loadAnimationIndexes;
-//	float loadAnimationDuration;
-//};
+
 static WeaponConfig weaponConfig{
 	10.0,
-	30.0,
+	30,
+	30,
 	0.4,
-	0.05,
+	0.1,
 
 	1.3,
 	vec2{96, 48},
@@ -80,35 +61,56 @@ Rifle::Rifle(Player* player, PhysicsWorld* world, RenderWindow* window)
 
 }
 
+Rifle::Rifle(Enemy* enemy, PhysicsWorld* world, RenderWindow* window)
+	: Weapon(weaponConfig, enemy, world, window) {
+
+}
+
+
 void Rifle::shoot() {
 	if (status.ammoLeft <= 0) {
 		status.ammoLeft = 0;
+		status.load = true;
+		return;
 	}
 	--status.ammoLeft;
 
-	Bullet* bullet = m_world->createBody<Bullet>(40, 3);
+	Bullet* bullet = m_world->createBody<Bullet>(40, 1500, 3);
+	bullet->player = m_player;
 
 	float rotateOffset;
-	if (m_player->status.walking) {
-		rotateOffset = Random::getReal<float>(-0.2, 0.2);
-	}
-	else if (m_player->status.crouching && m_player->status.moving) {
-		rotateOffset = Random::getReal<float>(-0.08, 0.08);
-	}
-	else if (!m_player->status.crouching && !m_player->status.moving) {
-		rotateOffset = Random::getReal<float>(-0.075, 0.075);
-	}
-	else if (m_player->status.crouching && !m_player->status.moving) {
-		rotateOffset = Random::getReal<float>(-0.05, 0.05);
+	if (m_player) {
+		if (m_player->status.walking) {
+			rotateOffset = Random::getReal<float>(-0.2, 0.2);
+		}
+		else if (m_player->status.crouching && m_player->status.moving) {
+			rotateOffset = Random::getReal<float>(-0.08, 0.08);
+		}
+		else if (!m_player->status.crouching && !m_player->status.moving) {
+			rotateOffset = Random::getReal<float>(-0.075, 0.075);
+		}
+		else if (m_player->status.crouching && !m_player->status.moving) {
+			rotateOffset = Random::getReal<float>(-0.05, 0.05);
+		}
+		else {
+			rotateOffset = Random::getReal<float>(-0.08, 0.08);
+		}
 	}
 	else {
-		rotateOffset = Random::getReal<float>(-0.08, 0.08);
+		rotateOffset = Random::getReal<float>(-0.3, 0.3);
 	}
 	float finalRotation = rotation + rotateOffset;
 	bullet->direction = vec2(cos(-finalRotation), sin(-finalRotation));
 	bullet->rotation = finalRotation;
-	bullet->damage = 100;
-	bullet->knockback = 250;
+	bullet->damage = 400;
+	bullet->knockback = 500;
+
+	if (m_player) {
+		bullet->type = Projectile::FROM_PLAYER;
+	}
+	else {
+		bullet->type = Projectile::FROM_ENEMY;
+	}
 	//bullet->color = {
 	//	Random::getInt(0, 255),
 	//	Random::getInt(0, 255),
@@ -120,17 +122,4 @@ void Rifle::shoot() {
 	//bullet->position += bullet->direction * bullet->speed * 0.25;
 
 	bullet->initialPosition = bullet->position;
-}
-
-void Rifle::myUpdate(float dt) {
-	if (Mouse::get(Mouse::LEFT).pressed) {
-		status.shoot = true;
-	}
-	else {
-		status.shoot = false;
-	}
-
-	if (Mouse::get(Mouse::RIGHT).pressed) {
-		status.load = true;
-	}
 }

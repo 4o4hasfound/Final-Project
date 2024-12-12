@@ -18,9 +18,11 @@ public:
 		Static =		1 << 30,
 		Dynamic =		1 << 29,
 		Uncollidable =	1 << 28,
-		CharacterType =				Dynamic | 1<<0,
-		EnemyType =					Dynamic | 1<<1,
-		BulletType = Dynamic | Uncollidable | 1<<2,
+		Projectile =	1 << 27,
+		CharacterType =		Dynamic								| 1<<0,
+		EnemyType =			Dynamic								| 1<<1,
+		BulletType =		Dynamic | Uncollidable | Projectile | 1<<2,
+		RocketType =		Dynamic | Uncollidable | Projectile | 1<<3,
 		Any = 0x7FFFFFFF
 	};
 

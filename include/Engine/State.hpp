@@ -19,6 +19,9 @@ public:
 	// Retrieves the state currently on top of the stack
 	State* topState();
 
+	// Retrieves the nth state of the stack
+	State* nthState(int n);
+
 	// Pops one or more states from the stack
 	void popState(int n);
 
@@ -28,25 +31,26 @@ public:
 	// This function can be called each frame to update the current state
 	// and clean up the removed states
 	void update();
-	
+
 	// Creates a new state using the specified constructor arguments
 	template<typename StateType, typename ...T, typename = std::enable_if_t<std::is_base_of_v<State, StateType>>>
-	State* makeState(T&... t);
+	State* makeState(T... t);
 
 	// Creates a new state using the specified constructor arguments
 	// then push it onto the stack
 	template<typename StateType, typename ...T, typename = std::enable_if_t<std::is_base_of_v<State, StateType>>>
-	State* emplaceState(T&... t);
+	State* emplaceState(T... t);
 
 	// Replaces the current state with a newly created state
 	template<typename StateType, typename ...T, typename = std::enable_if_t<std::is_base_of_v<State, StateType>>>
-	State* emplaceSwitchState(T&... t);
+	State* emplaceSwitchState(T... t);
 private:
-	std::stack<State*> m_states;
-	std::stack<State*> m_toRemove;
+	std::vector<State*> m_states;
+	std::vector<State*> m_toRemove;
 };
 
 class State {
+	friend class StateManager;
 public:
 	State(StateManager& manager);
 
@@ -68,6 +72,7 @@ public:
 	virtual bool shouldClose() = 0;
 protected:
 	StateManager& m_manager;
+	bool m_removed = 0;
 };
 
 #include "Engine/State.inl"

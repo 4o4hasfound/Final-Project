@@ -53,7 +53,7 @@
 //    glDisable(GL_CULL_FACE);
 //
 //    s_shader.use();
-//    s_shader.setVec2("screenSize", target->getSize());
+//    s_shader.setVec2("screenSize", target->size());
 //    s_shader.setVec2("size", size);
 //    s_shader.setVec3("color", color / 255.0f);
 //    s_shader.setVec2("pos", position);
@@ -133,7 +133,7 @@
 //    glDisable(GL_CULL_FACE);
 //
 //    s_shader.use();
-//    s_shader.setVec2("screenSize", target->getSize());
+//    s_shader.setVec2("screenSize", target->size());
 //    s_shader.setFloat("radius", radius);
 //    s_shader.setVec3("color", color / 255.0f);
 //    s_shader.setVec2("pos", position);
@@ -307,7 +307,7 @@ void Rectangle::draw(const RenderWindow* window, const Texture* texture) {
 		al_draw_scaled_bitmap(
 			texture->getBitmap(), 
 			0, 0,
-			texture->getSize().x, texture->getSize().y,
+			texture->size().x, texture->size().y,
 			std::round(position.x), std::roundf(position.y),
 			size.x, size.y,
 			flag
