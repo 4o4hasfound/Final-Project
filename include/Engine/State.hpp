@@ -23,7 +23,7 @@ public:
 	State* nthState(int n);
 
 	// Pops one or more states from the stack
-	void popState(int n);
+	void popState(int n = 1);
 
 	// Replaces the current state with a new state
 	void switchState(State* state);

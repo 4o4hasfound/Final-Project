@@ -192,6 +192,8 @@
     <ClCompile Include="src\Game\Projectile\Projectile.cpp" />
     <ClCompile Include="src\Game\Projectile\Rocket.cpp" />
     <ClCompile Include="src\Game\Skill\HealSkill.cpp" />
+    <ClCompile Include="src\Game\Skill\IncreaseLoadSpeedSkill.cpp" />
+    <ClCompile Include="src\Game\Skill\IncreaseShootSpeedSkill.cpp" />
     <ClCompile Include="src\Game\Skill\Skill.cpp" />
     <ClCompile Include="src\Game\States\ChooseSkillState.cpp" />
     <ClCompile Include="src\Game\States\TestState.cpp" />
@@ -209,6 +211,7 @@
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Physics\RigidBody.cpp" />
     <ClCompile Include="src\Render\Animation.cpp" />
+    <ClCompile Include="src\Render\Button.cpp" />
     <ClCompile Include="src\Render\Font.cpp" />
     <ClCompile Include="src\Render\RenderWindow.cpp" />
     <ClCompile Include="src\Render\Shape.cpp" />
@@ -241,6 +244,8 @@
     <ClInclude Include="include\Game\Projectile\Projectile.hpp" />
     <ClInclude Include="include\Game\Projectile\Rocket.hpp" />
     <ClInclude Include="include\Game\Skill\HealSkill.hpp" />
+    <ClInclude Include="include\Game\Skill\IncreaseLoadSpeedSkill.hpp" />
+    <ClInclude Include="include\Game\Skill\IncreaseShootSpeedSkill.hpp" />
     <ClInclude Include="include\Game\Skill\Skill.hpp" />
     <ClInclude Include="include\Game\States\ChooseSkillState.hpp" />
     <ClInclude Include="include\Game\States\TestState.hpp" />
@@ -267,6 +272,7 @@
     <ClInclude Include="include\Physics\PhysicsWorld.hpp" />
     <ClInclude Include="include\Physics\RigidBody.hpp" />
     <ClInclude Include="include\Render\Animation.hpp" />
+    <ClInclude Include="include\Render\Button.hpp" />
     <ClInclude Include="include\Render\Drawable.hpp" />
     <ClInclude Include="include\Render\Font.hpp" />
     <ClInclude Include="include\Render\RenderWindow.hpp" />

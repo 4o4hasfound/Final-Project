@@ -46,6 +46,7 @@ void TestState::update(RenderWindow& window, float dt) {
 
 	if (m_player->status.levelUp) {
 		m_player->status.levelUp = 0;
+		Audio::stopAll();
 		m_manager.emplaceState<ChooseSkillState>(m_player, &m_world, m_window);
 	}
 

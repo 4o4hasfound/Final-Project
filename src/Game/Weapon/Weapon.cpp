@@ -52,10 +52,10 @@ void Weapon::update(float dt) {
 	if (status.load) {
 		updateOnLoad(dt);
 	}
-	else if (status.shoot) {
+	else if (status.shoot || !finishShooting()) {
 		updateOnShoot(dt);
 	}
-	else {
+	else if (finishShooting()) {
 		updateOnNoShootLoad(dt);
 	}
 
@@ -133,9 +133,7 @@ void Weapon::updateStatus(float dt) {
 			}
 		}
 		else {
-			if (finishShooting()) {
-				status.shoot = false;
-			}
+			status.shoot = false;
 		}
 		if (Mouse::get(Mouse::RIGHT).pressed && status.ammoLeft != config.ammo && finishLoading()) {
 			status.load = true;
@@ -143,9 +141,11 @@ void Weapon::updateStatus(float dt) {
 	}
 
 
-	if (status.shoot && status.ammoLeft <= 0 && finishShooting()) {
+	if (status.ammoLeft <= 0 && finishShooting()) {
+		if (status.shoot) {
+			status.load = true;
+		}
 		status.shoot = false;
-		status.load = true;
 	}
 
 	if (status.shootCD > 0) {
@@ -161,7 +161,12 @@ void Weapon::updateStatus(float dt) {
 
 void Weapon::updateOnShoot(float dt) {
 	if (status.shootCD <= 0) {
-		status.shootCD = config.shootInterval;
+		if (m_player) {
+			status.shootCD = config.shootInterval / m_player->status.shootSpeed;
+		}
+		else {
+			status.shootCD = config.shootInterval;
+		}
 		shoot();
 		if (m_player) {
 			m_shootSound.play(1.0);
@@ -171,7 +176,13 @@ void Weapon::updateOnShoot(float dt) {
 		}
 		m_shootAnimation.reset();
 	}
-	m_shootAnimation.update(dt, false);
+	if (m_player) {
+		m_shootAnimation.update(dt * m_player->status.shootSpeed, false);
+	}
+	else {
+		m_shootAnimation.update(dt, false);
+	}
+	m_loadAnimation.reset();
 }
 
 void Weapon::updateOnLoad(float dt) {
@@ -184,10 +195,14 @@ void Weapon::updateOnLoad(float dt) {
 		}
 		m_loadAnimation.reset();
 	}
+	if (m_player) {
+		dt *= m_player->status.loadSpeed;
+	}
 	if (m_loadAnimation.update(dt, false)) {
 		status.load = false;
 		status.ammoLeft = std::min(config.ammo, status.ammoLeft + config.reloadAmmo);
 	}
+	m_shootAnimation.reset();
 }
 
 void Weapon::updateOnNoShootLoad(float dt) {

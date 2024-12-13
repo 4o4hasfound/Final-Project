@@ -65,3 +65,7 @@ void Audio::stop() {
 	}
 	ids.clear();
 }
+
+void Audio::stopAll() {
+	al_stop_samples();
+}

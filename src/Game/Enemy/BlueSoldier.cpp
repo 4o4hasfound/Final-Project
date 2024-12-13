@@ -125,7 +125,7 @@ void BlueSoldier::attack(Player* player) {
 
 	if (status.state == EnemyState::Attack && status.attacking) {
 		m_weapon->status.holding = 1;
-		if (m_weapon->finishShooting() && m_weapon->finishLoading()) {
+		if (m_weapon->finishLoading() && m_weapon->finishLoading()) {
 			m_weapon->status.shoot = 1;
 		}
 		const vec2 pivot = m_weapon->getWorldPivotPoint();

@@ -35,6 +35,11 @@ struct PlayerStatus {
 	int weaponIndex = 0;
 
 	std::vector<Skill*> skills;
+
+	float shootSpeed = 1.0f;
+	float loadSpeed = 1.0f;
+	float damageScale = 1.0f;
+	float rangeScale = 1.0f;
 };
 
 struct PlayerConfig {

@@ -31,6 +31,8 @@ public:
 
 	void stop();
 
+	static void stopAll();
+
 	ALLEGRO_SAMPLE* sample;
 	FreeList<ALLEGRO_SAMPLE_ID> ids;
 };

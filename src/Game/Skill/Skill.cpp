@@ -26,3 +26,7 @@ void Skill::renderAnimation(const vec2& position, const vec2& size) {
 	rect.absolutePosition = true;
 	m_window->draw(rect, m_animation.getFrame());
 }
+
+const Texture* Skill::getAnimationFrame() const {
+	return m_animation.getFrame();
+}

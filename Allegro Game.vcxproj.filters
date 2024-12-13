@@ -79,9 +79,6 @@
     <Filter Include="標頭檔\Game\Player">
       <UniqueIdentifier>{17effdd5-d130-4e92-8fd6-a9897f1f0eea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="來源檔案\Game\States">
-      <UniqueIdentifier>{cb442a87-5c47-40c6-8771-dd8a6d15511e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="標頭檔\Game\States">
       <UniqueIdentifier>{d02f3013-aec6-4274-88a6-896080c272ce}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     </Filter>
     <Filter Include="來源檔案\Game\Skill">
       <UniqueIdentifier>{ed17621a-fde5-4471-9ddc-cc37a39367ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="來源檔案\Game\States">
+      <UniqueIdentifier>{cb442a87-5c47-40c6-8771-dd8a6d15511e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +272,15 @@
     </ClCompile>
     <ClCompile Include="src\Game\States\ChooseSkillState.cpp">
       <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Render\Button.cpp">
+      <Filter>來源檔案\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\IncreaseShootSpeedSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\IncreaseLoadSpeedSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -451,6 +460,15 @@
     </ClInclude>
     <ClInclude Include="include\Game\States\ChooseSkillState.hpp">
       <Filter>標頭檔\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Render\Button.hpp">
+      <Filter>標頭檔\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\IncreaseShootSpeedSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\IncreaseLoadSpeedSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

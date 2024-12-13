@@ -18,7 +18,7 @@ static WeaponConfig weaponConfig{
 		{0, 2}, 
 		{0, 3}
 	},
-	0.0125,
+	0.05,
 	"assets/Guns/AK47/shootSound.mp3",
 
 	"assets/Guns/AK47/load.png",

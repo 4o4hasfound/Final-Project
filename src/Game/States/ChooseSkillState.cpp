@@ -9,6 +9,14 @@ ChooseSkillState::ChooseSkillState(StateManager& manager, Player* player, Physic
 
 void ChooseSkillState::onEnter() {
 	m_skills.push_back(std::move(std::make_unique<HealSkill>(m_player, m_world, m_window)));
+	m_skills.push_back(std::move(std::make_unique<IncreaseLoadSpeedSkill>(m_player, m_world, m_window)));
+	m_skills.push_back(std::move(std::make_unique<IncreaseShootSpeedSkill>(m_player, m_world, m_window)));
+	m_buttons.emplace_back(vec2(128, 128));
+	m_buttons.back().position = vec2(500);
+	m_buttons.emplace_back(vec2(256, 256));
+	m_buttons.back().position = vec2(800, 500);
+	m_buttons.emplace_back(vec2(160, 64));
+	m_buttons.back().position = vec2(1100, 500);
 }
 
 void ChooseSkillState::onDestroy() {
@@ -28,14 +36,14 @@ void ChooseSkillState::reset() {
 }
 
 void ChooseSkillState::update(RenderWindow& window, float dt) {
-	for (auto& skill : m_skills) {
-		skill->updateAnimation(dt);
-	}
-	if (AABB(vec2(500) - vec2(128, 128) * 0.5, vec2(500) + vec2(128, 128) * 0.5).intersect(Mouse::getPosition()) && Mouse::get(Mouse::LEFT).buttondown) {
-
-		m_skills[0]->use();
-
-		m_manager.popState(1);
+	for (int i = 0; i < m_skills.size(); ++i) {
+		m_skills[i]->updateAnimation(dt);
+		m_buttons[i].update(dt);
+		
+		if (m_buttons[i].pressedAndReleased) {
+			m_skills[i]->use();
+			goBack();
+		}
 	}
 }
 
@@ -51,11 +59,17 @@ void ChooseSkillState::render(RenderWindow& window) {
 	rect.absolutePosition = true;
 	window.draw(rect);
 
-
-	m_skills[0]->renderAnimation(vec2(500), vec2(128, 128));
+	for (int i = 0; i < m_skills.size(); ++i) {
+		window.draw(m_buttons[i], m_skills[i]->getAnimationFrame());
+	}
 }
 
 bool ChooseSkillState::shouldClose()
 {
 	return false;
+}
+
+void ChooseSkillState::goBack() {
+	m_manager.popState();
+	m_removed = true;
 }

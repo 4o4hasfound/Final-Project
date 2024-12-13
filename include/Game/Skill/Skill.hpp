@@ -20,6 +20,7 @@ public:
 
 	void updateAnimation(float dt);
 	void renderAnimation(const vec2& position, const vec2& size);
+	const Texture* getAnimationFrame() const;
 protected:
 	PhysicsWorld* m_world;
 	Player* m_player;

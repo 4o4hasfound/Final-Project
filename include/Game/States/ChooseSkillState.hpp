@@ -6,6 +6,7 @@
 
 #include "Render/Font.hpp"
 #include "Render/Text.hpp"
+#include "Render/Button.hpp"
 
 #include "Physics/PhysicsWorld.hpp"
 
@@ -13,6 +14,9 @@
 
 #include "Game/Skill/Skill.hpp"
 #include "Game/Skill/HealSkill.hpp"
+#include "Game/Skill/IncreaseLoadSpeedSkill.hpp"
+#include "Game/Skill/IncreaseShootSpeedSkill.hpp"
+
 
 #include "Engine/Mouse.hpp"
 
@@ -42,8 +46,11 @@ private:
 	Player* m_player;
 	Font m_font{ "assets/Minecraft.ttf" };
 	std::vector<std::unique_ptr<Skill>> m_skills;
+	std::vector<Button> m_buttons;
 
 	// Average fps
 	float m_totalFps = 0;
 	int m_frameCount = 0;
+
+	void goBack();
 };
