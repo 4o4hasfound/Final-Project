@@ -78,3 +78,7 @@ State::State(StateManager& manager)
 	: m_manager(manager) {
 
 }
+
+bool State::shouldClose() {
+	return m_shouldClose;
+}

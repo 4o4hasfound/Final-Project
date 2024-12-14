@@ -69,10 +69,11 @@ public:
 	virtual void reset() {};
 	virtual void update(RenderWindow& window, float dt) {};
 	virtual void render(RenderWindow& window) {};
-	virtual bool shouldClose() = 0;
+	virtual bool shouldClose();
 protected:
 	StateManager& m_manager;
 	bool m_removed = 0;
+	bool m_shouldClose = false;
 };
 
 #include "Engine/State.inl"

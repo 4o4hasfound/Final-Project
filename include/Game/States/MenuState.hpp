@@ -32,14 +32,18 @@ public:
 	virtual void reset() override;
 	virtual void update(RenderWindow& window, float dt) override;
 	virtual void render(RenderWindow& window) override;
-	virtual bool shouldClose() override;
 private:
 	RenderWindow* m_window;
 	GrassMap m_map;
 	Font m_font;
-	Text m_playText;
 	Audio m_audio{ "assets/Music/menu.ogg" };
+	Audio m_clickSound{ "assets/minecraft_click.mp3" };
 	Button m_playButton;
+	Button m_exitButton;
+	Button m_settingButton;
+	Text m_playText;
+	Text m_exitText;
+	Text m_settingText;
 
 	// Average fps
 	float m_totalFps = 0;

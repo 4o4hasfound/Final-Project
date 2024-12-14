@@ -10,9 +10,10 @@ Button::Button(const vec2& _size, std::function<void(void)> _callback)
 void Button::update(float dt) {
 	bool lastPressed = pressed;
 	bool lastReleased = released;
+	bool lastHover = hover;
 
 	hover = AABB(position - size * 0.5, position + size * 0.5).intersect(Mouse::getPosition());
-
+	firstHover = hover && !lastHover;
 
 	if (hover) {
 		size = originalSize * enlargeFactor;
@@ -54,8 +55,10 @@ void Button::update(float dt) {
 void Button::update(float dt, std::function<void(void)> _callback) {
 	bool lastPressed = pressed;
 	bool lastReleased = released;
+	bool lastHover = hover;
 
 	hover = AABB(position - size * 0.5, position + size * 0.5).intersect(Mouse::getPosition());
+	firstHover = hover && !lastHover;
 
 
 	if (hover) {

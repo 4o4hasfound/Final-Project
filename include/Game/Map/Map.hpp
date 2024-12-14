@@ -37,12 +37,12 @@ protected:
 		void setGridSize(const vec2& _size);
 
 		// Checks if a tile exists at the specified grid coordinates
-		bool exist(int x, int y);
+		bool exist(int x, int y) const;
 
 		// Checks if a point/aabb intersects with any existing tiles
-		bool intersect(const vec2& point);
-		bool intersect(const AABB& aabb);
-		bool intersect(const vec2& point, const vec2& size);
+		bool intersect(const vec2& point) const;
+		bool intersect(const AABB& aabb) const;
+		bool intersect(const vec2& point, const vec2& size) const;
 
 		std::vector<Tile>& operator[](int index);
 		const std::vector<Tile>& operator[](int index) const;
@@ -63,10 +63,10 @@ public:
 	virtual const Tiles* getCollisionTiles() const;
 
 	// Returns if the aabb intersect with the map
-	virtual bool intersect(const vec2& pos, const vec2& size) = 0;
-	virtual bool intersect(const AABB& aabb) = 0;
-	virtual bool intersect(const BoundingCircle& circle) = 0;
-	virtual bool intersect(const BoundingLine& line) = 0;
-	virtual bool intersect(const BoundingLine& line, RenderWindow& window) = 0;
+	virtual bool intersect(const vec2& pos, const vec2& size) const = 0;
+	virtual bool intersect(const AABB& aabb) const = 0;
+	virtual bool intersect(const BoundingCircle& circle) const = 0;
+	virtual bool intersect(const BoundingLine& line) const = 0;
+	virtual bool intersect(const BoundingLine& line, RenderWindow& window) const = 0;
 protected:
 };

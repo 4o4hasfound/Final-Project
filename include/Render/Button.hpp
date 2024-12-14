@@ -23,6 +23,7 @@ public:
 	std::function<void(void)> callback;
 
 	bool hover = false;
+	bool firstHover = false;
 	bool pressed = false;
 	bool released = true;
 	bool buttondown = false;

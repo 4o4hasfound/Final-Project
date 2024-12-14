@@ -7,11 +7,11 @@ void Map::Tiles::setGridSize(const vec2& _size) {
 	}
 }
 
-bool Map::Tiles::exist(int x, int y) {
+bool Map::Tiles::exist(int x, int y) const {
 	return y >= 0 && x >= 0 && y < grid.size() && x < grid[0].size() && grid[y][x].exist;
 }
 
-bool Map::Tiles::intersect(const vec2& point) {
+bool Map::Tiles::intersect(const vec2& point) const {
 	ivec2 index = ivec2((point - position) / size);
 	if (index.y < 0 || index.x < 0 || index.y >= grid.size() || index.x >= grid[0].size()) {
 		return false;
@@ -19,7 +19,7 @@ bool Map::Tiles::intersect(const vec2& point) {
 	return grid[index.y][index.x].exist;
 }
 
-bool Map::Tiles::intersect(const AABB& aabb) {
+bool Map::Tiles::intersect(const AABB& aabb) const {
 	ivec2 lowerIndex = ivec2((aabb.lowerBound - position) / size);
 	ivec2 upperIndex = ivec2((aabb.upperBound - position) / size);
 
@@ -36,7 +36,7 @@ bool Map::Tiles::intersect(const AABB& aabb) {
 	return false;
 }
 
-bool Map::Tiles::intersect(const vec2& point, const vec2& _size) {
+bool Map::Tiles::intersect(const vec2& point, const vec2& _size) const {
 	ivec2 lowerIndex = ivec2((point - position) / size);
 	ivec2 upperIndex = ivec2((point + _size - position) / size);
 

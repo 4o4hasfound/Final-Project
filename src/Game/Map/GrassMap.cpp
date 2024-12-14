@@ -73,13 +73,13 @@ void GrassMap::resolveCollision(RigidBody* body, RenderWindow& window) {
 	}
 }
 
-bool GrassMap::intersect(const vec2& pos, const vec2& size) {
+bool GrassMap::intersect(const vec2& pos, const vec2& size) const{
 	AABB aabb{ pos - size * 0.5, pos + size * 0.5 };
 	return intersect(aabb);
 }
 
-bool GrassMap::intersect(const AABB& aabb) {
-	Tiles& tiles = m_waterTiles;
+bool GrassMap::intersect(const AABB& aabb)const {
+	const Tiles& tiles = m_waterTiles;
 
 	ivec2 lowerIndex = max(ivec2(
 		(aabb.lowerBound - tiles.position) / tiles.size - 1
@@ -105,8 +105,8 @@ bool GrassMap::intersect(const AABB& aabb) {
 	return false;
 }
 
-bool GrassMap::intersect(const BoundingCircle& circle) {
-	Tiles& tiles = m_waterTiles;
+bool GrassMap::intersect(const BoundingCircle& circle) const{
+	const Tiles& tiles = m_waterTiles;
 
 	ivec2 lowerIndex = max(ivec2(
 		(circle.position - circle.radius - tiles.position) / tiles.size - 1
@@ -132,8 +132,8 @@ bool GrassMap::intersect(const BoundingCircle& circle) {
 	return false;
 }
 
-bool GrassMap::intersect(const BoundingLine& line) {
-	Tiles& tiles = m_waterTiles;
+bool GrassMap::intersect(const BoundingLine& line) const{
+	const Tiles& tiles = m_waterTiles;
 	const AABB aabb = AABB::FromTwoPoints(line.start, line.end);
 
 	ivec2 lowerIndex = max(ivec2(
@@ -161,8 +161,8 @@ bool GrassMap::intersect(const BoundingLine& line) {
 	return false;
 }
 
-bool GrassMap::intersect(const BoundingLine& line, RenderWindow& window) {
-	Tiles& tiles = m_waterTiles;
+bool GrassMap::intersect(const BoundingLine& line, RenderWindow& window) const {
+	const Tiles& tiles = m_waterTiles;
 	const AABB aabb = AABB::FromTwoPoints(line.start, line.end);
 	aabb.DebugDraw(window);
 	ivec2 lowerIndex = max(ivec2(
@@ -542,7 +542,7 @@ Texture* GrassMap::getLandTexture(int x, int y) {
 	return &m_earth[13][0];
 }
 
-std::vector<AABB> GrassMap::getWaterBoundingBox(int x, int y) {
+std::vector<AABB> GrassMap::getWaterBoundingBox(int x, int y) const {
 	bool right = m_landTiles.exist(x + 1, y) || existAdditionTrail(x + 1, y);
 	bool left = m_landTiles.exist(x - 1, y) || existAdditionTrail(x - 1, y);
 	bool up = m_landTiles.exist(x, y - 1) || existAdditionTrail(x, y - 1);
@@ -708,7 +708,7 @@ std::vector<AABB> GrassMap::getWaterBoundingBox(int x, int y) {
 	return { AABB{ {0, 0}, size } };
 }
 
-bool GrassMap::existAdditionTrail(int x, int y) {
+bool GrassMap::existAdditionTrail(int x, int y) const {
 	const vec2 position = m_waterTiles.position + vec2(x, y) * m_waterTiles.size;
 	return m_additionalTrail.count(position);
 }

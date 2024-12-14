@@ -21,12 +21,12 @@ public:
 	virtual void resolveCollision(RigidBody* body) override;
 	virtual void resolveCollision(RigidBody* body, RenderWindow& window);
 
-	virtual bool intersect(const vec2& pos, const vec2& size) override;
-	virtual bool intersect(const AABB& aabb) override;
-	virtual bool intersect(const BoundingCircle& circle) override;
-	virtual bool intersect(const BoundingLine& line) override;
+	virtual bool intersect(const vec2& pos, const vec2& size) const override;
+	virtual bool intersect(const AABB& aabb) const override;
+	virtual bool intersect(const BoundingCircle& circle) const override;
+	virtual bool intersect(const BoundingLine& line) const override;
 
-	virtual bool intersect(const BoundingLine& line, RenderWindow& window) override;
+	virtual bool intersect(const BoundingLine& line, RenderWindow& window) const override;
 
 	virtual const Tiles* getCollisionTiles() const override;
 
@@ -92,8 +92,8 @@ private:
 	Texture* getLandTexture(int x, int y);
 
 	// Determines what aabbs will composite the bound of the water tile
-	std::vector<AABB> getWaterBoundingBox(int x, int y);
+	std::vector<AABB> getWaterBoundingBox(int x, int y) const;
 
 	// Returns if an additional trail exist
-	bool existAdditionTrail(int x, int y);
+	bool existAdditionTrail(int x, int y) const;
 };

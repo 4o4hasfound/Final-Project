@@ -52,7 +52,7 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 	for (int i = 0; i < tiles->grid.size(); ++i) {
 		for (int j = 0; j < tiles->grid[0].size(); ++j) {
 			const vec2 position = vec2(j, i) * tiles->size + tiles->position;
-			if (tiles->grid[i][j].exist) {
+			if (map.intersect(position, vec2(300))) {
 				continue;
 			}
       		if (position <= window.viewport.position || position >= window.viewport.position + window.viewport.size) {
