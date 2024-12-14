@@ -7,11 +7,12 @@ TestState::TestState(StateManager& manager, RenderWindow* window)
 	, m_enemies(&m_world)
 	, m_font("assets/Minecraft.ttf") {
 	m_window->viewport.size *= 0.75;
+	m_window->viewport.position = vec2(0);
 	m_player = m_world.createBody<Adventurer>(&m_world, window);
 }
 
 void TestState::onEnter() {
-
+	m_audio.play(1.0, true);
 }
 
 void TestState::onDestroy() {

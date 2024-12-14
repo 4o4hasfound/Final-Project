@@ -282,6 +282,9 @@
     <ClCompile Include="src\Game\Skill\IncreaseLoadSpeedSkill.cpp">
       <Filter>來源檔案\Game\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\States\MenuState.cpp">
+      <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp">
@@ -469,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="include\Game\Skill\IncreaseLoadSpeedSkill.hpp">
       <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\States\MenuState.hpp">
+      <Filter>標頭檔\Game\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

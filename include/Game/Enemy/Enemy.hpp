@@ -74,7 +74,7 @@ public:
 	virtual void draw(RenderWindow& window) const = 0;
 	virtual void attack(Player* player);
 
-	void pathFind(Map* map, Player* player, RenderWindow& window);
+	virtual void pathFind(Map* map, Player* player, RenderWindow& window);
 
 	bool hit(float damage, const vec2& knockback);
 

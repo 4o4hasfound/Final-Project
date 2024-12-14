@@ -108,6 +108,7 @@ bool Enemy::hit(float damage, const vec2& knockback) {
 	if (status.health <= 0) {
 		status.health = 0;
 		status.dying = 1;
+		m_type = static_cast<RigidBody::BodyType>(RigidBody::Uncollidable | RigidBody::EnemyType);
 		return true;
 	}
 

@@ -180,10 +180,10 @@ void Adventurer::myUpdate(float dt) {
 		if (!m_audio.playing()) {
 			// Speed up a little bit
 			if (status.walking) {
-				m_audio.play(1.3 * 0.75, 20.0);
+				m_audio.play(1.3 * 0.75, 10.0);
 			}
 			else if (status.running) {
-				m_audio.play(1.3, 20.0);
+				m_audio.play(1.3, 10.0);
 			}
 		}
 	}

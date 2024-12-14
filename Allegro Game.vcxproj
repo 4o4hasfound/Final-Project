@@ -196,6 +196,7 @@
     <ClCompile Include="src\Game\Skill\IncreaseShootSpeedSkill.cpp" />
     <ClCompile Include="src\Game\Skill\Skill.cpp" />
     <ClCompile Include="src\Game\States\ChooseSkillState.cpp" />
+    <ClCompile Include="src\Game\States\MenuState.cpp" />
     <ClCompile Include="src\Game\States\TestState.cpp" />
     <ClCompile Include="src\Game\Weapon\Glock.cpp" />
     <ClCompile Include="src\Game\Weapon\Rifle.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="include\Game\Skill\IncreaseShootSpeedSkill.hpp" />
     <ClInclude Include="include\Game\Skill\Skill.hpp" />
     <ClInclude Include="include\Game\States\ChooseSkillState.hpp" />
+    <ClInclude Include="include\Game\States\MenuState.hpp" />
     <ClInclude Include="include\Game\States\TestState.hpp" />
     <ClInclude Include="include\Game\Weapon\Glock.hpp" />
     <ClInclude Include="include\Game\Weapon\Rifle.hpp" />

@@ -54,6 +54,7 @@ private:
 	Player* m_player;
 	Font m_font;
 	Texture m_uiBar{ "assets/UIBar.png" };
+	Audio m_audio{ "assets/music.ogg" };
 
 	// Only generate the enemy every few ticks(a constant duration)
 	Clock m_tickClock;
