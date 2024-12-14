@@ -28,7 +28,7 @@ public:
 
 
 	int level = 0;
-	Clock clock;
+	float clock = 60;
 	bool startWave = 0;
 private:
 	void generateEnemies(float dt, PhysicsWorld& world, const Map& map, RenderWindow& window);

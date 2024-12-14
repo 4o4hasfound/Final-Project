@@ -8,10 +8,10 @@ ChooseSkillState::ChooseSkillState(StateManager& manager, Player* player, Physic
 }
 
 void ChooseSkillState::onEnter() {
-	m_skills.push_back(std::move(std::make_unique<HealSkill>(m_player, m_world, m_window)));
+	m_skills.push_back(std::move(std::make_unique<InvincibleShieldSkill>(m_player, m_world, m_window)));
 	m_skills.push_back(std::move(std::make_unique<IncreaseLoadSpeedSkill>(m_player, m_world, m_window)));
 	m_skills.push_back(std::move(std::make_unique<IncreaseShootSpeedSkill>(m_player, m_world, m_window)));
-	m_buttons.emplace_back(vec2(128, 128));
+	m_buttons.emplace_back(vec2(120, 120));
 	m_buttons.back().position = vec2(500);
 	m_buttons.emplace_back(vec2(256, 256));
 	m_buttons.back().position = vec2(800, 500);
@@ -42,6 +42,7 @@ void ChooseSkillState::update(RenderWindow& window, float dt) {
 		
 		if (m_buttons[i].pressedAndReleased) {
 			m_skills[i]->use();
+			m_player->status.skills.push_back(m_skills[i].get());
 			goBack();
 		}
 	}
@@ -72,4 +73,11 @@ bool ChooseSkillState::shouldClose()
 void ChooseSkillState::goBack() {
 	m_manager.popState();
 	m_removed = true;
+}
+
+std::string ChooseSkillState::getDescription(int i) {
+	switch (i) {
+	case 0:
+		return "Invincible shield that defend you from all sorts of brutal attacks!";
+	}
 }

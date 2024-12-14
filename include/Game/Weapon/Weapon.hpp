@@ -47,9 +47,6 @@ struct WeaponConfig {
 	std::string loadSound;
 };
 
-class Player;
-class Enemy;
-
 class Weapon {
 public:
 	Weapon(const WeaponConfig& _config, Player* player, PhysicsWorld* world, RenderWindow* window);

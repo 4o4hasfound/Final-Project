@@ -1,8 +1,10 @@
 #include "Game/Player/Player.hpp"
 
-Player::Player(const PlayerConfig& _config)
+Player::Player(const PlayerConfig& _config, PhysicsWorld* world, RenderWindow* window)
 	: RigidBody(RigidBody::CharacterType, {_config.aabb * _config.scale})
-	, config(_config){
+	, config(_config)
+	, m_world(world)
+	, m_window(window) {
 
 }
 
@@ -12,13 +14,13 @@ void Player::update(float dt) {
 	status.maxExp = 5 * status.level;
 
 	for (Skill* skill : status.skills) {
-		skill->update();
+		skill->update(dt);
 	}
 }
 
 void Player::draw(RenderWindow& window) const {
 	for (Skill* skill : status.skills) {
-		skill->render();
+		skill->render(window);
 	}
 }
 
@@ -27,6 +29,9 @@ void Player::myUpdate(float dt) {
 }
 
 bool Player::hit(float damage, const vec2& knockback) {
+	if (status.invincible) {
+		return false;
+	}
 	status.health -= damage;
 	status.knockbackCD = 0.1;
 	velocity = knockback;
@@ -45,4 +50,8 @@ void Player::addExp(int amount) {
 		++status.level;
 		status.levelUp = 1;
 	}
+}
+
+void Player::changeWeapon(const std::string& name) {
+
 }

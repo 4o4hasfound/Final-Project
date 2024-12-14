@@ -1,11 +1,14 @@
 #include "Game/Entity/GunEntity.hpp"
 
-GunEntity::GunEntity(Player* player, const std::string& name, const Texture& texture, float scale)
+GunEntity::GunEntity(Player* player, const std::string& name, const Texture& texture, float scale, PhysicsWorld* world, RenderWindow* window)
 	: Entity(RigidBody::GunEntityType, AABB{texture.size() * scale * -0.5, texture.size() * scale * 0.5 })
 	, m_font("assets/Minecraft.ttf")
 	, m_hint(&m_font)
 	, m_scale(scale)
 	, m_player(player)
+	, m_name(name)
+	, m_world(world)
+	, m_window(window)
 	, m_texture(texture) {
 	m_hint.string = "Press G to obtain " + name;
 	m_hint.size = 40;
@@ -36,6 +39,7 @@ void GunEntity::update(float dt) {
 
 	if (inOpenDistance && Keyboard::get(Keyboard::KEY_G).keydown) {
 		alive = 0;
+		player->changeWeapon(m_name);
 	}
 
 }

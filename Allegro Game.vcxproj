@@ -198,6 +198,7 @@
     <ClCompile Include="src\Game\Skill\HealSkill.cpp" />
     <ClCompile Include="src\Game\Skill\IncreaseLoadSpeedSkill.cpp" />
     <ClCompile Include="src\Game\Skill\IncreaseShootSpeedSkill.cpp" />
+    <ClCompile Include="src\Game\Skill\InvincibleShieldSkill.cpp" />
     <ClCompile Include="src\Game\Skill\Skill.cpp" />
     <ClCompile Include="src\Game\States\ChooseSkillState.cpp" />
     <ClCompile Include="src\Game\States\MenuState.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="include\Game\Skill\HealSkill.hpp" />
     <ClInclude Include="include\Game\Skill\IncreaseLoadSpeedSkill.hpp" />
     <ClInclude Include="include\Game\Skill\IncreaseShootSpeedSkill.hpp" />
+    <ClInclude Include="include\Game\Skill\InvincibleShieldSkill.hpp" />
     <ClInclude Include="include\Game\Skill\Skill.hpp" />
     <ClInclude Include="include\Game\States\ChooseSkillState.hpp" />
     <ClInclude Include="include\Game\States\MenuState.hpp" />

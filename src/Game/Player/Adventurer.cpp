@@ -15,12 +15,9 @@ static PlayerConfig playerConfig{
 };
 
 Adventurer::Adventurer(PhysicsWorld* world, RenderWindow* window)
-	: Player(playerConfig) {
+	: Player(playerConfig, world, window) {
 	status.health = config.health;
-	m_weapons.push_back(std::move(std::make_unique<Glock>(this, world, window)));
-	m_weapons.push_back(std::move(std::make_unique<Rifle>(this, world, window)));
-	m_weapons.push_back(std::move(std::make_unique<Shotgun>(this, world, window)));
-	m_weapons.push_back(std::move(std::make_unique<RPG>(this, world, window)));
+	status.weapon = new Glock(this, world, window);
 }
 
 void Adventurer::draw(RenderWindow& window) const {
@@ -61,25 +58,19 @@ void Adventurer::draw(RenderWindow& window) const {
 		window.draw(rect, m_idleAnimation.getFrame());
 	}
 
-	Weapon* weapon = nullptr;
-
-	for (int i = 1; i <= m_weapons.size(); ++i) {
-		if (i == status.weaponIndex) {
-			weapon = m_weapons[i-1].get();
-			weapon->draw(window);
-			break;
+	if (status.weapon) {
+		if (status.weapon->status.holding) {
+			status.weapon->draw(window);
 		}
-	}
 
-	if (weapon) {
 		Font font("assets/Minecraft.ttf");
 		Text text(&font);
 
-		text.string = std::to_string(weapon->status.ammoLeft);
+		text.string = std::to_string(status.weapon->status.ammoLeft);
 		text.position = vec2(1400, 800);
 		text.size = 40;
-		
-		if (weapon->status.ammoLeft > weapon->config.ammo * 0.5) {
+
+		if (status.weapon->status.ammoLeft > status.weapon->config.ammo * 0.5) {
 			text.color = vec4(255, 255, 255, 255);
 		}
 		else {
@@ -88,11 +79,32 @@ void Adventurer::draw(RenderWindow& window) const {
 
 		window.draw(text);
 
-		text.string = " / " + std::to_string(weapon->config.ammo);
+		text.string = " / " + std::to_string(status.weapon->config.ammo);
 		text.position = vec2(1500, 800);
 		text.color = vec4(255, 255, 255, 255);
 
 		window.draw(text);
+	}
+	for (Skill* skill : status.skills) {
+		skill->render(window);
+	}
+}
+
+void Adventurer::changeWeapon(const std::string& name) {
+	if (status.weapon) {
+		delete status.weapon;
+	}
+	if (name == "Glock") {
+		status.weapon = new Glock(this, m_world, m_window);
+	}
+	else if (name == "Rifle") {
+		status.weapon = new Rifle(this, m_world, m_window);
+	}
+	else if (name == "Shotgun") {
+		status.weapon = new Shotgun(this, m_world, m_window);
+	}
+	else if (name == "RPG") {
+		status.weapon = new RPG(this, m_world, m_window);
 	}
 }
 
@@ -127,15 +139,10 @@ void Adventurer::myUpdate(float dt) {
 		velocity.x = 0;
 	}
 
-	if (Mouse::getScroll() > 0) {
-		status.weaponIndex = (status.weaponIndex + 1) % (m_weapons.size() + 1);
+	if (Mouse::getScroll() != 0) {
+		status.weaponIndex = status.weaponIndex ? 0 : 1;
 	}
-	if (Mouse::getScroll() < 0) {
-		status.weaponIndex = (status.weaponIndex + m_weapons.size()) % (m_weapons.size() + 1);
-	}
-	if (status.weaponIndex) {
-		m_weapons[status.weaponIndex - 1]->status.holding = 1;
-	}
+	status.weapon->status.holding = status.weaponIndex;
 
 	status.crouching = Keyboard::get(Keyboard::KEY_LSHIFT).pressed;
 	status.running = walking && status.weaponIndex == 0 && Keyboard::get(Keyboard::KEY_LCTRL).pressed;
@@ -223,11 +230,8 @@ void Adventurer::myUpdate(float dt) {
 		m_idleAnimation.update(dt, true);
 	}
 
-	for (int i = 1; i <= m_weapons.size(); ++i) {
-		if (i == status.weaponIndex) {
-			m_weapons[i-1]->update(dt);
-			break;
-		}
+	if (status.weapon && status.weapon->status.holding) {
+		status.weapon->update(dt);
 	}
 
 	status.moving = walking;

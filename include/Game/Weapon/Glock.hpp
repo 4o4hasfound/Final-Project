@@ -5,6 +5,7 @@
 
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Player/Player.hpp"
+#include "Game/Enemy/Enemy.hpp"
 #include "Game/Projectile/Bullet.hpp"
 #include "Game/Projectile/Rocket.hpp"
 

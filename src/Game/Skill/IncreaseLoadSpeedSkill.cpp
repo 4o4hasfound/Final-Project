@@ -1,7 +1,7 @@
 #include "Game/Skill/IncreaseLoadSpeedSkill.hpp"
 
 IncreaseLoadSpeedSkill::IncreaseLoadSpeedSkill(Player* player, PhysicsWorld* world, RenderWindow* window)
-	: Skill(Animation{
+	: Skill(Skill::OneTimeUse, Animation{
 		"assets/Skill/IncreaseLoadSpeed/load.png",
 		vec2(512, 512),
 		{

@@ -15,6 +15,8 @@
 #include "Math/Vector.hpp"
 #include "Math/Functions.hpp"
 
+class Weapon;
+
 struct PlayerStatus {
 	float health;
 	int level = 0;
@@ -40,6 +42,10 @@ struct PlayerStatus {
 	float loadSpeed = 1.0f;
 	float damageScale = 1.0f;
 	float rangeScale = 1.0f;
+
+	Weapon* weapon;
+	
+	bool invincible = false;
 };
 
 struct PlayerConfig {
@@ -57,7 +63,7 @@ class EnemyManager;
 
 class Player: public RigidBody {
 public:
-	Player(const PlayerConfig& config);
+	Player(const PlayerConfig& config, PhysicsWorld* world, RenderWindow* window);
 	~Player() = default;
 
 	virtual void update(float dt);
@@ -66,9 +72,13 @@ public:
 	bool hit(float damage, const vec2& knockback);
 	void addExp(int amount);
 
+	virtual void changeWeapon(const std::string& name);
+
 	PlayerStatus status;
 	PlayerConfig config;
 protected:
+	PhysicsWorld* m_world;
+	RenderWindow* m_window;
 	// myUpdate will be called before the actual update
 	// so by overriding it in the subclass, you can make your own update function
 	virtual void myUpdate(float dt);

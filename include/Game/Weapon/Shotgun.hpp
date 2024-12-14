@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Game/Enemy/Enemy.hpp"
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Projectile/Bullet.hpp"
 

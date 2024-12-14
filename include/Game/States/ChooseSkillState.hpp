@@ -16,6 +16,7 @@
 #include "Game/Skill/HealSkill.hpp"
 #include "Game/Skill/IncreaseLoadSpeedSkill.hpp"
 #include "Game/Skill/IncreaseShootSpeedSkill.hpp"
+#include "Game/Skill/InvincibleShieldSkill.hpp"
 
 
 #include "Engine/Mouse.hpp"
@@ -53,4 +54,6 @@ private:
 	int m_frameCount = 0;
 
 	void goBack();
+
+	std::string getDescription(int i);
 };

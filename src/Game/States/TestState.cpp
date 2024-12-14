@@ -12,7 +12,7 @@ TestState::TestState(StateManager& manager, RenderWindow* window)
 	m_player = m_world.createBody<Adventurer>(&m_world, window);
 
 	m_waveText.position = vec2(window->size().x * 0.5, 200);
-	m_waveText.size = 90;
+	m_waveText.size = 70;
 }
 
 void TestState::onEnter() {
@@ -163,10 +163,10 @@ void TestState::drawUI() {
 
 void TestState::drawWave() {
 	if (!m_enemies.startWave) {
-		m_waveText.string = std::to_string(int(60.0 - m_enemies.clock.duration())) + " seconds till wave " + std::to_string(m_enemies.level+1);
+		m_waveText.string = std::to_string(int(m_enemies.clock)) + " seconds till wave " + std::to_string(m_enemies.level+1);
 	}
 	else {
-		m_waveText.string = "Wave " + std::to_string(m_enemies.level) + ": " + std::to_string(int(60.0 - m_enemies.clock.duration())) + " seconds left";
+		m_waveText.string = "Wave " + std::to_string(m_enemies.level) + ": " + std::to_string(int(m_enemies.clock)) + " seconds left";
 	}
 	m_window->draw(m_waveText);
 }

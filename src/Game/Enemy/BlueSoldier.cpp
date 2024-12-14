@@ -17,7 +17,7 @@ static EnemyConfig enemyConfig{
 };
 
 BlueSoldier::BlueSoldier(PhysicsWorld* world, RenderWindow* window)
-	: Enemy(enemyConfig)
+	: Enemy(enemyConfig, window)
 	, m_idleAnimation(
 		"assets/Blue soldier/idle.png",
 		vec2(116, 67),

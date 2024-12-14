@@ -14,7 +14,7 @@
 
 class ChestEntity : public Entity {
 public:
-	ChestEntity(PhysicsWorld* world);
+	ChestEntity(PhysicsWorld* world, RenderWindow* window);
 	~ChestEntity() = default;
 
 	virtual void draw(RenderWindow& window) override;
@@ -25,6 +25,7 @@ protected:
 	Animation m_idleAnimation;
 	Animation m_openAnimation;
 	PhysicsWorld* m_world;
+	RenderWindow* m_window;
 
 	Font m_font;
 	Text m_hint;

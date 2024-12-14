@@ -1,7 +1,7 @@
 #include "Game/Skill/IncreaseShootSpeedSkill.hpp"
 
 IncreaseShootSpeedSkill::IncreaseShootSpeedSkill(Player* player, PhysicsWorld* world, RenderWindow* window)
-	: Skill(Animation{
+	: Skill(Skill::OneTimeUse, Animation{
 		"assets/Skill/IncreaseShootSpeed/SCAR-100ms.png",
 		vec2(80, 32),
 		{

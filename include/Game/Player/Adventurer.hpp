@@ -14,13 +14,14 @@ public:
 
 	virtual void draw(RenderWindow& window) const override;
 
+	virtual void changeWeapon(const std::string& name) override;
+
 protected:
 	virtual void myUpdate(float dt) override;
 	void fistAttack(float dt);
 
 	void drawUI(RenderWindow& window) const;
 
-	std::vector<std::unique_ptr<Weapon>> m_weapons;
 	Audio m_audio{ "assets/grassSound.mp3" };
 
 	Animation m_crouchAnimation{ {

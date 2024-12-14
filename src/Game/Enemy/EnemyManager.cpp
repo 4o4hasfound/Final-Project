@@ -6,6 +6,10 @@ EnemyManager::EnemyManager(PhysicsWorld* world)
 }
 
 void EnemyManager::update(float dt, PhysicsWorld& world, const Map& map, RenderWindow& window) {
+	clock -= dt;
+	if (clock <= 0) {
+		clock = 0;
+	}
 	removeEnemies(dt, world, map, window);
 	generateEnemies(dt, world, map, window);
 }
@@ -51,14 +55,14 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 	float probability;
 	int enemyMaxCount;
 
-	if (!startWave && clock.duration() >= 60.0) {
+	if (!startWave && clock <= 0) {
 		startWave = true;
-		clock.reset();
+		clock = 60;
 		++level;
 	}
-	else if (startWave && clock.duration() >= 60.0){
+	else if (startWave && clock <= 0){
 		startWave = false;
-		clock.reset();
+		clock = 60;
 	}
 
 	if (startWave) {

@@ -303,6 +303,9 @@
     <ClCompile Include="src\Game\Entity\GunEntity.cpp">
       <Filter>來源檔案\Game\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Skill\InvincibleShieldSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp">
@@ -505,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="include\Game\Entity\GunEntity.hpp">
       <Filter>標頭檔\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\InvincibleShieldSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

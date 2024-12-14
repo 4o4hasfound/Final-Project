@@ -1,7 +1,7 @@
 #include "Game/Skill/HealSkill.hpp"
 
 HealSkill::HealSkill(Player* player, PhysicsWorld* world, RenderWindow* window)
-	: Skill(Animation{
+	: Skill(Skill::OneTimeUse, Animation{
 		"assets/Skill/Heal/animation.png",
 		vec2(32, 32),
 		{

@@ -1,8 +1,9 @@
 #include "Game/Enemy/Enemy.hpp"
 
-Enemy::Enemy(const EnemyConfig& _config)
+Enemy::Enemy(const EnemyConfig& _config, RenderWindow* window)
 	: RigidBody(RigidBody::EnemyType, _config.aabb * _config.scale)
-	, config(_config) {
+	, config(_config)
+	, m_window(window) {
 	status.health = config.health;
 	status.knockbackCD = 0;
 }
@@ -117,9 +118,11 @@ bool Enemy::hit(float damage, const vec2& knockback, Player* player, PhysicsWorl
 			orb->position = position;
 			orb->speed = Random::getReal<float>(2.0, 8.0);
 		}
-		ChestEntity* chest = world->createBody<ChestEntity>(world);
-		chest->player = player;
-		chest->position = position;
+		if (Random::getReal<float>(0, 1) <= 0.1) {
+			ChestEntity* chest = world->createBody<ChestEntity>(world, m_window);
+			chest->player = player;
+			chest->position = position;
+		}
 		return true;
 	}
 

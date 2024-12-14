@@ -8,6 +8,7 @@
 #include "Render/Tileset.hpp"
 #include "Render/Animation.hpp"
 #include "Render/Shape.hpp"
+#include "Render/RenderWindow.hpp"
 
 #include "Physics/AABB.hpp"
 #include "Physics/RigidBody.hpp"
@@ -71,7 +72,7 @@ struct EnemyConfig {
 
 class Enemy : public RigidBody {
 public:
-	Enemy(const EnemyConfig& config);
+	Enemy(const EnemyConfig& config, RenderWindow* window);
 	~Enemy() = default;
 
 	virtual void update(float dt);
@@ -85,6 +86,8 @@ public:
 	EnemyStatus status;
 	const EnemyConfig config;
 protected:
+	RenderWindow* m_window;
+
 	// myUpdate will be called before the actual update
 	// so by overriding it in the subclass
 	virtual void myUpdate(float dt);

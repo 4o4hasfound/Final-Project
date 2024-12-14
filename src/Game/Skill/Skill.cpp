@@ -1,14 +1,18 @@
 #include "Game/Skill/Skill.hpp"
 
-Skill::Skill(const Animation& animation, Player* player, PhysicsWorld* world, RenderWindow* window)
-	: m_animation(animation), m_player(player), m_world(world), m_window(window) {
+Skill::Skill(SkillType _type, const Animation& animation, Player* player, PhysicsWorld* world, RenderWindow* window)
+	: type(_type), m_animation(animation), m_player(player), m_world(world), m_window(window) {
 }
 
-void Skill::update() {
+void Skill::update(float dt) {
 
 }
 
-void Skill::render() {
+void Skill::render(RenderWindow& window) {
+
+}
+
+void Skill::active() {
 
 }
 

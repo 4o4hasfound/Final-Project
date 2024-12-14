@@ -11,16 +11,27 @@ class Player;
 
 class Skill {
 public:
-	Skill(const Animation& animation, Player* player, PhysicsWorld* world, RenderWindow* window);
+	enum SkillType {
+		Passive,
+		Active,
+		OneTimeUse
+	};
+	Skill(SkillType _type, const Animation& animation, Player* player, PhysicsWorld* world, RenderWindow* window);
 	virtual ~Skill() = default;
 
-	virtual void update();
-	virtual void render();
+	virtual void update(float dt);
+	virtual void render(RenderWindow& window);
+	virtual void active();
+
+	// One time use
 	virtual void use();
 
 	void updateAnimation(float dt);
 	void renderAnimation(const vec2& position, const vec2& size);
 	const Texture* getAnimationFrame() const;
+
+	const SkillType type;
+	int level = 1;
 protected:
 	PhysicsWorld* m_world;
 	Player* m_player;
