@@ -10,6 +10,8 @@
 #include "Game/Player/Player.hpp"
 #include "Game/Enemy/EnemyManager.hpp"
 
+#include "Game/Entity/ExperienceOrb.hpp"
+
 #include "Game/Projectile/Projectile.hpp"
 
 #include "Math/Vector.hpp"

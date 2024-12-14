@@ -1,10 +1,11 @@
 #include "Game/Projectile/Bullet.hpp"
 
-Bullet::Bullet(float _speed, float _maxDistance, float _height)
+Bullet::Bullet(float _speed, float _maxDistance, float _height, PhysicsWorld* world)
 	: Projectile(RigidBody::BulletType, AABB{ vec2(-_speed * 0.5, -_height * 0.5), vec2(_speed * 0.5, _height * 0.5) })
 	, speed(_speed)
 	, maxDistance(_maxDistance)
-	, height(_height) {
+	, height(_height)
+	, m_world(world) {
 
 }
 
@@ -36,11 +37,7 @@ void Bullet::onCollide(RigidBody* other, const Manifold& detail) {
 		if (!line.intersect(enemy->getAABB())) {
 			return;
 		}
-		if (enemy->hit(damage, direction * knockback)) {
-			if (player) {
-				player->addExp(1);
-			}
-		}
+		enemy->hit(damage, direction * knockback, player, m_world);
 		alive = 0;
 	}
 	else {

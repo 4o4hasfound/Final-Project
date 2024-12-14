@@ -25,6 +25,11 @@ public:
 	void pathFind(Map* map, Player* player, RenderWindow& window);
 	void attack(Player* player);
 	void resolveCollision(Map* map);
+
+
+	int level = 0;
+	Clock clock;
+	bool startWave = 0;
 private:
 	void generateEnemies(float dt, PhysicsWorld& world, const Map& map, RenderWindow& window);
 	void removeEnemies(float dt, PhysicsWorld& world, const Map& map, const RenderWindow& window);

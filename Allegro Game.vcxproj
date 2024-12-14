@@ -183,6 +183,10 @@
     <ClCompile Include="src\Game\Enemy\DroidZapper.cpp" />
     <ClCompile Include="src\Game\Enemy\Enemy.cpp" />
     <ClCompile Include="src\Game\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="src\Game\Entity\ChestEntity.cpp" />
+    <ClCompile Include="src\Game\Entity\Entity.cpp" />
+    <ClCompile Include="src\Game\Entity\ExperienceOrb.cpp" />
+    <ClCompile Include="src\Game\Entity\GunEntity.cpp" />
     <ClCompile Include="src\Game\Map\GrassMap.cpp" />
     <ClCompile Include="src\Game\Map\Map.cpp" />
     <ClCompile Include="src\Game\Player\Adventurer.cpp" />
@@ -236,6 +240,10 @@
     <ClInclude Include="include\Game\Enemy\DroidZapper.hpp" />
     <ClInclude Include="include\Game\Enemy\Enemy.hpp" />
     <ClInclude Include="include\Game\Enemy\EnemyManager.hpp" />
+    <ClInclude Include="include\Game\Entity\ChestEntity.hpp" />
+    <ClInclude Include="include\Game\Entity\Entity.hpp" />
+    <ClInclude Include="include\Game\Entity\ExperienceOrb.hpp" />
+    <ClInclude Include="include\Game\Entity\GunEntity.hpp" />
     <ClInclude Include="include\Game\Map\GrassMap.hpp" />
     <ClInclude Include="include\Game\Map\Map.hpp" />
     <ClInclude Include="include\Game\Player\Adventurer.hpp" />

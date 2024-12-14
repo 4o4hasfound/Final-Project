@@ -71,7 +71,7 @@ void Shotgun::shoot() {
 	}
 	--status.ammoLeft;
 	for (int i = 0; i < 40; ++i) {
-		Bullet* bullet = m_world->createBody<Bullet>(40, Random::getInt<int>(500, 700), 4);
+		Bullet* bullet = m_world->createBody<Bullet>(40, Random::getInt<int>(500, 700), 4, m_world);
 		bullet->player = m_player;
 
 		float rotateOffset = Random::getReal<float>(-0.4, 0.4);

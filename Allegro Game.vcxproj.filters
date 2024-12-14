@@ -97,6 +97,12 @@
     <Filter Include="來源檔案\Game\States">
       <UniqueIdentifier>{cb442a87-5c47-40c6-8771-dd8a6d15511e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="來源檔案\Game\Entity">
+      <UniqueIdentifier>{9654782d-ac79-47e1-b930-f2a22c5cb951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\Game\Entity">
+      <UniqueIdentifier>{d3c7aff5-d1f4-4e1e-a1a5-171f5400fb1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -284,6 +290,18 @@
     </ClCompile>
     <ClCompile Include="src\Game\States\MenuState.cpp">
       <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Entity\ExperienceOrb.cpp">
+      <Filter>來源檔案\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Entity\Entity.cpp">
+      <Filter>來源檔案\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Entity\ChestEntity.cpp">
+      <Filter>來源檔案\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Entity\GunEntity.cpp">
+      <Filter>來源檔案\Game\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,6 +493,18 @@
     </ClInclude>
     <ClInclude Include="include\Game\States\MenuState.hpp">
       <Filter>標頭檔\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Entity\ExperienceOrb.hpp">
+      <Filter>標頭檔\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Entity\Entity.hpp">
+      <Filter>標頭檔\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Entity\ChestEntity.hpp">
+      <Filter>標頭檔\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Entity\GunEntity.hpp">
+      <Filter>標頭檔\Game\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -40,7 +40,7 @@ bool Player::hit(float damage, const vec2& knockback) {
 
 void Player::addExp(int amount) {
 	status.exp += amount;
-	if (status.exp > 10) {
+	if (status.exp > (status.level + 1) * 10) {
 		status.exp = 0;
 		++status.level;
 		status.levelUp = 1;

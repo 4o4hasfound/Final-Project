@@ -64,11 +64,7 @@ void Rocket::update(float dt) {
 
 		for (Enemy* enemy : enemies) {
 			const vec2 dir = enemy->position - position;
-			if (enemy->hit(damage, normalize(dir) * knockback)) {
-				if (player) {
-					player->addExp(1);
-				}
-			}
+			enemy->hit(damage, normalize(dir) * knockback, player, m_world);
 		}
 
 		position += direction * aabb.size().x * 0.5;
@@ -101,19 +97,11 @@ void Rocket::onCollide(RigidBody* other, const Manifold& detail) {
 		for (Enemy* enemy : enemies) {
 			const vec2 dir = enemy->position - position;
 			if (length(dir) <= blastRadius * 0.65) {
-				if (enemy->hit(damage, normalize(dir) * knockback)) {
-					if (player) {
-						player->addExp(1);
-					}
-				}
+				enemy->hit(damage, normalize(dir) * knockback, player, m_world);
 			}
 			else {
 				float scale = (length(dir) - blastRadius * 0.65) / (blastRadius * 0.35);
-				if (enemy->hit(damage * scale, normalize(dir) * knockback * scale)) {
-					if (player) {
-						player->addExp(1);
-					}
-				}
+				enemy->hit(damage * scale, normalize(dir) * knockback * scale, player, m_world);
 			}
 		}
 

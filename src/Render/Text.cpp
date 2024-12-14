@@ -36,6 +36,21 @@ void Text::draw(const Texture* texture) {
 }
 
 void Text::draw(const RenderWindow* window, const Texture* texture) {
+	ALLEGRO_TRANSFORM trans;
+	al_identity_transform(&trans);
+	if (window && !absolutePosition) {
+		al_translate_transform(
+			&trans,
+			std::round(-window->viewport.position.x),
+			std::round(-window->viewport.position.y)
+		);
+		al_scale_transform(
+			&trans,
+			(window->size() / window->viewport.size).x,
+			(window->size() / window->viewport.size).y
+		);
+	}
+	al_use_transform(&trans);
 	ALLEGRO_FONT* alFont = m_font->getFont(size);
 
 	al_draw_multiline_text(

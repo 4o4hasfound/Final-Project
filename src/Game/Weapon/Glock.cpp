@@ -87,7 +87,7 @@ void Glock::shoot() {
 	}
 	--status.ammoLeft;
 
-	Bullet* bullet = m_world->createBody<Bullet>(40, 1500, 3);
+	Bullet* bullet = m_world->createBody<Bullet>(40, 1500, 3, m_world);
 	bullet->player = m_player;
 
 	float rotateOffset;

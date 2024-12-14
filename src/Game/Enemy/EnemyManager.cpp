@@ -48,6 +48,28 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 
 	int additionalEnemy = 0;
 
+	float probability;
+	int enemyMaxCount;
+
+	if (!startWave && clock.duration() >= 60.0) {
+		startWave = true;
+		clock.reset();
+		++level;
+	}
+	else if (startWave && clock.duration() >= 60.0){
+		startWave = false;
+		clock.reset();
+	}
+
+	if (startWave) {
+		probability = 0.1;
+		enemyMaxCount = level * 10;
+	}
+	else {
+		probability = 0.025;
+		enemyMaxCount = level * 5;
+	}
+
 	// Generate enemy
 	for (int i = 0; i < tiles->grid.size(); ++i) {
 		for (int j = 0; j < tiles->grid[0].size(); ++j) {
@@ -56,7 +78,7 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 				continue;
 			}
       		if (position <= window.viewport.position || position >= window.viewport.position + window.viewport.size) {
-				if (Random::getReal<float>(0, 1) < 0.1 && bodies.size() + additionalEnemy < 50) {
+				if (Random::getReal<float>(0, 1) < probability && bodies.size() + additionalEnemy < enemyMaxCount) {
 					BlueSoldier* enemy = world.createBody<BlueSoldier>(&world, &window);
 					enemy->position = position;
 					++additionalEnemy;

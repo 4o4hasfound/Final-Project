@@ -19,10 +19,14 @@ public:
 		Dynamic =		1 << 29,
 		Uncollidable =	1 << 28,
 		Projectile =	1 << 27,
+		Entity =		1 << 26,
 		CharacterType =		Dynamic								| 1<<0,
 		EnemyType =			Dynamic								| 1<<1,
 		BulletType =		Dynamic | Uncollidable | Projectile | 1<<2,
 		RocketType =		Dynamic | Uncollidable | Projectile | 1<<3,
+		ChestType =			Static  | Uncollidable | Entity		| 1<<4,
+		ExpOrbType =		Static	| Uncollidable | Entity		| 1<<5,
+		GunEntityType =		Static	| Uncollidable | Entity		| 1<<6,
 		Any = 0x7FFFFFFF
 	};
 

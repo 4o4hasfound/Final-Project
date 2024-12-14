@@ -18,6 +18,10 @@
 #include "Game/Map/Map.hpp"
 #include "Game/Player/Player.hpp"
 
+#include "Game/Entity/Entity.hpp"
+#include "Game/Entity/ExperienceOrb.hpp"
+#include "Game/Entity/ChestEntity.hpp"
+
 #include "Math/Vector.hpp"
 #include "Math/Functions.hpp"
 
@@ -76,7 +80,7 @@ public:
 
 	virtual void pathFind(Map* map, Player* player, RenderWindow& window);
 
-	bool hit(float damage, const vec2& knockback);
+	bool hit(float damage, const vec2& knockback, Player* player, PhysicsWorld* world);
 
 	EnemyStatus status;
 	const EnemyConfig config;

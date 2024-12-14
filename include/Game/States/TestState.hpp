@@ -21,6 +21,8 @@
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Weapon/Rifle.hpp"
 
+#include "Game/Entity/Entity.hpp"
+
 #include "Render/Font.hpp"
 #include "Render/Text.hpp"
 
@@ -53,6 +55,7 @@ private:
 	EnemyManager m_enemies;
 	Player* m_player;
 	Font m_font;
+	Text m_waveText;
 	Texture m_uiBar{ "assets/UIBar.png" };
 	Audio m_audio{ "assets/music.ogg" };
 
@@ -69,4 +72,5 @@ private:
 
 	void drawProjectile();
 	void drawUI();
+	void drawWave();
 };

@@ -8,12 +8,13 @@
 #include "Game/Player/Player.hpp"
 #include "Game/Enemy/EnemyManager.hpp"
 #include "Game/Projectile/Projectile.hpp"
+#include "Game/Entity/ExperienceOrb.hpp"
 
 #include "Math/Vector.hpp"
 
 class Bullet: public Projectile {
 public:
-	Bullet(float speed, float maxDistance, float _height = 4.0);
+	Bullet(float speed, float maxDistance, float _height, PhysicsWorld* world);
 	~Bullet() = default;
 
 	virtual void draw(RenderWindow& window) const override;
@@ -28,6 +29,7 @@ public:
 	vec3 color{ 255 };
 	vec2 initialPosition;
 protected:
+	PhysicsWorld* m_world;
 	virtual void update(float dt);
 
 	// Callback function when two objects collide

@@ -101,7 +101,7 @@ void Enemy::pathFind(Map* map, Player* player, RenderWindow& window) {
 	}
 }
 
-bool Enemy::hit(float damage, const vec2& knockback) {
+bool Enemy::hit(float damage, const vec2& knockback, Player* player, PhysicsWorld* world) {
 	status.health -= damage;
 	status.knockbackCD = 0.1;
 	velocity = knockback;
@@ -109,6 +109,17 @@ bool Enemy::hit(float damage, const vec2& knockback) {
 		status.health = 0;
 		status.dying = 1;
 		m_type = static_cast<RigidBody::BodyType>(RigidBody::Uncollidable | RigidBody::EnemyType);
+
+		int count = Random::getInt<int>(2, 4);
+		for (int i = 0; i < count; ++i) {
+			ExperienceOrb* orb = world->createBody<ExperienceOrb>(Random::getInt(1, 3));
+			orb->player = player;
+			orb->position = position;
+			orb->speed = Random::getReal<float>(2.0, 8.0);
+		}
+		ChestEntity* chest = world->createBody<ChestEntity>(world);
+		chest->player = player;
+		chest->position = position;
 		return true;
 	}
 

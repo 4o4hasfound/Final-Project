@@ -5,10 +5,14 @@ TestState::TestState(StateManager& manager, RenderWindow* window)
 	, m_window(window)
 	, m_map(window->viewport.size * 0.75 / 0.5)
 	, m_enemies(&m_world)
-	, m_font("assets/Minecraft.ttf") {
+	, m_font("assets/Minecraft.ttf")
+	, m_waveText(&m_font) {
 	m_window->viewport.size *= 0.75 / 0.5;
 	m_window->viewport.position = vec2(0);
 	m_player = m_world.createBody<Adventurer>(&m_world, window);
+
+	m_waveText.position = vec2(window->size().x * 0.5, 200);
+	m_waveText.size = 90;
 }
 
 void TestState::onEnter() {
@@ -54,7 +58,10 @@ void TestState::update(RenderWindow& window, float dt) {
 	if (m_mapHasUpdateOnce) {
 		m_enemies.pathFind(&m_map, m_player, window);
 	}
-		
+	
+	if (Keyboard::get(Keyboard::KEY_SPACE).keydown) {
+		++m_enemies.level;
+	}
 	//// Add additional trails
 	//if (Mouse::get(Mouse::LEFT).pressed) {
 	//	vec2 position = Mouse::getPosition();
@@ -85,14 +92,16 @@ void TestState::update(RenderWindow& window, float dt) {
 void TestState::render(RenderWindow& window) {
 	m_map.draw(window);
 
+	drawProjectile();
+
 	m_enemies.draw(window);
 
 	// Draw character
 	m_player->draw(window);
 
-	drawProjectile();
-
 	drawUI();
+
+	drawWave();
 
 	//m_world.DebugDraw(window);
 
@@ -109,6 +118,11 @@ void TestState::drawProjectile() {
 
 	for (Projectile* projectile : bullets) {
 		projectile->draw(*m_window);
+	}
+
+	auto entities = m_world.getBodies<Entity>(RigidBody::Entity);
+	for (Entity* entity : entities) {
+		entity->draw(*m_window);
 	}
 }
 
@@ -127,7 +141,7 @@ void TestState::drawUI() {
 	healthBarRed.absolutePosition = true;
 
 	const float expBarWidth = rect.size.x * 0.371;
-	Rectangle expBarRed(vec2((m_player->status.exp) / 10.0 * expBarWidth, rect.size.y * 0.34));
+	Rectangle expBarRed(vec2((m_player->status.exp) / ((m_player->status.level + 1) * 10.0) * expBarWidth, rect.size.y * 0.34));
 
 	expBarRed.position = vec2(rect.position.x - rect.size.x * 0.227 - expBarWidth * 0.5 + expBarRed.size.x * 0.5, rect.position.y + rect.size.y * 0.18);
 	expBarRed.color = vec4(93, 151, 231, 255);
@@ -141,8 +155,18 @@ void TestState::drawUI() {
 
 	Text text(&m_font);
 	text.string = std::to_string(m_player->status.level);
-	text.position = vec2(rect.position.x - rect.size.x * 0.5 + rect.size.x * 0.275, rect.position.y - rect.size.y * 0.16);
+	text.position = vec2(rect.position.x - rect.size.x * 0.5 + rect.size.x * 0.275, rect.position.y - rect.size.y * 0.05);
 	text.size = 80;
 	text.absolutePosition = true;
 	m_window->draw(text);
+}
+
+void TestState::drawWave() {
+	if (!m_enemies.startWave) {
+		m_waveText.string = std::to_string(int(60.0 - m_enemies.clock.duration())) + " seconds till wave " + std::to_string(m_enemies.level+1);
+	}
+	else {
+		m_waveText.string = "Wave " + std::to_string(m_enemies.level) + ": " + std::to_string(int(60.0 - m_enemies.clock.duration())) + " seconds left";
+	}
+	m_window->draw(m_waveText);
 }
