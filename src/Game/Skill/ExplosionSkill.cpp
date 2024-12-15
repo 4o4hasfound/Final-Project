@@ -85,9 +85,7 @@ void ExplosionSkill::update(float dt) {
 
 			for (Enemy* enemy : enemies) {
 				const vec2 dir = enemy->position - m_explodePosition;
-				if (enemy->hit(1000, normalize(dir) * 2500, m_player, m_world)) {
-					++m_player->status.enemyCount;
-				}
+				enemy->hit(1000, normalize(dir) * 2500, m_player, m_world);
 			}
 
 			m_audio.play(1.0);

@@ -86,9 +86,7 @@ void Bullet::onCollide(RigidBody* other, const Manifold& detail) {
 		else {
 			alive = 0;
 		}
-		if (enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale * damageScale, direction * knockback, player, m_world)) {
-			++player->status.enemyCount;
-		}
+		enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale * damageScale, direction * knockback, player, m_world);
 	}
 	else {
 		if ((other->getType() & RigidBody::CharacterType) != RigidBody::CharacterType) {

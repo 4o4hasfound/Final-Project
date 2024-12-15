@@ -97,15 +97,11 @@ void Rocket::onCollide(RigidBody* other, const Manifold& detail) {
 		for (Enemy* enemy : enemies) {
 			const vec2 dir = enemy->position - position;
 			if (length(dir) <= blastRadius * 0.65) {
-				if (enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale, normalize(dir) * knockback, player, m_world)) {
-					++player->status.enemyCount;
-				}
+				enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale, normalize(dir) * knockback, player, m_world);
 			}
 			else {
 				float scale = (length(dir) - blastRadius * 0.65) / (blastRadius * 0.35);
-				if (enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale * scale, normalize(dir) * knockback * scale, player, m_world)) {
-					++player->status.enemyCount;
-				}
+				enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale * scale, normalize(dir) * knockback * scale, player, m_world);
 			}
 		}
 

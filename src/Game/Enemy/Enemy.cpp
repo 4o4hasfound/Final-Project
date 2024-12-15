@@ -150,6 +150,7 @@ bool Enemy::hit(float damage, const vec2& knockback, Player* player, PhysicsWorl
 			chest->player = player;
 			chest->position = position;
 		}
+		++player->status.enemyCount;
 		return true;
 	}
 
