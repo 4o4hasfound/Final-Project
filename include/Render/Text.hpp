@@ -11,9 +11,14 @@
 
 #include "Math/Vector.hpp"
 
-class Text: public Drawable {
+class Text : public Drawable {
 	friend class RenderWindow;
 public:
+	enum TextAlign {
+		Left = ALLEGRO_ALIGN_LEFT,
+		Center = ALLEGRO_ALIGN_CENTER,
+		Right = ALLEGRO_ALIGN_RIGHT
+	};
 	Text(Font* font);
 	Text(Font* font, const std::string& _string);
 
@@ -25,8 +30,9 @@ public:
 	std::string string;
 	vec2 position = vec2(0);
 	vec4 color = vec4(255);
-	float height = 0;	
+	float height = 0;
 	int size;
+	TextAlign align = Center;
 private:
 	Font* m_font;
 

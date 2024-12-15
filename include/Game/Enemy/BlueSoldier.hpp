@@ -15,11 +15,11 @@ public:
 	BlueSoldier(PhysicsWorld* world, RenderWindow* window);
 	~BlueSoldier();
 
-	virtual void draw(RenderWindow& window) const override;
+	virtual void draw(RenderWindow& window) override;
 	virtual void attack(Player* player) override;
 
+	Weapon* weapon = nullptr;
 protected:
-	Weapon* m_weapon;
 	Animation m_runAnimation;
 	Animation m_idleAnimation;
 	Animation m_dieAnimation;

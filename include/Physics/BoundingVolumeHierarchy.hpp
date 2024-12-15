@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <limits>
 
+#include "Engine/configuration.hpp"
+
 #include "Render/Shape.hpp"
 #include "Render/RenderWindow.hpp"
 

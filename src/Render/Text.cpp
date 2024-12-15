@@ -28,9 +28,9 @@ void Text::draw(const Texture* texture) {
 		al_map_rgba(color.r, color.g, color.b, color.a),
 		position.x,
 		position.y - al_get_font_ascent(alFont) * 0.5,
-		1000,
+		3000,
 		height,
-		ALLEGRO_ALIGN_LEFT,
+		align,
 		string.c_str()
 	);
 }
@@ -58,9 +58,9 @@ void Text::draw(const RenderWindow* window, const Texture* texture) {
 		al_map_rgba(color.r, color.g, color.b, color.a),
 		position.x,
 		position.y - al_get_font_ascent(alFont) * 0.5,
-		1000,
+		3000,
 		height,
-		ALLEGRO_ALIGN_CENTER,
+		align,
 		string.c_str()
 	);
 }

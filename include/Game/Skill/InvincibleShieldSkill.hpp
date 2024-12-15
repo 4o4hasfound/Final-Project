@@ -8,11 +8,11 @@ public:
 	InvincibleShieldSkill(Player* player, PhysicsWorld* world, RenderWindow* window);
 	~InvincibleShieldSkill() = default;
 
-	virtual void update(float dt);
-	virtual void render(RenderWindow& window);
-	virtual void active();
+	virtual void update(float dt) override;
+	virtual void render(RenderWindow& window) override;
 
-	virtual void use();
+	virtual void renderAnimation(const vec2& position, const vec2& size) override;
 private:
 	float m_clock;
+	Font m_font{ "assets/Minecraft.ttf" };
 };

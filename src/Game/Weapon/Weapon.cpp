@@ -128,7 +128,7 @@ vec2 Weapon::getWorldPivotPoint() const {
 void Weapon::updateStatus(float dt) {
 	if (m_player) {
 		if (Mouse::get(Mouse::LEFT).pressed) {
-			if (finishShooting() && finishLoading()) {
+			if (finishShooting() && finishLoading() && !m_player->status.healing && !m_player->status.premiumHealing) {
 				status.shoot = true;
 			}
 		}

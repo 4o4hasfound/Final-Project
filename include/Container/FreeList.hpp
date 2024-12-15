@@ -115,7 +115,7 @@ public:
 		iterator(FreeList<T>* list, int ind);
 
 		T& operator*();
-		T& operator->();
+		T* operator->();
 
 		iterator operator+(int length) const;
 		iterator& operator+=(int length);
@@ -143,7 +143,7 @@ public:
 		const_iterator(const iterator& iter);
 
 		const T& operator*() const;
-		const T& operator->() const;
+		const T* operator->() const;
 
 		const_iterator operator+(int length) const;
 		const_iterator& operator+=(int length);
@@ -170,7 +170,7 @@ public:
 		reverse_iterator(FreeList<T>* list, int ind);
 
 		T& operator*();
-		T& operator->();
+		T* operator->();
 
 		reverse_iterator operator+(int length) const;
 		reverse_iterator& operator+=(int length);
@@ -197,7 +197,7 @@ public:
 		const_reverse_iterator(const FreeList<T>* list, int ind);
 		const_reverse_iterator(const reverse_iterator& iter);
 		const T& operator*() const;
-		const T& operator->() const;
+		const T* operator->() const;
 
 		const_reverse_iterator operator+(int length) const;
 		const_reverse_iterator& operator+=(int length);

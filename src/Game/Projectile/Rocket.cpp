@@ -64,7 +64,7 @@ void Rocket::update(float dt) {
 
 		for (Enemy* enemy : enemies) {
 			const vec2 dir = enemy->position - position;
-			enemy->hit(damage, normalize(dir) * knockback, player, m_world);
+			enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale, normalize(dir) * knockback, player, m_world);
 		}
 
 		position += direction * aabb.size().x * 0.5;
@@ -78,7 +78,7 @@ void Rocket::onCollide(RigidBody* other, const Manifold& detail) {
 		return;
 	}
 	if (type == Projectile::FROM_PLAYER) {
-		if (!(other->getType() & RigidBody::EnemyType)) {
+		if ((other->getType() & RigidBody::EnemyType) != RigidBody::EnemyType) {
 			return;
 		}
 
@@ -97,11 +97,15 @@ void Rocket::onCollide(RigidBody* other, const Manifold& detail) {
 		for (Enemy* enemy : enemies) {
 			const vec2 dir = enemy->position - position;
 			if (length(dir) <= blastRadius * 0.65) {
-				enemy->hit(damage, normalize(dir) * knockback, player, m_world);
+				if (enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale, normalize(dir) * knockback, player, m_world)) {
+					++player->status.enemyCount;
+				}
 			}
 			else {
 				float scale = (length(dir) - blastRadius * 0.65) / (blastRadius * 0.35);
-				enemy->hit(damage * scale, normalize(dir) * knockback * scale, player, m_world);
+				if (enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale * scale, normalize(dir) * knockback * scale, player, m_world)) {
+					++player->status.enemyCount;
+				}
 			}
 		}
 
@@ -110,7 +114,7 @@ void Rocket::onCollide(RigidBody* other, const Manifold& detail) {
 		m_explodeSound.play(1.0, 0.5);
 	}
 	else {
-		if (!(other->getType() & RigidBody::CharacterType)) {
+		if ((other->getType() & RigidBody::CharacterType) != RigidBody::CharacterType) {
 			return;
 		}
 

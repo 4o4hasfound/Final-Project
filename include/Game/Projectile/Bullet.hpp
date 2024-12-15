@@ -28,8 +28,12 @@ public:
 	vec2 direction{ 0 };
 	vec3 color{ 255 };
 	vec2 initialPosition;
+
+	bool exploded = false;
 protected:
 	PhysicsWorld* m_world;
+	Animation m_explode;
+	Audio m_explodeSound;
 	virtual void update(float dt);
 
 	// Callback function when two objects collide

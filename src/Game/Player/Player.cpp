@@ -10,7 +10,15 @@ Player::Player(const PlayerConfig& _config, PhysicsWorld* world, RenderWindow* w
 
 void Player::update(float dt) {
 	myUpdate(dt);
-	position += velocity * dt;
+	
+	float scale = 1.0f;
+	if (status.healing) {
+		scale *= 0.5f;
+	}
+	if (status.premiumHealing) {
+		scale *= 0.3f;
+	}
+	position += velocity * dt * scale;
 	status.maxExp = 5 * status.level;
 
 	for (Skill* skill : status.skills) {

@@ -10,7 +10,7 @@ Font::Font(const std::string& file)
 }
 
 Font::~Font() {
-	for (auto [size, font] : m_fonts) {
+	for (auto& [size, font] : m_fonts) {
 		al_destroy_font(font);
 	}
 }

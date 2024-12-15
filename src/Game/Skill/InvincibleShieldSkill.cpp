@@ -1,9 +1,10 @@
 #include "Game/Skill/InvincibleShieldSkill.hpp"
 
 InvincibleShieldSkill::InvincibleShieldSkill(Player* player, PhysicsWorld* world, RenderWindow* window)
-	: Skill(Skill::OneTimeUse, Animation{
+	: Skill(Skill::Passive, "InvincibleShield",
+		Animation{
 		"assets/Skill/InvincibleShield/animation.png",
-		vec2(60, 60),
+		vec2(64, 64),
 		{
 			vec2(0, 0),
 			vec2(0, 1),
@@ -73,10 +74,27 @@ void InvincibleShieldSkill::render(RenderWindow& window) {
 	}
 }
 
-void InvincibleShieldSkill::active() {
+void InvincibleShieldSkill::renderAnimation(const vec2& position, const vec2& size) {
+	const Texture* texture = m_animation.getFrame();
 
-}
+	const vec2 textureSize = texture->size();
 
-void InvincibleShieldSkill::use() {
+	float scale = std::min(size.x / textureSize.y, size.y / textureSize.
+		y);
 
+	Rectangle rect(texture->size() * scale);
+	rect.position = position;
+	rect.absolutePosition = true;
+	m_window->draw(rect, texture);
+
+	if (!m_player->status.invincible) {
+		rect.color = vec4(58, 58, 58, 100);
+		m_window->draw(rect);
+	}
+
+	Text text(&m_font);
+	text.string = std::to_string(static_cast<int>(m_clock));
+	text.position = position;
+	text.size = 40;
+	m_window->draw(text);
 }

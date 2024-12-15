@@ -15,18 +15,19 @@ public:
 	// Example:
 	// Both Character & Dynamic and Enemy & Dynamic can be true simultaneously.
 	enum BodyType {
-		Static =		1 << 30,
-		Dynamic =		1 << 29,
-		Uncollidable =	1 << 28,
-		Projectile =	1 << 27,
-		Entity =		1 << 26,
-		CharacterType =		Dynamic								| 1<<0,
-		EnemyType =			Dynamic								| 1<<1,
-		BulletType =		Dynamic | Uncollidable | Projectile | 1<<2,
-		RocketType =		Dynamic | Uncollidable | Projectile | 1<<3,
-		ChestType =			Static  | Uncollidable | Entity		| 1<<4,
-		ExpOrbType =		Static	| Uncollidable | Entity		| 1<<5,
-		GunEntityType =		Static	| Uncollidable | Entity		| 1<<6,
+		Static =			1 << 30,
+		Dynamic =			1 << 29,
+		Uncollidable =		1 << 28,
+		ProjectileType =	1 << 27,
+		EntityType =		1 << 26,
+		CharacterType =		Dynamic									| 1<<0,
+		EnemyType =			Dynamic									| 1<<1,
+		BulletType =		Dynamic | Uncollidable | ProjectileType | 1<<2,
+		RocketType =		Dynamic | Uncollidable | ProjectileType | 1<<3,
+		ChestType =			Static  | Uncollidable | EntityType		| 1<<4,
+		ExpOrbType =		Static	| Uncollidable | EntityType		| 1<<5,
+		GunEntityType =		Static	| Uncollidable | EntityType		| 1<<6,
+		ShieldType =		Dynamic | Uncollidable | EntityType		| 1<<7,
 		Any = 0x7FFFFFFF
 	};
 

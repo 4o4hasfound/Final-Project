@@ -11,7 +11,7 @@ public:
 		FROM_ENEMY
 	};
 	Projectile(BodyType type, AABB aabb = { {0.0f, 0.0f}, {0.0f, 0.0f} });
-	~Projectile() = default;
+	virtual ~Projectile() = default;
 
 	virtual void draw(RenderWindow& window) const = 0;
 

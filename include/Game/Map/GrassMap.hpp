@@ -17,7 +17,10 @@ public:
 	virtual ~GrassMap() = default;
 
 	virtual void update(const ViewPort& viewport) override;
+
 	virtual void draw(RenderWindow& window) override;
+	virtual void drawAABB(RenderWindow& window, RigidBody* body) override;
+
 	virtual void resolveCollision(RigidBody* body) override;
 	virtual void resolveCollision(RigidBody* body, RenderWindow& window);
 

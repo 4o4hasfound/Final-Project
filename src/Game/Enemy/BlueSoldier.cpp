@@ -60,27 +60,15 @@ BlueSoldier::BlueSoldier(PhysicsWorld* world, RenderWindow* window)
 		0.05
 		) {
 	status.pivot = vec2(66, 49);
-
-	const float rand = Random::getReal<float>(0, 1);
-	if (rand <= 0.6) {
-		m_weapon = new Glock(this, world, window);
-	}
-	else if (rand <= 0.75) {
-		m_weapon = new Shotgun(this, world, window);
-	}
-	else if (rand <= 0.9) {
-		m_weapon = new Rifle(this, world, window);
-	}
-	else {
-		m_weapon = new RPG(this, world, window);
-	}
 }
 
 BlueSoldier::~BlueSoldier() {
-	delete m_weapon;
+	if (weapon) {
+		delete weapon;
+	}
 }
 
-void BlueSoldier::draw(RenderWindow& window) const {
+void BlueSoldier::draw(RenderWindow& window) {
 	Rectangle rect(config.size * config.scale);
 	vec2 delta;
 
@@ -116,25 +104,29 @@ void BlueSoldier::draw(RenderWindow& window) const {
 		window.draw(rect, m_idleAnimation.getFrame());
 	}
 
-	if (m_weapon->status.holding && !status.dying) {
-		m_weapon->draw(window);
+	if (weapon->status.holding && !status.dying) {
+		weapon->draw(window);
+	}
+
+	for (auto& [text, time] : m_damageTexts) {
+		window.draw(text);
 	}
 }
 
 void BlueSoldier::attack(Player* player) {
 
 	if (status.state == EnemyState::Attack && status.attacking) {
-		m_weapon->status.holding = 1;
-		if (m_weapon->finishLoading() && m_weapon->finishLoading()) {
-			m_weapon->status.shoot = 1;
+		weapon->status.holding = 1;
+		if (weapon->finishLoading() && weapon->finishLoading()) {
+			weapon->status.shoot = 1;
 		}
-		const vec2 pivot = m_weapon->getWorldPivotPoint();
+		const vec2 pivot = weapon->getWorldPivotPoint();
 		const vec2 delta = normalize(status.playerLastPosition - pivot);
-		m_weapon->rotation = std::fmodf(std::atan2(delta.x, delta.y) + PI * 1.5, PI_TWO);
+		weapon->rotation = std::fmodf(std::atan2(delta.x, delta.y) + PI * 1.5, PI_TWO);
 	}
 	else {
-		m_weapon->status.holding = 0;
-		m_weapon->status.shoot = 0;
+		weapon->status.holding = 0;
+		weapon->status.shoot = 0;
 	}
 }
 
@@ -180,5 +172,5 @@ void BlueSoldier::myUpdate(float dt) {
 		m_leaveAnimation.reset();
 	}
 
-	m_weapon->update(dt * 0.5);
+	weapon->update(dt * 0.5);
 }

@@ -1,7 +1,7 @@
 #include "Game/Player/Adventurer.hpp"
 
 static PlayerConfig playerConfig{
-	3000.0,
+	12000.0,
 	20.0,
 	400.0,
 
@@ -137,6 +137,10 @@ void Adventurer::myUpdate(float dt) {
 	}
 	else {
 		velocity.x = 0;
+	}
+	
+	if (Config::debug && Keyboard::get(Keyboard::KEY_TAB).keydown) {
+		addExp((status.level + 1) * 10 + 1);
 	}
 
 	if (Mouse::getScroll() != 0) {

@@ -60,7 +60,7 @@ std::vector<RigidBody*> PhysicsWorld::getBodies(RigidBody::BodyType bodyType) {
 void PhysicsWorld::resolveCollisions(std::vector<Manifold>& manifolds) {
 	std::vector<RigidBody*> collideBodies;
 	for (const auto& body : m_bodies) {
-		if (!body->alive) {
+		if (!body || !body->alive) {
 			continue;
 		}
 		if (body->getType() & RigidBody::Static) {
@@ -81,9 +81,9 @@ void PhysicsWorld::resolveCollisions(std::vector<Manifold>& manifolds) {
 
 void PhysicsWorld::updateBodies() {
 	for (auto itr = m_bodies.begin(), end = m_bodies.end(); itr != end; ++itr) {
-		if (!itr->alive) {
+		if (!(*itr)->alive) {
 			RigidBody* ptr = *itr;
-			m_tree.remove(itr->m_id);
+			m_tree.remove((*itr)->m_id);
 			m_bodies.remove(itr);
 			delete ptr;
 		}

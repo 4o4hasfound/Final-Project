@@ -27,6 +27,7 @@ struct WeaponStatus {
 
 struct WeaponConfig {
 	float attack;
+	float knockback;
 	int ammo;
 	int reloadAmmo;
 	float accuracy;

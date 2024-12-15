@@ -55,6 +55,8 @@ struct EnemyStatus {
 
 	EnemyState state = Patrol;
 	float huntingTimer = 0;
+
+	float freezingTimer = 0;
 };
 
 struct EnemyConfig {
@@ -73,10 +75,10 @@ struct EnemyConfig {
 class Enemy : public RigidBody {
 public:
 	Enemy(const EnemyConfig& config, RenderWindow* window);
-	~Enemy() = default;
+	virtual ~Enemy() = default;
 
 	virtual void update(float dt);
-	virtual void draw(RenderWindow& window) const = 0;
+	virtual void draw(RenderWindow& window) = 0;
 	virtual void attack(Player* player);
 
 	virtual void pathFind(Map* map, Player* player, RenderWindow& window);
@@ -86,7 +88,9 @@ public:
 	EnemyStatus status;
 	const EnemyConfig config;
 protected:
+	Font m_font{ "assets/Minecraft.ttf" };
 	RenderWindow* m_window;
+	std::vector<std::pair<Text, float>> m_damageTexts;
 
 	// myUpdate will be called before the actual update
 	// so by overriding it in the subclass

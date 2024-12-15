@@ -57,6 +57,9 @@ public:
 	// Render the map onto the screen
 	virtual void draw(RenderWindow& window) = 0;
 
+	// Render the aabb
+	virtual void drawAABB(RenderWindow& window, RigidBody* body) = 0;
+
 	// Resolve the collision for the body
 	virtual void resolveCollision(RigidBody* body) = 0;
 

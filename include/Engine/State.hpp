@@ -13,11 +13,13 @@ public:
 	bool empty() const;
 	int size() const;
 
+	void clear();
+
 	// Pushes a new state onto the stack
 	void pushState(State* state);
 
-	// Retrieves the state currently on top of the stack
-	State* topState();
+	// Retrieves the nth top state of the stack
+	State* topState(int n = 0);
 
 	// Retrieves the nth state of the stack
 	State* nthState(int n);
@@ -53,6 +55,7 @@ class State {
 	friend class StateManager;
 public:
 	State(StateManager& manager);
+	virtual ~State() = default;
 
 	// Called when the state is entered
 	virtual void onEnter() {};

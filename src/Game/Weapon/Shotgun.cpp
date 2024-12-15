@@ -1,7 +1,8 @@
 #include "Game/Weapon/Shotgun.hpp"
 
 static WeaponConfig weaponConfig{
-	10.0,
+	100.0,
+	1000.0,
 	5,
 	1,
 	0.4,
@@ -70,7 +71,7 @@ void Shotgun::shoot() {
 		return;
 	}
 	--status.ammoLeft;
-	for (int i = 0; i < 40; ++i) {
+	for (int i = 0; i < 20; ++i) {
 		Bullet* bullet = m_world->createBody<Bullet>(40, Random::getInt<int>(500, 700), 4, m_world);
 		bullet->player = m_player;
 
@@ -78,8 +79,8 @@ void Shotgun::shoot() {
 		float finalRotation = rotation + rotateOffset;
 		bullet->direction = vec2(cos(-finalRotation), sin(-finalRotation));
 		bullet->rotation = finalRotation;
-		bullet->damage = 100;
-		bullet->knockback = 1000;
+		bullet->damage = config.attack;
+		bullet->knockback = config.knockback;
 		//bullet->color = {
 		//	Random::getInt(0, 255),
 		//	Random::getInt(0, 255),

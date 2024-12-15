@@ -2,7 +2,7 @@
 
 MenuState::MenuState(StateManager& manager, RenderWindow* window)
 	: State(manager)
-	, m_map(window->viewport.size * 0.5)
+	, m_map(window->size() * 0.5)
 	, m_window(window)
 	, m_playButton(vec2(800, 100))
 	, m_exitButton(vec2(800, 100))
@@ -11,7 +11,7 @@ MenuState::MenuState(StateManager& manager, RenderWindow* window)
 	, m_playText(&m_font)
 	, m_exitText(&m_font)
 	, m_settingText(&m_font) {
-	m_window->viewport.size *= 0.5;
+	m_window->viewport.size = m_window->size() * 0.5;
 
 	m_settingButton.position = window->size() * 0.5 - vec2(0, 150);
 	m_settingButton.color = vec4(50, 50, 50, 100);
@@ -84,10 +84,10 @@ void MenuState::update(RenderWindow& window, float dt) {
 		m_settingButton.color = vec4(50, 50, 50, 100);
 	}
 	if (m_settingButton.buttondown) {
-		m_clickSound.play(1.0);
+		m_clickSound.play(1.0, 2.0);
 	}
 	if (m_settingButton.pressedAndReleased) {
-
+		m_manager.emplaceState<SettingState>(&m_map, &m_audio, m_window);
 	}
 
 	if (m_playButton.hover) {
@@ -99,11 +99,11 @@ void MenuState::update(RenderWindow& window, float dt) {
 		m_playButton.color = vec4(50, 50, 50, 100);
 	}
 	if (m_playButton.buttondown) {
-		m_clickSound.play(1.0);
+		m_clickSound.play(1.0, 2.0);
 	}
 	if (m_playButton.pressedAndReleased) {
-		m_manager.emplaceState<TestState>(m_window);
-		m_audio.stop();
+		m_manager.emplaceSwitchState<TestState>(m_window);
+		m_audio.stop(1.0);
 	}
 
 	if (m_exitButton.hover) {
@@ -115,7 +115,7 @@ void MenuState::update(RenderWindow& window, float dt) {
 		m_exitButton.color = vec4(50, 50, 50, 100);
 	}
 	if (m_exitButton.buttondown) {
-		m_clickSound.play(1.0);
+		m_clickSound.play(1.0, 2.0);
 	}
 	if (m_exitButton.pressedAndReleased) {
 		m_shouldClose = true;

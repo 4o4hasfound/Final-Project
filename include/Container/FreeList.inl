@@ -494,8 +494,8 @@ inline T& FreeList<T>::iterator::operator*() {
 }
 
 template<typename T>
-inline T& FreeList<T>::iterator::operator->() {
-	return m_list->m_data[m_ind].element;
+inline T* FreeList<T>::iterator::operator->() {
+	return &m_list->m_data[m_ind].element;
 }
 
 template<typename T>
@@ -612,8 +612,8 @@ inline const T& FreeList<T>::const_iterator::operator*() const {
 }
 
 template<typename T>
-inline const T& FreeList<T>::const_iterator::operator->() const {
-	return m_list->m_data[m_ind].element;
+inline const T* FreeList<T>::const_iterator::operator->() const {
+	return &m_list->m_data[m_ind].element;
 }
 
 template<typename T>
@@ -725,8 +725,8 @@ inline T& FreeList<T>::reverse_iterator::operator*() {
 }
 
 template<typename T>
-inline T& FreeList<T>::reverse_iterator::operator->() {
-	return m_list->m_data[m_ind].element;
+inline T* FreeList<T>::reverse_iterator::operator->() {
+	return &m_list->m_data[m_ind].element;
 }
 
 template<typename T>
@@ -843,8 +843,8 @@ inline const T& FreeList<T>::const_reverse_iterator::operator*() const {
 }
 
 template<typename T>
-inline const T& FreeList<T>::const_reverse_iterator::operator->() const {
-	return m_list->m_data[m_ind].element;
+inline const T* FreeList<T>::const_reverse_iterator::operator->() const {
+	return &m_list->m_data[m_ind].element;
 }
 
 template<typename T>

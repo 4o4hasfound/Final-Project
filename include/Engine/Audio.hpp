@@ -29,10 +29,21 @@ public:
 	void play(float speed, float sound = 1.0);
 	bool playing();
 
-	void stop();
+	void stop(float fadeoutSpeed = -1.0);
 
-	static void stopAll();
+	static void update(float dt);
+	static void stopAll(float fadeoutSpeed = -1.0);
 
 	ALLEGRO_SAMPLE* sample;
 	FreeList<ALLEGRO_SAMPLE_ID> ids;
+private:
+	struct ToDeleteSample {
+		ALLEGRO_SAMPLE_ID id;
+		float fadeoutSpeed;
+
+		ToDeleteSample(ALLEGRO_SAMPLE_ID _id, float speed) 
+			: id(_id), fadeoutSpeed(speed) {}
+	};
+	static FreeList<ALLEGRO_SAMPLE_ID> s_globalIDs;
+	static FreeList<ToDeleteSample> s_toDeleteIds;
 };

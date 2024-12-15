@@ -261,6 +261,7 @@ void Rectangle::draw(const RenderWindow* window, const Texture* texture) {
 			al_translate_transform(&trans, rotationCenter.x, rotationCenter.y);
 		}
 	}
+
 	al_translate_transform(&trans, position.x, position.y);
 	if (window && !absolutePosition) {
 		al_translate_transform(

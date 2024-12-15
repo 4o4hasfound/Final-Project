@@ -23,6 +23,29 @@ void GrassMap::draw(RenderWindow& window) {
 	drawTree(window);
 }
 
+void GrassMap::drawAABB(RenderWindow& window, RigidBody* body) {
+	Tiles& tiles = m_waterTiles;
+
+	ivec2 lowerIndex = max(ivec2(
+		(body->getAABB().lowerBound - tiles.position) / tiles.size - 1
+	), ivec2(0));
+	ivec2 upperIndex = min(ivec2(
+		(body->getAABB().upperBound - tiles.position) / tiles.size + 1
+	), ivec2(m_waterTiles.grid[0].size() - 1, m_waterTiles.grid.size() - 1));
+	for (int i = lowerIndex.y; i <= upperIndex.y; ++i) {
+		for (int j = lowerIndex.x; j <= upperIndex.x; ++j) {
+			if (!tiles[i][j].exist || existAdditionTrail(j, i)) {
+				continue;
+			}
+			const vec2 position = vec2(j, i) * tiles.size + tiles.position;
+			std::vector<AABB> aabbs = getWaterBoundingBox(j, i);
+			for (auto& aabb : aabbs) {
+				(aabb + position).DebugDraw(window);
+			}
+		}
+	}
+}
+
 void GrassMap::resolveCollision(RigidBody* body) {
 	Tiles& tiles = m_waterTiles;
 

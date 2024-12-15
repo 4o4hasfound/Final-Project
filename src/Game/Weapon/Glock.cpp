@@ -1,7 +1,8 @@
 #include "Game/Weapon/Glock.hpp"
 
 static WeaponConfig weaponConfig{
-	10.0,
+	200.0,
+	500.0,
 	12,
 	12,
 	0.4,
@@ -114,8 +115,8 @@ void Glock::shoot() {
 	float finalRotation = rotation + rotateOffset;
 	bullet->direction = vec2(cos(-finalRotation), sin(-finalRotation));
 	bullet->rotation = finalRotation;
-	bullet->damage = 200;
-	bullet->knockback = 500;
+	bullet->damage = config.attack;
+	bullet->knockback = config.knockback;
 
 	if (m_player) {
 		bullet->type = Projectile::FROM_PLAYER;

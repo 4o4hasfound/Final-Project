@@ -1,6 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <vector>
+#include <algorithm>
+#include <numeric>
 
 #include "Engine/State.hpp"
 
@@ -14,9 +17,18 @@
 
 #include "Game/Skill/Skill.hpp"
 #include "Game/Skill/HealSkill.hpp"
+#include "Game/Skill/PremiumHealSkill.hpp"
 #include "Game/Skill/IncreaseLoadSpeedSkill.hpp"
 #include "Game/Skill/IncreaseShootSpeedSkill.hpp"
+#include "Game/Skill/IncreaseAttackSkill.hpp"
+#include "Game/Skill/IncreaseHealthSkill.hpp"
 #include "Game/Skill/InvincibleShieldSkill.hpp"
+#include "Game/Skill/IncreaseMovementSpeedSkill.hpp"
+#include "Game/Skill/SpinningShieldSkill.hpp"
+#include "Game/Skill/AttackEnhancementSkill.hpp"
+#include "Game/Skill/FreezingBulletSkill.hpp"
+#include "Game/Skill/ExplosiveBulletSkill.hpp"
+#include "Game/Skill/ExplosionSkill.hpp"
 
 
 #include "Engine/Mouse.hpp"
@@ -46,8 +58,10 @@ private:
 	PhysicsWorld* m_world;
 	Player* m_player;
 	Font m_font{ "assets/Minecraft.ttf" };
+	Text m_text;
 	std::vector<std::unique_ptr<Skill>> m_skills;
 	std::vector<Button> m_buttons;
+	std::vector<int> m_index;
 
 	// Average fps
 	float m_totalFps = 0;
@@ -56,4 +70,7 @@ private:
 	void goBack();
 
 	std::string getDescription(int i);
+	std::unique_ptr<Skill> getSkill(int i);
+
+	void addPlayerSkill(Skill* skill);
 };

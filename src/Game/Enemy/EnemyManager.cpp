@@ -62,7 +62,7 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 	}
 	else if (startWave && clock <= 0){
 		startWave = false;
-		clock = 60;
+		clock = 30;
 	}
 
 	if (startWave) {
@@ -71,7 +71,7 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 	}
 	else {
 		probability = 0.025;
-		enemyMaxCount = level * 5;
+		enemyMaxCount = (level + 1) * 5;
 	}
 
 	// Generate enemy
@@ -85,6 +85,22 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 				if (Random::getReal<float>(0, 1) < probability && bodies.size() + additionalEnemy < enemyMaxCount) {
 					BlueSoldier* enemy = world.createBody<BlueSoldier>(&world, &window);
 					enemy->position = position;
+
+					const float rand = Random::getReal<float>(0, 1);
+					const float firstProb = 1.0 - 0.2 * std::sqrt(level);
+					const float secondProb = (1.0 - firstProb) * 0.4;
+					if (rand <= firstProb) {
+						enemy->weapon = new Glock(dynamic_cast<Enemy*>(enemy), &world, &window);
+					}
+					else if (rand <= firstProb + secondProb) {
+						enemy->weapon = new Shotgun(dynamic_cast<Enemy*>(enemy), &world, &window);
+					}
+					else if (rand <= firstProb + secondProb * 2) {
+						enemy->weapon = new Rifle(dynamic_cast<Enemy*>(enemy), &world, &window);
+					}
+					else {
+						enemy->weapon = new RPG(dynamic_cast<Enemy*>(enemy), &world, &window);
+					}
 					++additionalEnemy;
 				}
 			}

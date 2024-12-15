@@ -16,7 +16,7 @@ public:
 		Active,
 		OneTimeUse
 	};
-	Skill(SkillType _type, const Animation& animation, Player* player, PhysicsWorld* world, RenderWindow* window);
+	Skill(SkillType _type, const std::string& _name, const Animation& animation, Player* player, PhysicsWorld* world, RenderWindow* window);
 	virtual ~Skill() = default;
 
 	virtual void update(float dt);
@@ -26,12 +26,14 @@ public:
 	// One time use
 	virtual void use();
 
-	void updateAnimation(float dt);
-	void renderAnimation(const vec2& position, const vec2& size);
+	virtual void updateAnimation(float dt);
+	virtual void renderAnimation(const vec2& position, const vec2& size);
+	vec2 getAnimationSize() const;
 	const Texture* getAnimationFrame() const;
 
 	const SkillType type;
 	int level = 1;
+	const std::string name;
 protected:
 	PhysicsWorld* m_world;
 	Player* m_player;

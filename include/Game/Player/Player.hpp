@@ -44,8 +44,20 @@ struct PlayerStatus {
 	float rangeScale = 1.0f;
 
 	Weapon* weapon;
-	
+
 	bool invincible = false;
+	bool healing = false;
+	bool premiumHealing = false;
+
+	bool freezingBullet = false;
+	float freezingDuration = 0.0f;
+	bool explosiveBullet = false;
+	float explosiveRadius = 0.0f;
+	float explosiveDamage = 0.0f;
+
+	int increaseAttack = 0;
+
+	int enemyCount = 0;
 };
 
 struct PlayerConfig {
@@ -64,7 +76,7 @@ class EnemyManager;
 class Player: public RigidBody {
 public:
 	Player(const PlayerConfig& config, PhysicsWorld* world, RenderWindow* window);
-	~Player() = default;
+	virtual ~Player() = default;
 
 	virtual void update(float dt);
 	virtual void draw(RenderWindow& window) const;

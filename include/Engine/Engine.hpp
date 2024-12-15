@@ -14,6 +14,7 @@
 #include "Engine/Keyboard.hpp"
 #include "Engine/Mouse.hpp"
 #include "Engine/State.hpp"
+#include "Engine/Audio.hpp"
 
 #include "Render/RenderWindow.hpp"
 #include "Render/Texture.hpp"
@@ -35,7 +36,6 @@ public:
 
 	// Call this function at the very end of the program
 	static void terminate();
-
 
 	// Run the main loop
 	static void run();

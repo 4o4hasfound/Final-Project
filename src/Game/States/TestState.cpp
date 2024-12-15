@@ -51,8 +51,8 @@ void TestState::update(RenderWindow& window, float dt) {
 
 	if (m_player->status.levelUp) {
 		m_player->status.levelUp = 0;
-		Audio::stopAll();
 		m_manager.emplaceState<ChooseSkillState>(m_player, &m_world, m_window);
+		Audio::stopAll(1.0);
 	}
 
 	if (m_mapHasUpdateOnce) {
@@ -87,6 +87,14 @@ void TestState::update(RenderWindow& window, float dt) {
 
 	m_frameCount = 1;
 	m_totalFps = dt;
+
+	if (m_player->status.health <= 0) {
+		m_manager.emplaceSwitchState<DieState>(m_player, m_window);
+		Audio::stopAll();
+	}
+	if (Keyboard::get(Keyboard::KEY_ESCAPE).keydown) {
+		m_manager.emplaceState<PauseState>(m_player, &m_enemies, m_window);
+	}
 }
 
 void TestState::render(RenderWindow& window) {
@@ -103,7 +111,13 @@ void TestState::render(RenderWindow& window) {
 
 	drawWave();
 
-	//m_world.DebugDraw(window);
+	if (Config::debugDrawMapAABB) {
+		m_map.drawAABB(window, m_player);
+	}
+
+	if (Config::debug) {
+		m_world.DebugDraw(window);
+	}
 
 	// Fps
 	window.setTitle(std::to_string(m_frameCount / m_totalFps).c_str());
@@ -114,13 +128,13 @@ bool TestState::shouldClose() {
 }
 
 void TestState::drawProjectile() {
-	auto bullets = m_world.getBodies<Projectile>(RigidBody::Projectile);
+	auto bullets = m_world.getBodies<Projectile>(RigidBody::ProjectileType);
 
 	for (Projectile* projectile : bullets) {
 		projectile->draw(*m_window);
 	}
 
-	auto entities = m_world.getBodies<Entity>(RigidBody::Entity);
+	auto entities = m_world.getBodies<Entity>(RigidBody::EntityType);
 	for (Entity* entity : entities) {
 		entity->draw(*m_window);
 	}
@@ -159,6 +173,11 @@ void TestState::drawUI() {
 	text.size = 80;
 	text.absolutePosition = true;
 	m_window->draw(text);
+
+	for (int i = 0; i < m_player->status.skills.size(); ++i) {
+		Skill* skill = m_player->status.skills[i];
+		skill->renderAnimation(vec2(1200 + 160 * i, rect.position.y - rect.size.y * 0.05), vec2(128));
+	}
 }
 
 void TestState::drawWave() {

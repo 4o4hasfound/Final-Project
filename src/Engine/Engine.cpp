@@ -51,6 +51,7 @@ void Engine::init() {
 }
 
 void Engine::terminate() {
+	states.clear();
 	ThreadPool::terminate();
 	Texture::cleanup();
 	delete window;
@@ -70,9 +71,11 @@ void Engine::run() {
 			break;
 		}
 
-		state->update(*window, deltaTime.reset());
-		state->render(*window);
+		float dt = deltaTime.reset();
+		Audio::update(dt);
 
+		state->update(*window, dt);
+		state->render(*window);
 
 		window->flipDisplay();
 	}
@@ -81,4 +84,5 @@ void Engine::run() {
 void Engine::update() {
 	Mouse::update();
 	Keyboard::update();
+	states.update();
 }

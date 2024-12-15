@@ -1,7 +1,8 @@
 #include "Game/Weapon/Rifle.hpp"
 
 static WeaponConfig weaponConfig{
-	10.0,
+	400.0,
+	500.0,
 	30,
 	30,
 	0.4,
@@ -102,8 +103,8 @@ void Rifle::shoot() {
 	float finalRotation = rotation + rotateOffset;
 	bullet->direction = vec2(cos(-finalRotation), sin(-finalRotation));
 	bullet->rotation = finalRotation;
-	bullet->damage = 400;
-	bullet->knockback = 500;
+	bullet->damage = config.attack;
+	bullet->knockback = config.knockback;
 
 	if (m_player) {
 		bullet->type = Projectile::FROM_PLAYER;

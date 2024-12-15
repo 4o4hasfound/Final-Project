@@ -23,6 +23,17 @@ int StateManager::size() const {
 	return m_states.size();
 }
 
+void StateManager::clear() {
+	while (!m_states.empty()) {
+		delete m_states.back();
+		m_states.pop_back();
+	}
+	while (!m_toRemove.empty()) {
+		delete m_toRemove.back();
+		m_toRemove.pop_back();
+	}
+}
+
 void StateManager::pushState(State* state) {
 	state->onEnter();
 	if (!m_states.empty()) {
@@ -31,11 +42,11 @@ void StateManager::pushState(State* state) {
 	m_states.push_back(state);
 }
 
-State* StateManager::topState() {
+State* StateManager::topState(int n) {
 	if (m_states.empty()) {
 		return nullptr;
 	}
-	return m_states.back();
+	return m_states[m_states.size() - n - 1];
 }
 
 State* StateManager::nthState(int n) {

@@ -1,7 +1,8 @@
 #include "Game/Weapon/RPG.hpp"
 
 static WeaponConfig weaponConfig{
-	10.0,
+	1000.0,
+	1000.0,
 	2,
 	1,
 	0.4,
@@ -71,8 +72,8 @@ void RPG::shoot() {
 	bullet->direction = vec2(cos(-finalRotation), sin(-finalRotation));
 
 	bullet->rotation = finalRotation;
-	bullet->damage = 1000;
-	bullet->knockback = 1000;
+	bullet->damage = config.attack;
+	bullet->knockback = config.knockback;
 	bullet->blastRadius = 500;
 
 	bullet->position = getWorldPivotPoint();

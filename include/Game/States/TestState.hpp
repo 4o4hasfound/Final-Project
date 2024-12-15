@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Engine/Engine.hpp"
 #include "Engine/State.hpp"
+#include "Engine/configuration.hpp"
 
 #include "Physics/PhysicsWorld.hpp"
 #include "Physics/RigidBody.hpp"
@@ -17,6 +19,8 @@
 #include "Game/Enemy/DroidZapper.hpp"
 
 #include "Game/States/ChooseSkillState.hpp"
+#include "Game/States/DieState.hpp"
+#include "Game/States/PauseState.hpp"
 
 #include "Game/Weapon/Weapon.hpp"
 #include "Game/Weapon/Rifle.hpp"

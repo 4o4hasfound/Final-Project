@@ -306,6 +306,48 @@
     <ClCompile Include="src\Game\Skill\InvincibleShieldSkill.cpp">
       <Filter>來源檔案\Game\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Entity\FloatingShield.cpp">
+      <Filter>來源檔案\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\SpinningShieldSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\AttackEnhancementSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\IncreaseAttackSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\IncreaseHealthSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\IncreaseMovementSpeedSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\States\DieState.cpp">
+      <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\States\SettingState.cpp">
+      <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\configuration.cpp">
+      <Filter>來源檔案\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\States\PauseState.cpp">
+      <Filter>來源檔案\Game\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\FreezingBulletSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\ExposiveBulletSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\PremiumHealSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill\ExplosionSkill.cpp">
+      <Filter>來源檔案\Game\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Container\FreeList.hpp">
@@ -510,6 +552,48 @@
       <Filter>標頭檔\Game\Entity</Filter>
     </ClInclude>
     <ClInclude Include="include\Game\Skill\InvincibleShieldSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\AttackEnhancementSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\PremiumHealSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\SpinningShieldSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\FreezingBulletSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\IncreaseAttackSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\IncreaseMovementSpeedSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\IncreaseHealthSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Entity\FloatingShield.hpp">
+      <Filter>標頭檔\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\States\DieState.hpp">
+      <Filter>標頭檔\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\States\SettingState.hpp">
+      <Filter>標頭檔\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\configuration.hpp">
+      <Filter>標頭檔\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\States\PauseState.hpp">
+      <Filter>標頭檔\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\ExplosiveBulletSkill.hpp">
+      <Filter>標頭檔\Game\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Skill\ExplosionSkill.hpp">
       <Filter>標頭檔\Game\Skill</Filter>
     </ClInclude>
   </ItemGroup>

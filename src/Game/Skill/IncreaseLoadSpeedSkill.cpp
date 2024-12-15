@@ -1,9 +1,10 @@
 #include "Game/Skill/IncreaseLoadSpeedSkill.hpp"
 
 IncreaseLoadSpeedSkill::IncreaseLoadSpeedSkill(Player* player, PhysicsWorld* world, RenderWindow* window)
-	: Skill(Skill::OneTimeUse, Animation{
-		"assets/Skill/IncreaseLoadSpeed/load.png",
-		vec2(512, 512),
+	: Skill(Skill::OneTimeUse, "IncreaseLoadSpeed",
+		Animation{
+		"assets/Skill/IncreaseLoadSpeed/animation.png",
+		vec2(64, 64),
 		{
 			vec2(0, 0),
 			vec2(0, 1),
@@ -48,6 +49,9 @@ IncreaseLoadSpeedSkill::IncreaseLoadSpeedSkill(Player* player, PhysicsWorld* wor
 			vec2(0, 40),
 			vec2(0, 41),
 			vec2(0, 42),
+			vec2(0, 43),
+			vec2(0, 44),
+			vec2(0, 45),
 		},
 		0.05
 		}, player, world, window) {
@@ -55,5 +59,5 @@ IncreaseLoadSpeedSkill::IncreaseLoadSpeedSkill(Player* player, PhysicsWorld* wor
 }
 
 void IncreaseLoadSpeedSkill::use() {
-	m_player->status.loadSpeed += 0.2;
+	m_player->status.loadSpeed += 0.1;
 }

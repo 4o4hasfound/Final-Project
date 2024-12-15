@@ -9,6 +9,16 @@ Enemy::Enemy(const EnemyConfig& _config, RenderWindow* window)
 }
 
 void Enemy::update(float dt) {
+	std::vector<std::pair<Text, float>> newTexts;
+	newTexts.reserve(m_damageTexts.size());
+	for (int i = 0; i < m_damageTexts.size(); ++i) {
+		if ((m_damageTexts[i].second -= dt) > 0) {
+			newTexts.push_back(m_damageTexts[i]);
+			newTexts.back().first.size = 2 * static_cast<int>(newTexts.back().second * 20);
+		}
+	}
+	m_damageTexts = newTexts;
+
 	if (status.dying) {
 		velocity = vec2(0);
 		myUpdate(dt);
@@ -22,6 +32,10 @@ void Enemy::update(float dt) {
 	status.huntingTimer -= dt;
 	if (status.huntingTimer <= 0) {
 		status.huntingTimer = 0;
+	}
+	status.freezingTimer -= dt;
+	if (status.freezingTimer <= 0) {
+		status.freezingTimer = 0;
 	}
 	myUpdate(dt);
 	if (status.knockbackCD == 0) {
@@ -37,7 +51,12 @@ void Enemy::update(float dt) {
 	}
 	if (status.needUpdate) {
 		myUpdate(dt);
-		position += velocity * dt;
+		if (status.freezingTimer > 0) {
+			position += velocity * dt * 0.5;
+		}
+		else {
+			position += velocity * dt;
+		}
 	}
 }
 
@@ -106,6 +125,14 @@ bool Enemy::hit(float damage, const vec2& knockback, Player* player, PhysicsWorl
 	status.health -= damage;
 	status.knockbackCD = 0.1;
 	velocity = knockback;
+	Text text(&m_font);
+	text.position = position;
+	text.color = vec4(255, 30, 30, 255);
+	text.string = std::to_string(static_cast<int>(damage));
+	text.absolutePosition = false;
+
+	m_damageTexts.push_back(std::make_pair(text, 0.75f));
+
 	if (status.health <= 0) {
 		status.health = 0;
 		status.dying = 1;
