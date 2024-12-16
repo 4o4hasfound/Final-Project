@@ -1,8 +1,9 @@
 #include "Game/States/PauseState.hpp"
 
-PauseState::PauseState(StateManager& manager, Player* player, EnemyManager* enemies, RenderWindow* window)
+PauseState::PauseState(StateManager& manager, Player* player, PhysicsWorld* world, EnemyManager* enemies, RenderWindow* window)
 	: State(manager)
 	, m_window(window)
+	, m_world(world)
 	, m_player(player)
 	, m_enemies(enemies)
 	, m_backButton(vec2(400, 80))
@@ -13,6 +14,11 @@ PauseState::PauseState(StateManager& manager, Player* player, EnemyManager* enem
 	, m_menuText(&m_font)
 	, m_nextWaveButton(vec2(400, 80))
 	, m_nextWaveText(&m_font)
+	, m_generateChestButton(vec2(400, 80))
+	, m_generateChestText(&m_font)
+	, m_chestTypeToggleButton(vec2(400, 80))
+	, m_chestTypeToggleText(&m_font)
+	, m_chestTypeText(&m_font)
 	, m_debugCheckBoxButton(vec2(64, 64))
 	, m_debugCheckboxText(&m_font)
 	, m_debugDrawAABBCheckBoxButton(vec2(64, 64))
@@ -35,9 +41,17 @@ PauseState::PauseState(StateManager& manager, Player* player, EnemyManager* enem
 	m_dieButton.color = vec4(50, 50, 50, 100);
 	m_dieButton.enlargeFactor = 1.2;
 
-	m_nextWaveButton.position = vec2(568, 800);
+	m_nextWaveButton.position = vec2(568, 700);
 	m_nextWaveButton.color = vec4(50, 50, 50, 100);
 	m_nextWaveButton.enlargeFactor = 1.2;
+
+	m_generateChestButton.position = vec2(568, 850);
+	m_generateChestButton.color = vec4(50, 50, 50, 100);
+	m_generateChestButton.enlargeFactor = 1.2;
+
+	m_chestTypeToggleButton.position = vec2(1468, 850);
+	m_chestTypeToggleButton.color = vec4(50, 50, 50, 100);
+	m_chestTypeToggleButton.enlargeFactor = 1.2;
 
 	m_backText.string = "Back";
 	m_backText.position = m_backButton.position;
@@ -50,6 +64,14 @@ PauseState::PauseState(StateManager& manager, Player* player, EnemyManager* enem
 
 	m_nextWaveText.string = "Next wave";
 	m_nextWaveText.position = m_nextWaveButton.position;
+
+	m_generateChestText.string = "Spawn Chest";
+	m_generateChestText.position = m_generateChestButton.position;
+
+	m_chestTypeToggleText.string = "Toggle";
+	m_chestTypeToggleText.position = m_generateChestButton.position;
+
+	m_chestTypeText.size = 50;
 
 	m_debugCheckBoxButton.position = vec2(400, 250);
 	m_debugCheckBoxButton.color = vec4(50, 50, 50, 100);
@@ -177,13 +199,23 @@ void PauseState::update(RenderWindow& window, float dt) {
 	}
 
 	if (Config::debug) {
-		m_nextWaveButton.position = vec2(568, 800);
+		m_nextWaveButton.position = vec2(568, 700);
+		m_generateChestButton.position = vec2(568, 850);
+		m_chestTypeToggleButton.position = vec2(1468, 850);
+		m_chestTypeText.position = vec2(1018, 850);
 	}
 	else {
-		m_nextWaveButton.position = vec2(568, 450);
+		m_nextWaveButton.position = vec2(568, 400);
+		m_generateChestButton.position = vec2(568, 550);
+		m_chestTypeToggleButton.position = vec2(1468, 550);
+		m_chestTypeText.position = vec2(1018, 550);
 	}
 	m_nextWaveButton.update(dt);
 	m_nextWaveText.position = m_nextWaveButton.position;
+	m_generateChestButton.update(dt);
+	m_generateChestText.position = m_generateChestButton.position;
+	m_chestTypeToggleButton.update(dt);
+	m_chestTypeToggleText.position = m_chestTypeToggleButton.position;
 
 	if (m_nextWaveButton.hover) {
 		m_nextWaveText.size = 60 * m_nextWaveButton.enlargeFactor;
@@ -200,6 +232,68 @@ void PauseState::update(RenderWindow& window, float dt) {
 		m_enemies->clock = 0;
 	}
 
+	if (m_generateChestButton.hover) {
+		m_generateChestText.size = 50 * m_generateChestButton.enlargeFactor;
+		m_generateChestButton.color = vec4(100, 100, 100, 100);
+	}
+	else {
+		m_generateChestText.size = 50;
+		m_generateChestButton.color = vec4(50, 50, 50, 100);
+	}
+	if (m_generateChestButton.buttondown) {
+		m_clickSound.play(1.0, 2.0);
+	}
+	if (m_generateChestButton.pressedAndReleased) {
+		ChestEntity* chest;;
+		if (m_generateChestType == 0) {
+			chest = m_world->createBody<ChestEntity>(m_world, m_window);
+		}
+		else if (m_generateChestType == 1) {
+			chest = m_world->createBody<ChestEntity>(m_world, m_window, ChestEntity::ChestEntityGlock);
+		}
+		else if (m_generateChestType == 2) {
+			chest = m_world->createBody<ChestEntity>(m_world, m_window, ChestEntity::ChestEntityRifle);
+		}
+		else if (m_generateChestType == 3) {
+			chest = m_world->createBody<ChestEntity>(m_world, m_window, ChestEntity::ChestEntityShotgun);
+		}
+		else {
+			chest = m_world->createBody<ChestEntity>(m_world, m_window, ChestEntity::ChestEntityRPG);
+		}
+		chest->player = m_player;
+		chest->position = m_player->position;
+	}
+
+	if (m_chestTypeToggleButton.hover) {
+		m_chestTypeToggleText.size = 50 * m_chestTypeToggleButton.enlargeFactor;
+		m_chestTypeToggleButton.color = vec4(100, 100, 100, 100);
+	}
+	else {
+		m_chestTypeToggleText.size = 50;
+		m_chestTypeToggleButton.color = vec4(50, 50, 50, 100);
+	}
+	if (m_chestTypeToggleButton.buttondown) {
+		m_clickSound.play(1.0, 2.0);
+	}
+	if (m_chestTypeToggleButton.pressedAndReleased) {
+		m_generateChestType = (m_generateChestType + 1) % 5;
+	}
+
+	if (m_generateChestType == 0) {
+		m_chestTypeText.string = "Random weapon";
+	}
+	else if(m_generateChestType == 1) {
+		m_chestTypeText.string = "Glock";
+	}
+	else if (m_generateChestType == 2) {
+		m_chestTypeText.string = "Rifle";
+	}
+	else if (m_generateChestType == 3) {
+		m_chestTypeText.string = "Shotgun";
+	}
+	else if (m_generateChestType == 4) {
+		m_chestTypeText.string = "RPG";
+	}
 
 	if (!Config::debug) {
 		Config::debugDrawAABB = Config::debugDrawBVH = Config::debugDrawMapAABB = false;
@@ -268,6 +362,11 @@ void PauseState::render(RenderWindow& window) {
 	window.draw(m_dieText);
 	window.draw(m_nextWaveButton);
 	window.draw(m_nextWaveText);
+	window.draw(m_generateChestButton);
+	window.draw(m_generateChestText);
+	window.draw(m_chestTypeText);
+	window.draw(m_chestTypeToggleButton);
+	window.draw(m_chestTypeToggleText);
 
 	window.draw(m_debugCheckBoxButton);
 	window.draw(m_debugCheckBoxButton, Config::debug ? &m_check : &m_unCheck);

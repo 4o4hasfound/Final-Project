@@ -32,9 +32,9 @@
 
 #include "Engine/Mouse.hpp"
 
-class TestState : public State {
+class GameState : public State {
 public:
-	TestState(StateManager& manager, RenderWindow* window);
+	GameState(StateManager& manager, RenderWindow* window);
 
 	// Called when the state is entered
 	virtual void onEnter() override;
@@ -61,7 +61,6 @@ private:
 	Font m_font;
 	Text m_waveText;
 	Texture m_uiBar{ "assets/UIBar.png" };
-	Audio m_audio{ "assets/music.ogg" };
 
 	// Only generate the enemy every few ticks(a constant duration)
 	Clock m_tickClock;

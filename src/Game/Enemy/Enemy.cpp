@@ -145,7 +145,7 @@ bool Enemy::hit(float damage, const vec2& knockback, Player* player, PhysicsWorl
 			orb->position = position;
 			orb->speed = Random::getReal<float>(2.0, 8.0);
 		}
-		if (Random::getReal<float>(0, 1) <= 0.1) {
+		if (Random::getReal<float>(0, 1) <= 0.025) {
 			ChestEntity* chest = world->createBody<ChestEntity>(world, m_window);
 			chest->player = player;
 			chest->position = position;

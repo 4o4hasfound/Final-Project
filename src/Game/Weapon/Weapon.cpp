@@ -169,10 +169,10 @@ void Weapon::updateOnShoot(float dt) {
 		}
 		shoot();
 		if (m_player) {
-			m_shootSound.play(1.0);
+			m_shootSound.play(1.0, 0.25);
 		}
 		else {
-			m_shootSound.play(1.0, 0.25);
+			m_shootSound.play(1.0, 0.0625);
 		}
 		m_shootAnimation.reset();
 	}

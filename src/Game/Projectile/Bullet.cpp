@@ -69,7 +69,7 @@ void Bullet::onCollide(RigidBody* other, const Manifold& detail) {
 		}
 		float damageScale = 1.0f;
 		if (player->status.explosiveBullet) {
-			position += direction * aabb.size().x * 0.5;
+			position += direction * aabb.size().x * 0.75;
 
 			BoundingCircle circle(position, player->status.explosiveRadius);
 			std::vector<Enemy*> enemies = m_world->query<Enemy>(circle, RigidBody::EnemyType);
@@ -77,6 +77,9 @@ void Bullet::onCollide(RigidBody* other, const Manifold& detail) {
 			for (Enemy* enemy : enemies) {
 				const vec2 dir = enemy->position - position;
 				enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale * player->status.explosiveDamage, normalize(dir) * knockback, player, m_world);
+				if (player->status.freezingBullet) {
+					enemy->status.freezingTimer = player->status.freezingDuration;
+				}
 			}
 
 			exploded = true;

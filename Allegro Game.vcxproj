@@ -216,7 +216,7 @@
     <ClCompile Include="src\Game\States\MenuState.cpp" />
     <ClCompile Include="src\Game\States\PauseState.cpp" />
     <ClCompile Include="src\Game\States\SettingState.cpp" />
-    <ClCompile Include="src\Game\States\TestState.cpp" />
+    <ClCompile Include="src\Game\States\GameState.cpp" />
     <ClCompile Include="src\Game\Weapon\Glock.cpp" />
     <ClCompile Include="src\Game\Weapon\Rifle.cpp" />
     <ClCompile Include="src\Game\Weapon\RPG.cpp" />
@@ -288,7 +288,7 @@
     <ClInclude Include="include\Game\States\MenuState.hpp" />
     <ClInclude Include="include\Game\States\PauseState.hpp" />
     <ClInclude Include="include\Game\States\SettingState.hpp" />
-    <ClInclude Include="include\Game\States\TestState.hpp" />
+    <ClInclude Include="include\Game\States\GameState.hpp" />
     <ClInclude Include="include\Game\Weapon\Glock.hpp" />
     <ClInclude Include="include\Game\Weapon\Rifle.hpp" />
     <ClInclude Include="include\Game\Weapon\RPG.hpp" />

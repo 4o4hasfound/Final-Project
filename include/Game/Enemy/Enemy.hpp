@@ -86,7 +86,7 @@ public:
 	bool hit(float damage, const vec2& knockback, Player* player, PhysicsWorld* world);
 
 	EnemyStatus status;
-	const EnemyConfig config;
+	EnemyConfig config;
 protected:
 	Font m_font{ "assets/Minecraft.ttf" };
 	RenderWindow* m_window;

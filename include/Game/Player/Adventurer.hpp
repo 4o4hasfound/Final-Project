@@ -22,7 +22,7 @@ protected:
 
 	void drawUI(RenderWindow& window) const;
 
-	Audio m_audio{ "assets/grassSound.mp3" };
+	Audio m_audio{ "assets/Map/grassSound.mp3" };
 
 	Animation m_crouchAnimation{ {
 		Texture{"assets/Adventurer/adventurer-crouch-walk-00.png"},

@@ -8,9 +8,11 @@
 #include "Game/Map/Map.hpp"
 #include "Game/Map/GrassMap.hpp"
 
-#include "Game/States/TestState.hpp"
+#include "Game/States/GameState.hpp"
 #include "Game/States/DieState.hpp"
 #include "Game/States/MenuState.hpp"
+
+#include "Game/Entity/ChestEntity.hpp"
 
 #include "Physics/PhysicsWorld.hpp"
 
@@ -19,7 +21,7 @@
 
 class PauseState : public State {
 public:
-	PauseState(StateManager& manager, Player* player, EnemyManager* enemies, RenderWindow* window);
+	PauseState(StateManager& manager, Player* player, PhysicsWorld* world, EnemyManager* enemies, RenderWindow* window);
 	~PauseState() = default;
 
 	// Called when the state is entered
@@ -39,6 +41,7 @@ public:
 	virtual void render(RenderWindow& window) override;
 private:
 	RenderWindow* m_window;
+	PhysicsWorld* m_world;
 	Player* m_player;
 	EnemyManager* m_enemies;
 	Font m_font{ "assets/Minecraft.ttf" };
@@ -55,6 +58,14 @@ private:
 
 	Button m_nextWaveButton;
 	Text m_nextWaveText;
+
+	Button m_generateChestButton;
+	Text m_generateChestText;
+
+	Button m_chestTypeToggleButton;
+	Text m_chestTypeToggleText;
+	Text m_chestTypeText;
+	int m_generateChestType = 0;
 
 	Texture m_check{ "assets/Checked.png" };
 	Texture m_unCheck{ "assets/UnChecked.png" };

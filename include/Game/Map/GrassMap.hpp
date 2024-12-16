@@ -41,43 +41,43 @@ private:
 	float m_treeThreshold = 0.2;
 
 	// Load textures and tileset
-	Texture m_water = Texture("assets/water.png");
-	Texture m_land = Texture("assets/grass.png");
-	Texture m_flower = Texture("assets/red_flower/Red_Flower_3.png");
+	Texture m_water = Texture("assets/Map/water.png");
+	Texture m_land = Texture("assets/Map/grass.png");
+	Texture m_flower = Texture("assets/Map/red_flower/Red_Flower_3.png");
 	std::array<std::vector<Texture>, 5> m_flowers { {
 		{
-			Texture{"assets/pink/Pink_Flower_1.png"},
-			Texture{"assets/pink/Pink_Flower_2.png"},
-			Texture{"assets/pink/Pink_Flower_3.png"}
+			Texture{"assets/Map/pink/Pink_Flower_1.png"},
+			Texture{"assets/Map/pink/Pink_Flower_2.png"},
+			Texture{"assets/Map/pink/Pink_Flower_3.png"}
 		},
 		{
-			Texture{"assets/purple/Purple_Flower_1.png"},
-			Texture{"assets/purple/Purple_Flower_2.png"},
-			Texture{"assets/purple/Purple_Flower_3.png"}
+			Texture{"assets/Map/purple/Purple_Flower_1.png"},
+			Texture{"assets/Map/purple/Purple_Flower_2.png"},
+			Texture{"assets/Map/purple/Purple_Flower_3.png"}
 		},
 		{
-			Texture{"assets/red_flower/Red_Flower_1.png"},
-			Texture{"assets/red_flower/Red_Flower_2.png"},
-			Texture{"assets/red_flower/Red_Flower_3.png"},
-			Texture{"assets/red_flower/Red_Flower_4.png"}
+			Texture{"assets/Map/red_flower/Red_Flower_1.png"},
+			Texture{"assets/Map/red_flower/Red_Flower_2.png"},
+			Texture{"assets/Map/red_flower/Red_Flower_3.png"},
+			Texture{"assets/Map/red_flower/Red_Flower_4.png"}
 		},
 		{
-			Texture{"assets/red_rose/Red_Rose_1.png"},
-			Texture{"assets/red_rose/Red_Rose_2.png"},
-			Texture{"assets/red_rose/Red_Rose_3.png"},
-			Texture{"assets/red_rose/Red_Rose_4.png"},
-			Texture{"assets/red_rose/Red_Rose_5.png"}
+			Texture{"assets/Map/red_rose/Red_Rose_1.png"},
+			Texture{"assets/Map/red_rose/Red_Rose_2.png"},
+			Texture{"assets/Map/red_rose/Red_Rose_3.png"},
+			Texture{"assets/Map/red_rose/Red_Rose_4.png"},
+			Texture{"assets/Map/red_rose/Red_Rose_5.png"}
 		}
 		,
 		{
-			Texture{"assets/yellow/1.png"},
-			Texture{"assets/yellow/2.png"},
-			Texture{"assets/yellow/3.png"},
-			Texture{"assets/yellow/4.png"}
+			Texture{"assets/Map/yellow/1.png"},
+			Texture{"assets/Map/yellow/2.png"},
+			Texture{"assets/Map/yellow/3.png"},
+			Texture{"assets/Map/yellow/4.png"}
 		}
 	} };
-	Tileset m_earth = Tileset("assets/TileSet_V1.png", vec2(32));
-	Texture m_tree = Texture("assets/tree.png");
+	Tileset m_earth = Tileset("assets/Map/TileSet_V1.png", vec2(32));
+	Texture m_tree = Texture("assets/Map/tree.png");
 
 	std::unordered_set<vec2, vec2_hash> m_additionalTrail;
 

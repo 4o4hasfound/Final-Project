@@ -96,6 +96,9 @@ void Rocket::onCollide(RigidBody* other, const Manifold& detail) {
 
 		for (Enemy* enemy : enemies) {
 			const vec2 dir = enemy->position - position;
+			if (player->status.freezingBullet) {
+				enemy->status.freezingTimer = player->status.freezingDuration;
+			}
 			if (length(dir) <= blastRadius * 0.65) {
 				enemy->hit((damage + player->status.increaseAttack) * player->status.damageScale, normalize(dir) * knockback, player, m_world);
 			}

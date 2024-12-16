@@ -102,7 +102,7 @@ void MenuState::update(RenderWindow& window, float dt) {
 		m_clickSound.play(1.0, 2.0);
 	}
 	if (m_playButton.pressedAndReleased) {
-		m_manager.emplaceSwitchState<TestState>(m_window);
+		m_manager.emplaceSwitchState<GameState>(m_window);
 		m_audio.stop(1.0);
 	}
 

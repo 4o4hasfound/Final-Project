@@ -357,7 +357,7 @@ constexpr bool operator>=(vec<1, T> const& v1, vec<1, T> const& v2) {
 
 template<typename T>
 constexpr bool operator<=(vec<1, T> const& v1, vec<1, T> const& v2) {
-	return this->x <= v2.x;
+	return v1.x <= v2.x;
 }
 
 template<typename T>

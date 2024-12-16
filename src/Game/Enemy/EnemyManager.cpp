@@ -101,6 +101,10 @@ void EnemyManager::generateEnemies(float dt, PhysicsWorld& world, const Map& map
 					else {
 						enemy->weapon = new RPG(dynamic_cast<Enemy*>(enemy), &world, &window);
 					}
+					enemy->config.attack *= 1 + level / 5.0;
+					enemy->config.health *= 1 + level / 3.0;
+					enemy->status.health = enemy->config.health;
+					enemy->config.speed *= 1 + level / 15.0;
 					++additionalEnemy;
 				}
 			}

@@ -7,7 +7,7 @@
 #include "Game/Map/GrassMap.hpp"
 
 #include "Game/States/MenuState.hpp"
-#include "Game/States/TestState.hpp"
+#include "Game/States/GameState.hpp"
 
 #include "Physics/PhysicsWorld.hpp"
 

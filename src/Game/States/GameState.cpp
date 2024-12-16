@@ -1,6 +1,6 @@
-#include "Game/States/TestState.hpp"
+#include "Game/States/GameState.hpp"
 
-TestState::TestState(StateManager& manager, RenderWindow* window)
+GameState::GameState(StateManager& manager, RenderWindow* window)
 	: State(manager)
 	, m_window(window)
 	, m_map(window->viewport.size * 0.75 / 0.5)
@@ -15,27 +15,27 @@ TestState::TestState(StateManager& manager, RenderWindow* window)
 	m_waveText.size = 70;
 }
 
-void TestState::onEnter() {
+void GameState::onEnter() {
 	//m_audio.play(1.0, true);
 }
 
-void TestState::onDestroy() {
+void GameState::onDestroy() {
 
 }
 
-void TestState::onSuspend() {
+void GameState::onSuspend() {
 
 }
 
-void TestState::onWakeup() {
+void GameState::onWakeup() {
 
 }
 
-void TestState::reset() {
+void GameState::reset() {
 
 }
 
-void TestState::update(RenderWindow& window, float dt) {
+void GameState::update(RenderWindow& window, float dt) {
 	if (m_tickClock.duration() > m_tick) {
 		m_tickClock.reset();
 
@@ -93,11 +93,11 @@ void TestState::update(RenderWindow& window, float dt) {
 		Audio::stopAll();
 	}
 	if (Keyboard::get(Keyboard::KEY_ESCAPE).keydown) {
-		m_manager.emplaceState<PauseState>(m_player, &m_enemies, m_window);
+		m_manager.emplaceState<PauseState>(m_player, &m_world, &m_enemies, m_window);
 	}
 }
 
-void TestState::render(RenderWindow& window) {
+void GameState::render(RenderWindow& window) {
 	m_map.draw(window);
 
 	drawProjectile();
@@ -123,11 +123,11 @@ void TestState::render(RenderWindow& window) {
 	window.setTitle(std::to_string(m_frameCount / m_totalFps).c_str());
 }
 
-bool TestState::shouldClose() {
+bool GameState::shouldClose() {
 	return false;
 }
 
-void TestState::drawProjectile() {
+void GameState::drawProjectile() {
 	auto bullets = m_world.getBodies<Projectile>(RigidBody::ProjectileType);
 
 	for (Projectile* projectile : bullets) {
@@ -140,7 +140,7 @@ void TestState::drawProjectile() {
 	}
 }
 
-void TestState::drawUI() {
+void GameState::drawUI() {
 	Rectangle rect(m_uiBar.size() * 1.5);
 	rect.position = vec2(960, 990);
 	rect.absolutePosition = true;
@@ -155,7 +155,7 @@ void TestState::drawUI() {
 	healthBarRed.absolutePosition = true;
 
 	const float expBarWidth = rect.size.x * 0.371;
-	Rectangle expBarRed(vec2((m_player->status.exp) / ((m_player->status.level + 1) * 10.0) * expBarWidth, rect.size.y * 0.34));
+	Rectangle expBarRed(vec2(static_cast<float>(m_player->status.exp) / m_player->status.maxExp * expBarWidth, rect.size.y * 0.34));
 
 	expBarRed.position = vec2(rect.position.x - rect.size.x * 0.227 - expBarWidth * 0.5 + expBarRed.size.x * 0.5, rect.position.y + rect.size.y * 0.18);
 	expBarRed.color = vec4(93, 151, 231, 255);
@@ -180,7 +180,7 @@ void TestState::drawUI() {
 	}
 }
 
-void TestState::drawWave() {
+void GameState::drawWave() {
 	if (!m_enemies.startWave) {
 		m_waveText.string = std::to_string(int(m_enemies.clock)) + " seconds till wave " + std::to_string(m_enemies.level+1);
 	}

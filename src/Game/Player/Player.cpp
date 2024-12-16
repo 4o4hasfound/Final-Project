@@ -19,7 +19,7 @@ void Player::update(float dt) {
 		scale *= 0.3f;
 	}
 	position += velocity * dt * scale;
-	status.maxExp = 5 * status.level;
+	status.maxExp = (status.level + 1) * 5;
 
 	for (Skill* skill : status.skills) {
 		skill->update(dt);
@@ -53,7 +53,7 @@ bool Player::hit(float damage, const vec2& knockback) {
 
 void Player::addExp(int amount) {
 	status.exp += amount;
-	if (status.exp > (status.level + 1) * 10) {
+	if (status.exp > (status.level + 1) * 5) {
 		status.exp = 0;
 		++status.level;
 		status.levelUp = 1;

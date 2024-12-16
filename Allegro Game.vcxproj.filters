@@ -228,7 +228,7 @@
     <ClCompile Include="src\Game\Enemy\EnemyManager.cpp">
       <Filter>來源檔案\Game\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\States\TestState.cpp">
+    <ClCompile Include="src\Game\States\GameState.cpp">
       <Filter>來源檔案\Game\States</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Player\Adventurer.cpp">
@@ -482,7 +482,7 @@
     <ClInclude Include="include\Game\Enemy\EnemyManager.hpp">
       <Filter>標頭檔\Game\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="include\Game\States\TestState.hpp">
+    <ClInclude Include="include\Game\States\GameState.hpp">
       <Filter>標頭檔\Game\States</Filter>
     </ClInclude>
     <ClInclude Include="include\Game\Player\Adventurer.hpp">

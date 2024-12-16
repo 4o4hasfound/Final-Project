@@ -1,7 +1,7 @@
 #include "Game/Weapon/Rifle.hpp"
 
 static WeaponConfig weaponConfig{
-	400.0,
+	300.0,
 	500.0,
 	30,
 	30,
